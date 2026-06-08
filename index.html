@@ -296,10 +296,13 @@
         /* ========== HERO SECTION ========== */
         .hero {
             margin-top: 80px;
-            padding: 80px 2rem;
             background: linear-gradient(135deg, var(--color-bg) 0%, var(--color-bg-alt) 100%);
             position: relative;
             overflow: hidden;
+            min-height: calc(100vh - 80px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .hero::before {
@@ -312,17 +315,21 @@
             background-image:
                 repeating-linear-gradient(45deg, transparent, transparent 100px, rgba(201, 168, 124, 0.03) 100px, rgba(201, 168, 124, 0.03) 200px);
             pointer-events: none;
+            z-index: 2;
         }
+
 
         .hero-content {
             max-width: 1400px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: 60% 40%;
+            grid-template-columns: 1fr;
             gap: 4rem;
             align-items: center;
             position: relative;
-            z-index: 1;
+            z-index: 3;
+            width: 100%;
+            padding: 80px 2rem;
         }
 
         .hero-left {
@@ -372,10 +379,7 @@
         }
 
         .hero-right {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            animation: slideInRight 0.8s ease-out 0.2s both;
+            display: none;
         }
 
         .hero-image {
@@ -1436,7 +1440,7 @@
     </nav>
 
     <!-- HERO SECTION -->
-    <section class="hero" id="inicio">
+    <section class="hero" id="inicio" style="background: linear-gradient(135deg, rgba(44, 26, 16, 0.5) 0%, rgba(160, 114, 74, 0.4) 100%), url('https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1600&h=900&fit=crop') center/cover no-repeat; background-attachment: fixed;">
         <div class="hero-content">
             <div class="hero-left">
                 <div class="label">✦ Moreno, Buenos Aires</div>
