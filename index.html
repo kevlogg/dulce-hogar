@@ -1,0 +1,2025 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dulce Hogar | Diseño & Estilo - Muebles y Decoración Premium</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,600&family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ========== VARIABLES & RESET ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --color-bg: #F7F3EE;
+            --color-bg-alt: #EFEBE3;
+            --color-dark: #2C1A10;
+            --color-gold: #C9A87C;
+            --color-accent: #A0724A;
+            --color-white: #FDFAF6;
+            --color-text: #3D2B1F;
+            --color-whatsapp: #25D366;
+
+            --font-display: 'Cormorant Garamond', serif;
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Raleway', sans-serif;
+
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 2rem;
+            --spacing-lg: 3rem;
+            --spacing-xl: 4rem;
+
+            --transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --shadow-warm: 0 10px 40px rgba(44, 26, 16, 0.12);
+            --shadow-gold: 0 8px 32px rgba(201, 168, 124, 0.2);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            color: var(--color-text);
+            background-color: var(--color-bg);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ========== TYPOGRAPHY ========== */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-heading);
+            color: var(--color-dark);
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 700;
+            margin-bottom: var(--spacing-md);
+        }
+
+        h2 {
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            margin-bottom: var(--spacing-md);
+        }
+
+        h3 {
+            font-size: clamp(1.3rem, 3vw, 1.8rem);
+            font-weight: 600;
+        }
+
+        p {
+            font-size: 1rem;
+            line-height: 1.8;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .label {
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 600;
+            color: var(--color-gold);
+        }
+
+        /* ========== BUTTONS ========== */
+        button, a.btn {
+            font-family: var(--font-body);
+            padding: 12px 28px;
+            border: none;
+            cursor: pointer;
+            border-radius: 999px;
+            font-weight: 500;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-block;
+            font-size: 0.95rem;
+        }
+
+        .btn-primary {
+            background-color: var(--color-dark);
+            color: var(--color-white);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--color-accent);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-gold);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--color-whatsapp);
+            border: 2px solid var(--color-whatsapp);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--color-whatsapp);
+            color: var(--color-white);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--color-dark);
+            border: 2px solid var(--color-dark);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--color-dark);
+            color: var(--color-white);
+        }
+
+        /* ========== NAVBAR ========== */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background-color: rgba(44, 26, 16, 0.05);
+            backdrop-filter: none;
+            z-index: 1000;
+            transition: var(--transition);
+            border-bottom: 1px solid transparent;
+        }
+
+        nav.solid {
+            background-color: rgba(44, 26, 16, 0.98);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(201, 168, 124, 0.2);
+            box-shadow: 0 4px 20px rgba(44, 26, 16, 0.15);
+        }
+
+        .navbar-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            height: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            flex-shrink: 0;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-name {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-style: italic;
+            font-weight: 600;
+            color: var(--color-dark);
+            line-height: 1;
+        }
+
+        nav.solid .logo-name {
+            color: var(--color-white);
+        }
+
+        .logo-subtitle {
+            font-family: var(--font-body);
+            font-size: 0.6rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            font-weight: 600;
+            color: var(--color-gold);
+            line-height: 1;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--color-dark);
+            font-size: 0.95rem;
+            font-weight: 500;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        nav.solid .nav-links a {
+            color: var(--color-white);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--color-gold);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+            background: none;
+            border: none;
+            padding: 0;
+        }
+
+        .hamburger span {
+            width: 24px;
+            height: 2px;
+            background-color: var(--color-dark);
+            transition: var(--transition);
+        }
+
+        nav.solid .hamburger span {
+            background-color: var(--color-white);
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-cta {
+                gap: 0.5rem;
+            }
+
+            .nav-cta .btn-secondary {
+                display: none;
+            }
+        }
+
+        /* ========== HERO SECTION ========== */
+        .hero {
+            margin-top: 80px;
+            padding: 80px 2rem;
+            background: linear-gradient(135deg, var(--color-bg) 0%, var(--color-bg-alt) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                repeating-linear-gradient(45deg, transparent, transparent 100px, rgba(201, 168, 124, 0.03) 100px, rgba(201, 168, 124, 0.03) 200px);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 60% 40%;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-left {
+            animation: slideInLeft 0.8s ease-out;
+        }
+
+        .hero-label {
+            margin-bottom: var(--spacing-md);
+        }
+
+        .hero-text {
+            margin-bottom: var(--spacing-lg);
+            color: var(--color-text);
+        }
+
+        .hero-ctas {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: var(--spacing-lg);
+            flex-wrap: wrap;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 2rem;
+            padding-top: var(--spacing-md);
+            border-top: 1px solid rgba(201, 168, 124, 0.3);
+        }
+
+        .stat {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-number {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--color-gold);
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--color-text);
+            font-weight: 500;
+        }
+
+        .hero-right {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: slideInRight 0.8s ease-out 0.2s both;
+        }
+
+        .hero-image {
+            width: 100%;
+            max-width: 400px;
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, rgba(201, 168, 124, 0.3) 0%, rgba(160, 114, 74, 0.2) 100%);
+            border-radius: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-image svg {
+            width: 60%;
+            height: 60%;
+            opacity: 0.7;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            z-index: 10;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(8px); }
+        }
+
+        /* ========== SECTION DIVIDER ========== */
+        .divider {
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--color-gold), transparent);
+            margin: var(--spacing-xl) 0;
+        }
+
+        /* ========== SECTIONS FADE-IN ========== */
+        .section {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: var(--transition);
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ========== ABOUT SECTION ========== */
+        .about {
+            padding: 100px 2rem;
+            background-color: var(--color-bg-alt);
+        }
+
+        .about-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 40% 60%;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-image {
+            width: 100%;
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, var(--color-gold) 0%, var(--color-accent) 100%);
+            border-radius: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-image::after {
+            content: 'Flor & Esteban';
+            position: absolute;
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-style: italic;
+            color: var(--color-white);
+            z-index: 10;
+        }
+
+        .about-text h2 {
+            margin-bottom: var(--spacing-md);
+        }
+
+        .about-text > p {
+            margin-bottom: var(--spacing-md);
+            color: var(--color-text);
+        }
+
+        .values {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: var(--spacing-lg);
+        }
+
+        .value {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .value-icon {
+            width: 48px;
+            height: 48px;
+            min-width: 48px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .value-icon svg {
+            width: 100%;
+            height: 100%;
+            stroke: var(--color-gold);
+            fill: none;
+            stroke-width: 1.5;
+        }
+
+        .value-content h3 {
+            font-size: 1rem;
+            margin-bottom: 4px;
+            color: var(--color-dark);
+        }
+
+        .value-content p {
+            font-size: 0.85rem;
+            color: var(--color-text);
+            margin: 0;
+        }
+
+        /* ========== CATEGORIES SECTION ========== */
+        .categories {
+            padding: 100px 2rem;
+            background-color: var(--color-bg);
+        }
+
+        .section-header {
+            max-width: 1400px;
+            margin: 0 auto 4rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-header::before {
+            content: '';
+            position: absolute;
+            top: -2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 1px;
+            background-color: var(--color-gold);
+        }
+
+        .section-header h2 {
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .section-subtitle {
+            font-size: 1.05rem;
+            color: var(--color-text);
+        }
+
+        .categories-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .category-card {
+            background: linear-gradient(135deg, rgba(201, 168, 124, 0.1) 0%, rgba(160, 114, 74, 0.08) 100%);
+            border-radius: 16px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            transition: var(--transition);
+            cursor: pointer;
+            border: 1px solid rgba(201, 168, 124, 0.2);
+        }
+
+        .category-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-gold);
+            background: linear-gradient(135deg, rgba(201, 168, 124, 0.15) 0%, rgba(160, 114, 74, 0.12) 100%);
+        }
+
+        .category-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .category-icon svg {
+            width: 100%;
+            height: 100%;
+            stroke: var(--color-gold);
+            fill: none;
+            stroke-width: 1;
+        }
+
+        .category-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .category-card p {
+            font-size: 0.9rem;
+            color: var(--color-text);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .category-card .btn-outline {
+            font-size: 0.85rem;
+            padding: 10px 20px;
+        }
+
+        /* ========== FEATURED CHAIRS SECTION ========== */
+        .featured {
+            padding: 60px 2rem;
+            background-color: var(--color-dark);
+            text-align: center;
+        }
+
+        .featured h2 {
+            color: var(--color-white);
+            margin-bottom: 3rem;
+            font-size: 2rem;
+        }
+
+        .featured-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .product-card {
+            background-color: var(--color-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .product-card:hover {
+            transform: scale(1.03);
+            box-shadow: var(--shadow-gold);
+        }
+
+        .product-image {
+            width: 100%;
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, rgba(201, 168, 124, 0.2) 0%, rgba(160, 114, 74, 0.15) 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image svg {
+            width: 50%;
+            height: 50%;
+            opacity: 0.6;
+            stroke: var(--color-gold);
+            fill: none;
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background-color: var(--color-gold);
+            color: var(--color-dark);
+            padding: 6px 12px;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+            text-align: left;
+        }
+
+        .product-info h3 {
+            font-size: 1.05rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-desc {
+            font-size: 0.85rem;
+            color: var(--color-text);
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .product-card .btn-primary {
+            width: 100%;
+            text-align: center;
+            padding: 10px 0;
+            font-size: 0.85rem;
+        }
+
+        .featured-note {
+            max-width: 1400px;
+            margin: 3rem auto 0;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* ========== SHIPPING SECTION ========== */
+        .shipping {
+            padding: 100px 2rem;
+            background-color: var(--color-bg);
+        }
+
+        .shipping-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .shipping-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            margin-bottom: 4rem;
+            text-align: center;
+        }
+
+        .shipping-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .shipping-icon {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .shipping-icon svg {
+            width: 100%;
+            height: 100%;
+            stroke: var(--color-gold);
+            fill: none;
+            stroke-width: 1.5;
+        }
+
+        .shipping-item h3 {
+            margin-bottom: var(--spacing-sm);
+            font-size: 1.1rem;
+        }
+
+        .shipping-item p {
+            color: var(--color-text);
+            font-size: 0.9rem;
+        }
+
+        .shipping-banner {
+            background: linear-gradient(135deg, rgba(201, 168, 124, 0.15) 0%, rgba(160, 114, 74, 0.1) 100%);
+            border-radius: 12px;
+            padding: 2.5rem;
+            text-align: center;
+            border: 1px solid rgba(201, 168, 124, 0.2);
+        }
+
+        .shipping-banner h3 {
+            margin-bottom: 1rem;
+            color: var(--color-dark);
+        }
+
+        /* ========== TESTIMONIALS SECTION ========== */
+        .testimonials {
+            padding: 100px 2rem;
+            background-color: var(--color-bg-alt);
+        }
+
+        .testimonials-header {
+            max-width: 1400px;
+            margin: 0 auto 3rem;
+            text-align: center;
+        }
+
+        .testimonials-header h2 {
+            margin-bottom: 1rem;
+        }
+
+        .testimonials-stat {
+            font-size: 1.2rem;
+            color: var(--color-accent);
+            font-weight: 600;
+            margin-bottom: 3rem;
+        }
+
+        .testimonials-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .testimonial {
+            background-color: var(--color-white);
+            border-radius: 12px;
+            padding: 2rem;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .testimonial:hover {
+            box-shadow: var(--shadow-warm);
+            transform: translateY(-4px);
+        }
+
+        .quote-icon {
+            font-size: 3rem;
+            color: var(--color-gold);
+            opacity: 0.15;
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            line-height: 1;
+        }
+
+        .testimonial-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--color-gold) 0%, var(--color-accent) 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 1rem;
+            font-family: var(--font-display);
+            color: var(--color-white);
+            font-weight: 600;
+        }
+
+        .testimonial-name {
+            font-weight: 600;
+            color: var(--color-dark);
+            margin-bottom: 2px;
+        }
+
+        .testimonial-city {
+            font-size: 0.85rem;
+            color: var(--color-text);
+            margin-bottom: 1rem;
+        }
+
+        .stars {
+            color: var(--color-gold);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+        }
+
+        .testimonial-text {
+            font-size: 0.95rem;
+            color: var(--color-text);
+            line-height: 1.6;
+        }
+
+        /* ========== CTA SECTION ========== */
+        .cta-section {
+            padding: 80px 2rem;
+            background: linear-gradient(135deg, var(--color-dark) 0%, #1A0E07 100%);
+            text-align: center;
+            color: var(--color-white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--color-gold), transparent);
+        }
+
+        .cta-section::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--color-gold), transparent);
+        }
+
+        .cta-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-section h2 {
+            color: var(--color-white);
+            margin-bottom: var(--spacing-md);
+            font-size: 2rem;
+        }
+
+        .cta-section p {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 1.05rem;
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            font-size: 1rem;
+            padding: 15px 35px;
+            background-color: var(--color-whatsapp);
+            color: var(--color-white);
+        }
+
+        .cta-button:hover {
+            background-color: #1ead54;
+            transform: translateY(-3px);
+        }
+
+        /* ========== CONTACT SECTION ========== */
+        .contact {
+            padding: 100px 2rem;
+            background-color: var(--color-bg);
+        }
+
+        .contact-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 55% 45%;
+            gap: 4rem;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--color-dark);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 12px 16px;
+            border: 1px solid rgba(201, 168, 124, 0.3);
+            border-radius: 8px;
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            color: var(--color-text);
+            background-color: var(--color-white);
+            transition: var(--transition);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--color-gold);
+            box-shadow: 0 0 0 3px rgba(201, 168, 124, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-submit {
+            background-color: var(--color-dark);
+            color: var(--color-white);
+            padding: 14px 30px;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+
+        .form-submit:hover {
+            background-color: var(--color-accent);
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .info-item {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .info-icon {
+            width: 48px;
+            height: 48px;
+            min-width: 48px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(201, 168, 124, 0.1);
+            border-radius: 8px;
+        }
+
+        .info-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--color-gold);
+            fill: none;
+            stroke-width: 1.5;
+        }
+
+        .info-content h3 {
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-content p {
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        .info-content a {
+            color: var(--color-gold);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .info-content a:hover {
+            text-decoration: underline;
+        }
+
+        .map-placeholder {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, rgba(201, 168, 124, 0.15) 0%, rgba(160, 114, 74, 0.1) 100%);
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--color-text);
+            border: 1px solid rgba(201, 168, 124, 0.2);
+            margin-top: 2rem;
+        }
+
+        /* ========== FOOTER ========== */
+        footer {
+            background-color: var(--color-dark);
+            color: var(--color-white);
+            padding: 4rem 2rem 2rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            margin-bottom: 3rem;
+            padding-bottom: 3rem;
+            border-bottom: 1px solid rgba(201, 168, 124, 0.2);
+        }
+
+        .footer-section h3 {
+            color: var(--color-white);
+            margin-bottom: var(--spacing-md);
+            font-size: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+
+        .footer-section a:hover {
+            color: var(--color-gold);
+        }
+
+        .footer-logo {
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .footer-logo .logo-icon {
+            width: 32px;
+            height: 32px;
+        }
+
+        .footer-logo .logo-name {
+            color: var(--color-white);
+        }
+
+        .footer-socials {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background-color: rgba(201, 168, 124, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .social-link:hover {
+            background-color: var(--color-gold);
+        }
+
+        .social-link svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--color-gold);
+            fill: none;
+        }
+
+        .social-link:hover svg {
+            stroke: var(--color-dark);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.85rem;
+        }
+
+        /* ========== WHATSAPP BUTTON ========== */
+        .whatsapp-fab {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            background-color: var(--color-whatsapp);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 999;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3);
+            transition: var(--transition);
+            animation: pulse 2s infinite;
+        }
+
+        .whatsapp-fab:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 30px rgba(37, 211, 102, 0.4);
+        }
+
+        .whatsapp-fab svg {
+            width: 30px;
+            height: 30px;
+            fill: var(--color-white);
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3);
+            }
+            50% {
+                box-shadow: 0 4px 20px rgba(37, 211, 102, 0.6);
+            }
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 1024px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-right {
+                order: -1;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .categories-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .featured-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .shipping-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .testimonials-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .contact-content {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .values {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 40px 1.5rem;
+            }
+
+            .hero-content {
+                gap: 2rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .featured-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-stats {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+
+            .hero-ctas {
+                flex-direction: column;
+            }
+
+            .hero-ctas button {
+                width: 100%;
+            }
+
+            .whatsapp-fab {
+                bottom: 1rem;
+                right: 1rem;
+                width: 50px;
+                height: 50px;
+            }
+
+            .whatsapp-fab svg {
+                width: 24px;
+                height: 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding: 30px 1rem;
+                margin-top: 80px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            h2 {
+                font-size: 1.2rem;
+            }
+
+            .featured-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .shipping-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .logo-subtitle {
+                display: none;
+            }
+
+            .about, .categories, .featured, .shipping, .testimonials, .contact, .cta-section {
+                padding: 60px 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav id="navbar">
+        <div class="navbar-content">
+            <a href="#hero" class="logo">
+                <svg class="logo-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="16" cy="8" r="2" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                    <rect x="12" y="10" width="8" height="12" rx="1" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                    <line x1="14" y1="16" x2="18" y2="16" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="M10 22H22" stroke="currentColor" stroke-width="1.5"/>
+                </svg>
+                <div class="logo-text">
+                    <div class="logo-name">Dulce Hogar</div>
+                    <div class="logo-subtitle">Diseño & Estilo</div>
+                </div>
+            </a>
+
+            <div class="nav-cta">
+                <ul class="nav-links">
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#nosotros">Nosotros</a></li>
+                    <li><a href="#productos">Productos</a></li>
+                    <li><a href="#testimonios">Testimonios</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                </ul>
+                <a href="https://wa.me/5491126917777?text=Hola!%20Quisiera%20conocer%20más%20sobre%20los%20productos" target="_blank" class="btn btn-secondary">WhatsApp</a>
+                <button class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="hero" id="inicio">
+        <div class="hero-content">
+            <div class="hero-left">
+                <div class="label">✦ Moreno, Buenos Aires</div>
+                <h1>Transformamos espacios en hogares que enamoran</h1>
+                <p class="hero-text">Somos Flor y Esteban. Diseñamos ambientes únicos con muebles y deco de calidad, con envíos a todo el país y asesoramiento personalizado.</p>
+                <div class="hero-ctas">
+                    <a href="#productos" class="btn btn-primary">Ver Productos</a>
+                    <a href="https://wa.me/5491126917777?text=Hola!%20Me%20gustaría%20hablar%20sobre%20vuestros%20productos" target="_blank" class="btn btn-secondary">Hablar por WhatsApp</a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <div class="stat-number counter" data-target="508">0</div>
+                        <div class="stat-label">Publicaciones</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number counter" data-target="26000">0</div>
+                        <div class="stat-label">Seguidores</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-label">Envíos a todo el país</div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-right">
+                <div class="hero-image">
+                    <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="50" y="40" width="100" height="120" rx="8" stroke="currentColor" stroke-width="2"/>
+                        <circle cx="100" cy="80" r="15" stroke="currentColor" stroke-width="2" fill="none"/>
+                        <rect x="70" y="100" width="60" height="40" rx="4" stroke="currentColor" stroke-width="2" fill="none"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10 4V14M14 10L10 14L6 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" color="var(--color-gold)"/>
+            </svg>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ABOUT SECTION -->
+    <section class="about section" id="nosotros">
+        <div class="about-content">
+            <div class="about-image"></div>
+            <div class="about-text">
+                <h2>Nuestra historia</h2>
+                <p>Somos Flor y Esteban, dos apasionados por el diseño y la decoración. Hace años decidimos compartir nuestra pasión transformando espacios en hogares acogedores y hermosos. Cada proyecto es único, cada cliente es especial.</p>
+                <p>Creemos que los muebles y la decoración deben contar historias, generar emociones y crear ambientes donde la familia y los amigos disfruten momentos inolvidables. Por eso seleccionamos cada pieza con cuidado, buscando siempre la mejor calidad y los diseños más actuales.</p>
+                <p>Nuestro compromiso es simple: que vuestro hogar sea un reflejo de vuestro estilo y que cada rincón transmita calidez, elegancia y buen gusto.</p>
+                <div class="values">
+                    <div class="value">
+                        <div class="value-icon">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M3 12L12 3L21 12V20C21 21.1 20.1 22 19 22H5C3.9 22 3 21.1 3 20V12Z" stroke-width="1.5"/>
+                            </svg>
+                        </div>
+                        <div class="value-content">
+                            <h3>Diseño Único</h3>
+                            <p>Cada espacio es diferente</p>
+                        </div>
+                    </div>
+                    <div class="value">
+                        <div class="value-icon">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2L15.09 8.26H22L17.55 12.74L19.64 19.04L12 14.56L4.36 19.04L6.45 12.74L2 8.26H8.91L12 2Z" stroke-width="1.5"/>
+                            </svg>
+                        </div>
+                        <div class="value-content">
+                            <h3>Calidad Premium</h3>
+                            <p>Materiales y acabados selectos</p>
+                        </div>
+                    </div>
+                    <div class="value">
+                        <div class="value-icon">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.58 20 4 16.42 4 12C4 7.58 7.58 4 12 4C16.42 4 20 7.58 20 12C20 16.42 16.42 20 12 20ZM13 7H11V13H17V11H13V7Z" stroke-width="0.5" fill="currentColor"/>
+                                <path d="M8 14L10 12L8 10" stroke-width="1.5" fill="none"/>
+                            </svg>
+                        </div>
+                        <div class="value-content">
+                            <h3>Envíos Nacionales</h3>
+                            <p>A todo el país con seguridad</p>
+                        </div>
+                    </div>
+                    <div class="value">
+                        <div class="value-icon">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20 2H4C2.9 2 2 2.9 2 4V22L22 2V4C22 5.1 21.1 2 20 2ZM12 12.5C10.6 12.5 9.5 11.4 9.5 10C9.5 8.6 10.6 7.5 12 7.5C13.4 7.5 14.5 8.6 14.5 10C14.5 11.4 13.4 12.5 12 12.5Z" stroke-width="0.5" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <div class="value-content">
+                            <h3>Asesoramiento</h3>
+                            <p>Personal y especializado</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- CATEGORIES SECTION -->
+    <section class="categories section" id="productos">
+        <div class="section-header">
+            <h2>Encontrá lo que tu hogar necesita</h2>
+            <p class="section-subtitle">Explorá nuestra colección de muebles y decoración</p>
+        </div>
+        <div class="categories-grid">
+            <div class="category-card">
+                <div class="category-icon">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M30 70L30 30C30 25 35 20 40 20H60C65 20 70 25 70 30V70M25 70H75C76 70 77 71 77 72V80C77 81 76 82 75 82H25C24 82 23 81 23 80V72C23 71 24 70 25 70Z" stroke-width="2" fill="none" stroke-linecap="round"/>
+                        <circle cx="50" cy="45" r="8" stroke-width="2" fill="none"/>
+                    </svg>
+                </div>
+                <h3>Sillones</h3>
+                <p>Confortables y de diseño, perfectos para relajarte</p>
+                <a href="#featured" class="btn btn-outline">Explorar →</a>
+            </div>
+
+            <div class="category-card">
+                <div class="category-icon">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="20" y="40" width="60" height="35" rx="3" stroke-width="2" fill="none"/>
+                        <line x1="50" y1="25" x2="50" y2="40" stroke-width="2"/>
+                        <line x1="30" y1="25" x2="70" y2="25" stroke-width="2"/>
+                    </svg>
+                </div>
+                <h3>Mesas & Muebles</h3>
+                <p>Piezas versátiles para cada ambiente</p>
+                <a href="#featured" class="btn btn-outline">Explorar →</a>
+            </div>
+
+            <div class="category-card">
+                <div class="category-icon">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="50" cy="40" r="15" stroke-width="2" fill="none"/>
+                        <path d="M35 60C35 50 40 45 50 45C60 45 65 50 65 60L65 75H35Z" stroke-width="2" fill="none" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <h3>Decoración</h3>
+                <p>Accesorios que dan vida a tus espacios</p>
+                <a href="#featured" class="btn btn-outline">Explorar →</a>
+            </div>
+
+            <div class="category-card">
+                <div class="category-icon">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="25" y="30" width="50" height="50" rx="4" stroke-width="2" fill="none"/>
+                        <path d="M35 45L45 55L65 35" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <h3>Textiles & Cojines</h3>
+                <p>Telas y texturas que abrazan tu hogar</p>
+                <a href="#featured" class="btn btn-outline">Explorar →</a>
+            </div>
+
+            <div class="category-card">
+                <div class="category-icon">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="50" cy="35" r="12" stroke-width="2" fill="none"/>
+                        <path d="M50 47V70M35 55L50 70L65 55" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <h3>Iluminación</h3>
+                <p>Luces que crean el ambiente perfecto</p>
+                <a href="#featured" class="btn btn-outline">Explorar →</a>
+            </div>
+
+            <div class="category-card">
+                <div class="category-icon">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="50" cy="30" r="10" stroke-width="2" fill="none"/>
+                        <path d="M30 50C30 45 40 40 50 40C60 40 70 45 70 50L70 75C70 78 68 80 65 80H35C32 80 30 78 30 75Z" stroke-width="2" fill="none" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <h3>Navidad & Estaciones</h3>
+                <p>Colecciones temáticas y especiales</p>
+                <a href="#featured" class="btn btn-outline">Explorar →</a>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- FEATURED PRODUCTS -->
+    <section class="featured" id="featured">
+        <h2>Sillones que invitan a quedarse</h2>
+        <div class="featured-grid">
+            <div class="product-card">
+                <div class="product-image">
+                    <div class="product-badge">Destacado</div>
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M30 70L30 30C30 25 35 20 40 20H60C65 20 70 25 70 30V70M25 70H75C76 70 77 71 77 72V80C77 81 76 82 75 82H25C24 82 23 81 23 80V72C23 71 24 70 25 70Z" stroke-width="2"/>
+                        <circle cx="50" cy="45" r="8" stroke-width="2" fill="none"/>
+                    </svg>
+                </div>
+                <div class="product-info">
+                    <h3>Sillón Chester Premium</h3>
+                    <p class="product-desc">Clásico y elegante, con detalles dorados y almohadones incluidos.</p>
+                    <a href="https://wa.me/5491126917777?text=Hola!%20Me%20interesa%20el%20Sillón%20Chester%20Premium" target="_blank" class="btn btn-primary">Consultar precio →</a>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">
+                    <div class="product-badge">Destacado</div>
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="25" y="35" width="50" height="45" rx="5" stroke-width="2" fill="none"/>
+                        <circle cx="50" cy="50" r="6" stroke-width="2" fill="none"/>
+                    </svg>
+                </div>
+                <div class="product-info">
+                    <h3>Sillón Puff XXL</h3>
+                    <p class="product-desc">Versátil y cómodo, ideal para salas modernas y relajación.</p>
+                    <a href="https://wa.me/5491126917777?text=Hola!%20Me%20interesa%20el%20Sillón%20Puff%20XXL" target="_blank" class="btn btn-primary">Consultar precio →</a>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">
+                    <div class="product-badge">Destacado</div>
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M25 70L25 40C25 35 28 30 32 30H68C72 30 75 35 75 40V70M20 70H80C81 70 82 71 82 72V78C82 79 81 80 80 80H20C19 80 18 79 18 78V72C18 71 19 70 20 70Z" stroke-width="2" fill="none"/>
+                        <line x1="40" y1="45" x2="60" y2="45" stroke-width="1.5"/>
+                        <line x1="35" y1="55" x2="65" y2="55" stroke-width="1.5"/>
+                    </svg>
+                </div>
+                <div class="product-info">
+                    <h3>Sillón Orejero Vintage</h3>
+                    <p class="product-desc">Retro con toque moderno, perfecto para leer y disfrutar.</p>
+                    <a href="https://wa.me/5491126917777?text=Hola!%20Me%20interesa%20el%20Sillón%20Orejero%20Vintage" target="_blank" class="btn btn-primary">Consultar precio →</a>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">
+                    <div class="product-badge">Destacado</div>
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="20" y="25" width="60" height="50" rx="4" stroke-width="2" fill="none"/>
+                        <line x1="35" y1="25" x2="35" y2="75" stroke-width="1.5"/>
+                        <line x1="65" y1="25" x2="65" y2="75" stroke-width="1.5"/>
+                    </svg>
+                </div>
+                <div class="product-info">
+                    <h3>Sillón Cama</h3>
+                    <p class="product-desc">Funcional y cómodo, se transforma según necesites.</p>
+                    <a href="https://wa.me/5491126917777?text=Hola!%20Me%20interesa%20el%20Sillón%20Cama" target="_blank" class="btn btn-primary">Consultar precio →</a>
+                </div>
+            </div>
+        </div>
+        <p class="featured-note">Precios en pesos argentinos. Consultar disponibilidad y modalidades de pago.</p>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- SHIPPING SECTION -->
+    <section class="shipping section">
+        <div class="shipping-content">
+            <div class="shipping-grid">
+                <div class="shipping-item">
+                    <div class="shipping-icon">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15 65H80C82 65 85 67 85 70V80C85 82 82 85 80 85H15C13 85 10 82 10 80V70C10 67 13 65 15 65Z" stroke-width="2" fill="none"/>
+                            <path d="M35 65V50C35 45 40 40 45 40H70V65" stroke-width="2" fill="none" stroke-linecap="round"/>
+                            <circle cx="25" cy="80" r="4" stroke-width="2" fill="none"/>
+                            <circle cx="75" cy="80" r="4" stroke-width="2" fill="none"/>
+                        </svg>
+                    </div>
+                    <h3>Envío a domicilio</h3>
+                    <p>Entrega segura directamente en tu puerta, con cuidado profesional</p>
+                </div>
+
+                <div class="shipping-item">
+                    <div class="shipping-icon">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="20" y="25" width="60" height="50" rx="4" stroke-width="2" fill="none"/>
+                            <path d="M35 40L48 53L65 35" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3>Embalaje seguro</h3>
+                    <p>Tus productos llegan protegidos con los mejores materiales</p>
+                </div>
+
+                <div class="shipping-item">
+                    <div class="shipping-icon">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="50" cy="50" r="35" stroke-width="2" fill="none"/>
+                            <path d="M50 30V50L65 65" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                            <line x1="50" y1="15" x2="50" y2="10" stroke-width="1.5"/>
+                            <line x1="50" y1="90" x2="50" y2="85" stroke-width="1.5"/>
+                            <line x1="85" y1="50" x2="90" y2="50" stroke-width="1.5"/>
+                            <line x1="15" y1="50" x2="10" y2="50" stroke-width="1.5"/>
+                        </svg>
+                    </div>
+                    <h3>Seguimiento en tiempo real</h3>
+                    <p>Conocé el estado de tu pedido en cada momento</p>
+                </div>
+            </div>
+
+            <div class="shipping-banner">
+                <h3>Llegamos a todos los rincones de Argentina</h3>
+                <p>Desde Moreno, Buenos Aires, enviamos con seguridad y rapidez a cualquier punto del país</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- TESTIMONIALS SECTION -->
+    <section class="testimonials section">
+        <div class="testimonials-header">
+            <h2>Lo que dicen nuestros clientes ❤</h2>
+            <div class="testimonials-stat">Más de 500 familias ya transformaron su hogar con nosotros</div>
+        </div>
+        <div class="testimonials-grid">
+            <div class="testimonial">
+                <div class="quote-icon">"</div>
+                <div class="testimonial-avatar">MG</div>
+                <div class="testimonial-name">Mariana G.</div>
+                <div class="testimonial-city">San Isidro, Buenos Aires</div>
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">Transformaron mi sala de estar completamente. El sillón Chester es una joya, y el asesoramiento de Flor y Esteban fue impecable. Recomiendo a todos mis amigos.</p>
+            </div>
+
+            <div class="testimonial">
+                <div class="quote-icon">"</div>
+                <div class="testimonial-avatar">CR</div>
+                <div class="testimonial-name">Carlos R.</div>
+                <div class="testimonial-city">La Plata, Buenos Aires</div>
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">La calidad de los muebles superó todas mis expectativas. El envío fue rápido y el embalaje impecable. Ya está mi próximo pedido en planes.</p>
+            </div>
+
+            <div class="testimonial">
+                <div class="quote-icon">"</div>
+                <div class="testimonial-avatar">LP</div>
+                <div class="testimonial-name">Laura P.</div>
+                <div class="testimonial-city">Córdoba</div>
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">Encontré exactamente lo que buscaba. La decoración y los muebles crean un ambiente cálido y acogedor en mi hogar. Muchas gracias por la dedicación.</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- CTA SECTION -->
+    <section class="cta-section section">
+        <div class="cta-content">
+            <h2>¿No sabés qué elegir para tu hogar?</h2>
+            <p>Contanos tus gustos y presupuesto, y te asesoramos para crear el espacio que soñás.</p>
+            <a href="https://wa.me/5491126917777?text=Hola%20Flor%20y%20Esteban!%20Quisiera%20asesoramiento%20para%20decorar%20mi%20hogar" target="_blank" class="btn cta-button">💬 Hablar con Flor y Esteban</a>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- CONTACT SECTION -->
+    <section class="contact section" id="contacto">
+        <div class="contact-content">
+            <div class="contact-form">
+                <h2>Envianos tu mensaje</h2>
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" id="nombre" name="nombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="telefono">Teléfono</label>
+                        <input type="tel" id="telefono" name="telefono">
+                    </div>
+                    <div class="form-group">
+                        <label for="mensaje">Mensaje</label>
+                        <textarea id="mensaje" name="mensaje" required></textarea>
+                    </div>
+                    <button type="submit" class="form-submit">Enviar mensaje</button>
+                </form>
+            </div>
+
+            <div class="contact-info">
+                <h2>Información de contacto</h2>
+
+                <div class="info-item">
+                    <div class="info-icon">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.58 20 4 16.42 4 12C4 7.58 7.58 4 12 4C16.42 4 20 7.58 20 12C20 16.42 16.42 20 12 20ZM12.5 7H11V13H17V11.5H12.5V7Z" stroke-width="0" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <div class="info-content">
+                        <h3>Dirección</h3>
+                        <p>Av. Caveri 1481<br>Moreno, Buenos Aires 1744</p>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-icon">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17 10.5V7C17 5.9 16.1 5 15 5H1C.9 5 0 5.9 0 7V16C0 17.1 .9 18 2 18H14C15.1 18 16 17.1 16 16V12.5L20 16V4L17 10.5Z" stroke-width="0" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <div class="info-content">
+                        <h3>WhatsApp</h3>
+                        <a href="https://wa.me/5491126917777" target="_blank">+54 9 11 2691 7777</a>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-icon">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2C9.24 2 7 4.24 7 7C7 11.5 12 21 12 21S17 11.5 17 7C17 4.24 14.76 2 12 2M12 9.5C10.62 9.5 9.5 8.38 9.5 7C9.5 5.62 10.62 4.5 12 4.5C13.38 4.5 14.5 5.62 14.5 7C14.5 8.38 13.38 9.5 12 9.5Z" stroke-width="0" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <div class="info-content">
+                        <h3>Instagram</h3>
+                        <a href="https://instagram.com/dulcehogar.dye" target="_blank">@dulcehogar.dye</a>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-icon">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12" cy="12" r="1" stroke-width="0" fill="currentColor"/>
+                            <circle cx="19" cy="12" r="1" stroke-width="0" fill="currentColor"/>
+                            <circle cx="5" cy="12" r="1" stroke-width="0" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <div class="info-content">
+                        <h3>Horario</h3>
+                        <p>Lunes a Viernes: 9:00 - 18:00<br>Sábados: 10:00 - 16:00</p>
+                    </div>
+                </div>
+
+                <div class="map-placeholder">
+                    <p>📍 Mapa interactivo — Av. Caveri 1481, Moreno</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="footer-logo">
+                    <svg class="logo-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="16" cy="8" r="2" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                        <rect x="12" y="10" width="8" height="12" rx="1" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                        <line x1="14" y1="16" x2="18" y2="16" stroke="currentColor" stroke-width="1.5"/>
+                        <path d="M10 22H22" stroke="currentColor" stroke-width="1.5"/>
+                    </svg>
+                    <div class="logo-name">Dulce Hogar</div>
+                </div>
+                <p style="font-size: 0.9rem; color: rgba(255,255,255,0.7); line-height: 1.6;">Transformamos espacios en hogares que enamoran. Muebles y decoración premium con envíos a todo el país.</p>
+            </div>
+
+            <div class="footer-section">
+                <h3>Navegación</h3>
+                <ul>
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#nosotros">Nosotros</a></li>
+                    <li><a href="#productos">Productos</a></li>
+                    <li><a href="#testimonios">Testimonios</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Contacto</h3>
+                <ul>
+                    <li><a href="https://wa.me/5491126917777" target="_blank">WhatsApp: +54 9 11 2691 7777</a></li>
+                    <li><a href="https://instagram.com/dulcehogar.dye" target="_blank">Instagram: @dulcehogar.dye</a></li>
+                    <li><a href="#contacto">Enviar mensaje</a></li>
+                </ul>
+                <div class="footer-socials" style="margin-top: 1rem;">
+                    <a href="https://instagram.com/dulcehogar.dye" target="_blank" class="social-link" title="Instagram">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="2" y="2" width="20" height="20" rx="5" stroke-width="1.5"/>
+                            <circle cx="12" cy="12" r="5" stroke-width="1.5" fill="none"/>
+                            <circle cx="18" cy="6" r="1" fill="currentColor"/>
+                        </svg>
+                    </a>
+                    <a href="https://wa.me/5491126917777" target="_blank" class="social-link" title="WhatsApp">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.6 6.32C16.68 5.37 15.53 4.71 14.25 4.42C12.97 4.13 11.63 4.23 10.4 4.7C9.17 5.17 8.13 6 7.44 7.08C6.75 8.16 6.45 9.43 6.57 10.7C6.68 11.97 7.2 13.16 8.01 14.11L7.1 17.8C6.88 18.64 7.54 19.42 8.4 19.27L12 18.57C12.63 18.71 13.29 18.79 13.96 18.79C15.88 18.79 17.73 18.07 19 16.8C20.27 15.53 21 13.7 21 11.8C21 9.9 20.27 8.07 19 6.8L17.6 6.32Z" stroke-width="1.5" fill="none"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2025 Dulce Hogar | Diseño & Estilo — Hecho con ❤ en Moreno, Buenos Aires</p>
+        </div>
+    </footer>
+
+    <!-- WHATSAPP FAB -->
+    <a href="https://wa.me/5491126917777?text=Hola!%20Me%20gustaría%20conocer%20más%20sobre%20vuestros%20productos" target="_blank" class="whatsapp-fab" title="Contáctanos por WhatsApp">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.6 6.32C16.68 5.37 15.53 4.71 14.25 4.42C12.97 4.13 11.63 4.23 10.4 4.7C9.17 5.17 8.13 6 7.44 7.08C6.75 8.16 6.45 9.43 6.57 10.7C6.68 11.97 7.2 13.16 8.01 14.11L7.1 17.8C6.88 18.64 7.54 19.42 8.4 19.27L12 18.57C12.63 18.71 13.29 18.79 13.96 18.79C15.88 18.79 17.73 18.07 19 16.8C20.27 15.53 21 13.7 21 11.8C21 9.9 20.27 8.07 19 6.8L17.6 6.32Z"/>
+        </svg>
+    </a>
+
+    <script>
+        // ========== NAVBAR SCROLL EFFECT ==========
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('solid');
+            } else {
+                navbar.classList.remove('solid');
+            }
+        });
+
+        // ========== INTERSECTION OBSERVER FOR FADE-IN ==========
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.section').forEach(el => {
+            observer.observe(el);
+        });
+
+        // ========== COUNTER ANIMATION ==========
+        const counters = document.querySelectorAll('.counter');
+        let hasAnimated = false;
+
+        const animateCounters = () => {
+            if (hasAnimated) return;
+
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'));
+                let current = 0;
+                const increment = Math.ceil(target / 30);
+
+                const interval = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        counter.innerText = target.toLocaleString();
+                        clearInterval(interval);
+                    } else {
+                        counter.innerText = current.toLocaleString();
+                    }
+                }, 30);
+            });
+
+            hasAnimated = true;
+        };
+
+        window.addEventListener('scroll', () => {
+            const heroSection = document.querySelector('.hero');
+            const rect = heroSection.getBoundingClientRect();
+            if (rect.bottom <= window.innerHeight) {
+                animateCounters();
+            }
+        });
+
+        // ========== FORM VALIDATION & SUBMISSION ==========
+        const contactForm = document.getElementById('contactForm');
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const nombre = document.getElementById('nombre').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const telefono = document.getElementById('telefono').value.trim();
+            const mensaje = document.getElementById('mensaje').value.trim();
+
+            if (!nombre || !email || !mensaje) {
+                alert('Por favor completa los campos requeridos.');
+                return;
+            }
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Por favor ingresa un email válido.');
+                return;
+            }
+
+            const whatsappMessage = `Nuevo mensaje de contacto:\n\nNombre: ${nombre}\nEmail: ${email}\nTeléfono: ${telefono}\n\nMensaje:\n${mensaje}`;
+            const encodedMessage = encodeURIComponent(whatsappMessage);
+            window.open(`https://wa.me/5491126917777?text=${encodedMessage}`, '_blank');
+
+            contactForm.reset();
+            alert('Mensaje enviado! Pronto nos comunicaremos contigo.');
+        });
+
+        // ========== SMOOTH ANCHOR LINKS ==========
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href !== '#' && document.querySelector(href)) {
+                    e.preventDefault();
+                    document.querySelector(href).scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // ========== HAMBURGER MENU ==========
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+            navLinks.style.position = 'absolute';
+            navLinks.style.top = '80px';
+            navLinks.style.left = '0';
+            navLinks.style.right = '0';
+            navLinks.style.flexDirection = 'column';
+            navLinks.style.backgroundColor = 'var(--color-dark)';
+            navLinks.style.padding = '1rem';
+            navLinks.style.gap = '1rem';
+            navLinks.style.zIndex = '999';
+        });
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    navLinks.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
