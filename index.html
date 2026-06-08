@@ -660,7 +660,7 @@
             max-width: 1400px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2rem;
         }
 
@@ -669,11 +669,36 @@
             border-radius: 12px;
             overflow: hidden;
             transition: var(--transition);
+            animation: fadeInUp 0.6s ease-out backwards;
         }
 
         .product-card:hover {
-            transform: scale(1.03);
-            box-shadow: var(--shadow-gold);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 12px 40px rgba(201, 168, 124, 0.3);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .filter-btn {
+            transition: var(--transition);
+        }
+
+        .filter-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(201, 168, 124, 0.2);
+        }
+
+        .filter-btn.active {
+            box-shadow: 0 4px 16px rgba(201, 168, 124, 0.3);
         }
 
         .product-image {
@@ -1525,72 +1550,46 @@
             <h2>Encontrá lo que tu hogar necesita</h2>
             <p class="section-subtitle">Explorá nuestra colección de muebles y decoración</p>
         </div>
-        <div class="categories-grid">
-            <div class="category-card" style="background: url('https://images.unsplash.com/photo-1592078615290-033ee584e267?ixlib=rb-4.0.3&q=85&w=400&h=300&fit=crop') center/cover; position: relative;"><div style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(44, 26, 16, 0.7) 0%, rgba(160, 114, 74, 0.6) 100%); display: flex; flex-direction: column; justify-content: center; align-items: center; border-radius: 16px;"><h3 style="color: var(--color-white);">Sillones</h3><p style="color: rgba(255, 255, 255, 0.9); text-align: center;">Confortables y de diseño</p><a href="#featured" class="btn btn-outline" style="border-color: var(--color-white); color: var(--color-white); margin-top: 1rem;">Explorar →</a></div></div>
+        <div class="categories-grid" id="categoriesGrid">
+            <div class="category-card" data-category="MUEBLES" style="background: url('https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&q=85&w=400&h=300&fit=crop') center/cover; position: relative; cursor: pointer;"><div style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(44, 26, 16, 0.7) 0%, rgba(160, 114, 74, 0.6) 100%); display: flex; flex-direction: column; justify-content: center; align-items: center; border-radius: 16px;"><h3 style="color: var(--color-white);">Muebles</h3><p style="color: rgba(255, 255, 255, 0.9); text-align: center;">Sofás, mesas y más</p><a href="#products-section" class="btn btn-outline" style="border-color: var(--color-white); color: var(--color-white); margin-top: 1rem;">Explorar →</a></div></div>
 
-            <div class="category-card" style="background: url('https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&q=85&w=400&h=300&fit=crop') center/cover; position: relative;"><div style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(44, 26, 16, 0.7) 0%, rgba(160, 114, 74, 0.6) 100%); display: flex; flex-direction: column; justify-content: center; align-items: center; border-radius: 16px;"><h3 style="color: var(--color-white);">Mesas & Muebles</h3><p style="color: rgba(255, 255, 255, 0.9); text-align: center;">Piezas versátiles</p><a href="#featured" class="btn btn-outline" style="border-color: var(--color-white); color: var(--color-white); margin-top: 1rem;">Explorar →</a></div></div>
+            <div class="category-card" data-category="TEXTILES" style="background: url('https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?ixlib=rb-4.0.3&q=85&w=400&h=300&fit=crop') center/cover; position: relative; cursor: pointer;"><div style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(44, 26, 16, 0.7) 0%, rgba(160, 114, 74, 0.6) 100%); display: flex; flex-direction: column; justify-content: center; align-items: center; border-radius: 16px;"><h3 style="color: var(--color-white);">Textiles</h3><p style="color: rgba(255, 255, 255, 0.9); text-align: center;">Cojines, cortinas, mantas</p><a href="#products-section" class="btn btn-outline" style="border-color: var(--color-white); color: var(--color-white); margin-top: 1rem;">Explorar →</a></div></div>
 
-            <div class="category-card" style="background: url('https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?w=500&h=500&fit=crop') center/cover; position: relative;"><div style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(44, 26, 16, 0.7) 0%, rgba(160, 114, 74, 0.6) 100%); display: flex; flex-direction: column; justify-content: center; align-items: center; border-radius: 16px;"><h3 style="color: var(--color-white);">Decoración</h3><p style="color: rgba(255, 255, 255, 0.9); text-align: center;">Accesorios únicos</p><a href="#featured" class="btn btn-outline" style="border-color: var(--color-white); color: var(--color-white); margin-top: 1rem;">Explorar →</a></div></div>
+            <div class="category-card" data-category="ILUMINACION" style="background: url('https://images.unsplash.com/photo-1565636206683-aa13cc989a4e?w=500&h=500&fit=crop') center/cover; position: relative; cursor: pointer;"><div style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(44, 26, 16, 0.7) 0%, rgba(160, 114, 74, 0.6) 100%); display: flex; flex-direction: column; justify-content: center; align-items: center; border-radius: 16px;"><h3 style="color: var(--color-white);">Iluminación</h3><p style="color: rgba(255, 255, 255, 0.9); text-align: center;">Lámparas y luces</p><a href="#products-section" class="btn btn-outline" style="border-color: var(--color-white); color: var(--color-white); margin-top: 1rem;">Explorar →</a></div></div>
 
-            <div class="category-card" style="background: url('https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?ixlib=rb-4.0.3&q=85&w=400&h=300&fit=crop') center/cover; position: relative;"><div style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(44, 26, 16, 0.7) 0%, rgba(160, 114, 74, 0.6) 100%); display: flex; flex-direction: column; justify-content: center; align-items: center; border-radius: 16px;"><h3 style="color: var(--color-white);">Textiles & Cojines</h3><p style="color: rgba(255, 255, 255, 0.9); text-align: center;">Confort suave</p><a href="#featured" class="btn btn-outline" style="border-color: var(--color-white); color: var(--color-white); margin-top: 1rem;">Explorar →</a></div></div>
+            <div class="category-card" data-category="ESPEJOS" style="background: url('https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=500&h=500&fit=crop') center/cover; position: relative; cursor: pointer;"><div style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(44, 26, 16, 0.7) 0%, rgba(160, 114, 74, 0.6) 100%); display: flex; flex-direction: column; justify-content: center; align-items: center; border-radius: 16px;"><h3 style="color: var(--color-white);">Espejos</h3><p style="color: rgba(255, 255, 255, 0.9); text-align: center;">Decorativos y funcionales</p><a href="#products-section" class="btn btn-outline" style="border-color: var(--color-white); color: var(--color-white); margin-top: 1rem;">Explorar →</a></div></div>
 
-            <div class="category-card" style="background: url('https://images.unsplash.com/photo-1565636206683-aa13cc989a4e?w=500&h=500&fit=crop') center/cover; position: relative;"><div style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(44, 26, 16, 0.7) 0%, rgba(160, 114, 74, 0.6) 100%); display: flex; flex-direction: column; justify-content: center; align-items: center; border-radius: 16px;"><h3 style="color: var(--color-white);">Iluminación</h3><p style="color: rgba(255, 255, 255, 0.9); text-align: center;">Luces perfectas</p><a href="#featured" class="btn btn-outline" style="border-color: var(--color-white); color: var(--color-white); margin-top: 1rem;">Explorar →</a></div></div>
+            <div class="category-card" data-category="DECO" style="background: url('https://images.unsplash.com/photo-1578500494198-246f612d03b3?w=500&h=500&fit=crop') center/cover; position: relative; cursor: pointer;"><div style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(44, 26, 16, 0.7) 0%, rgba(160, 114, 74, 0.6) 100%); display: flex; flex-direction: column; justify-content: center; align-items: center; border-radius: 16px;"><h3 style="color: var(--color-white);">Decoración</h3><p style="color: rgba(255, 255, 255, 0.9); text-align: center;">Accesorios únicos</p><a href="#products-section" class="btn btn-outline" style="border-color: var(--color-white); color: var(--color-white); margin-top: 1rem;">Explorar →</a></div></div>
 
-            <div class="category-card" style="background: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=500&h=500&fit=crop') center/cover; position: relative;"><div style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(44, 26, 16, 0.7) 0%, rgba(160, 114, 74, 0.6) 100%); display: flex; flex-direction: column; justify-content: center; align-items: center; border-radius: 16px;"><h3 style="color: var(--color-white);">Navidad & Estaciones</h3><p style="color: rgba(255, 255, 255, 0.9); text-align: center;">Ediciones especiales</p><a href="#featured" class="btn btn-outline" style="border-color: var(--color-white); color: var(--color-white); margin-top: 1rem;">Explorar →</a></div></div>
+            <div class="category-card" data-category="EXTERIOR" style="background: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=500&h=500&fit=crop') center/cover; position: relative; cursor: pointer;"><div style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(44, 26, 16, 0.7) 0%, rgba(160, 114, 74, 0.6) 100%); display: flex; flex-direction: column; justify-content: center; align-items: center; border-radius: 16px;"><h3 style="color: var(--color-white);">Exterior</h3><p style="color: rgba(255, 255, 255, 0.9); text-align: center;">Muebles y deco al aire libre</p><a href="#products-section" class="btn btn-outline" style="border-color: var(--color-white); color: var(--color-white); margin-top: 1rem;">Explorar →</a></div></div>
         </div>
     </section>
 
     <div class="divider"></div>
 
-    <!-- FEATURED PRODUCTS -->
-    <section class="featured" id="featured">
-        <h2>Sillones que invitan a quedarse</h2>
-        <div class="featured-grid">
-            <div class="product-card">
-                <div class="product-image" style="background: url('https://images.unsplash.com/photo-1592078615290-033ee584e267?w=400&h=400&fit=crop') center/cover;">
-                    <div class="product-badge">Destacado</div>
-                </div>
-                <div class="product-info">
-                    <h3>Sillón Chester Premium</h3>
-                    <p class="product-desc">Clásico y elegante, con detalles dorados y almohadones incluidos.</p>
-                    <a href="https://wa.me/5491126917777?text=Hola!%20Me%20interesa%20el%20Sillón%20Chester%20Premium" target="_blank" class="btn btn-primary">Consultar precio →</a>
-                </div>
+    <!-- FEATURED PRODUCTS / PRODUCT GRID -->
+    <section class="featured" id="products-section">
+        <div style="max-width: 1400px; margin: 0 auto;">
+            <h2 style="margin-bottom: 2rem;">Nuestros Productos</h2>
+
+            <!-- FILTER BUTTONS -->
+            <div style="display: flex; gap: 1rem; margin-bottom: 3rem; flex-wrap: wrap; justify-content: center;">
+                <button class="filter-btn active" data-filter="ALL" style="background-color: var(--color-dark); color: var(--color-white); padding: 10px 20px; border: none; border-radius: 999px; cursor: pointer; font-weight: 500; transition: var(--transition);">Ver Todo</button>
+                <button class="filter-btn" data-filter="MUEBLES" style="background-color: transparent; color: var(--color-white); padding: 10px 20px; border: 2px solid var(--color-gold); border-radius: 999px; cursor: pointer; font-weight: 500; transition: var(--transition);">Muebles</button>
+                <button class="filter-btn" data-filter="TEXTILES" style="background-color: transparent; color: var(--color-white); padding: 10px 20px; border: 2px solid var(--color-gold); border-radius: 999px; cursor: pointer; font-weight: 500; transition: var(--transition);">Textiles</button>
+                <button class="filter-btn" data-filter="ILUMINACION" style="background-color: transparent; color: var(--color-white); padding: 10px 20px; border: 2px solid var(--color-gold); border-radius: 999px; cursor: pointer; font-weight: 500; transition: var(--transition);">Iluminación</button>
+                <button class="filter-btn" data-filter="ESPEJOS" style="background-color: transparent; color: var(--color-white); padding: 10px 20px; border: 2px solid var(--color-gold); border-radius: 999px; cursor: pointer; font-weight: 500; transition: var(--transition);">Espejos</button>
+                <button class="filter-btn" data-filter="DECO" style="background-color: transparent; color: var(--color-white); padding: 10px 20px; border: 2px solid var(--color-gold); border-radius: 999px; cursor: pointer; font-weight: 500; transition: var(--transition);">Decoración</button>
+                <button class="filter-btn" data-filter="EXTERIOR" style="background-color: transparent; color: var(--color-white); padding: 10px 20px; border: 2px solid var(--color-gold); border-radius: 999px; cursor: pointer; font-weight: 500; transition: var(--transition);">Exterior</button>
             </div>
 
-            <div class="product-card">
-                <div class="product-image" style="background: url('https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&h=400&fit=crop') center/cover;">
-                    <div class="product-badge">Destacado</div>
-                </div>
-                <div class="product-info">
-                    <h3>Sillón Puff XXL</h3>
-                    <p class="product-desc">Versátil y cómodo, ideal para salas modernas y relajación.</p>
-                    <a href="https://wa.me/5491126917777?text=Hola!%20Me%20interesa%20el%20Sillón%20Puff%20XXL" target="_blank" class="btn btn-primary">Consultar precio →</a>
-                </div>
+            <!-- PRODUCTS GRID -->
+            <div class="featured-grid" id="productsGrid">
+                <!-- Products will be rendered here by JavaScript -->
             </div>
 
-            <div class="product-card">
-                <div class="product-image" style="background: url('https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?w=400&h=400&fit=crop') center/cover;">
-                    <div class="product-badge">Destacado</div>
-                </div>
-                <div class="product-info">
-                    <h3>Sillón Orejero Vintage</h3>
-                    <p class="product-desc">Retro con toque moderno, perfecto para leer y disfrutar.</p>
-                    <a href="https://wa.me/5491126917777?text=Hola!%20Me%20interesa%20el%20Sillón%20Orejero%20Vintage" target="_blank" class="btn btn-primary">Consultar precio →</a>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-image" style="background: url('https://images.unsplash.com/photo-1593642632823-8f785ba67e45?w=400&h=400&fit=crop') center/cover;">
-                    <div class="product-badge">Destacado</div>
-                </div>
-                <div class="product-info">
-                    <h3>Sillón Cama</h3>
-                    <p class="product-desc">Funcional y cómodo, se transforma según necesites.</p>
-                    <a href="https://wa.me/5491126917777?text=Hola!%20Me%20interesa%20el%20Sillón%20Cama" target="_blank" class="btn btn-primary">Consultar precio →</a>
-                </div>
-            </div>
+            <p class="featured-note">Precios en pesos argentinos. Consultar disponibilidad y modalidades de pago.</p>
         </div>
-        <p class="featured-note">Precios en pesos argentinos. Consultar disponibilidad y modalidades de pago.</p>
     </section>
 
     <div class="divider"></div>
@@ -1847,6 +1846,115 @@
     </a>
 
     <script>
+        // ========== PRODUCTS DATA ==========
+        const products = [
+            { id: 1, name: "Sillón Chester Premium", category: "MUEBLES", image: "https://images.unsplash.com/photo-1592078615290-033ee584e267?w=400&h=400&fit=crop", desc: "Clásico y elegante, con detalles dorados", badge: "Destacado" },
+            { id: 2, name: "Mesa Ratona Madera Maciza", category: "MUEBLES", image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&h=400&fit=crop", desc: "Diseño minimalista, perfecta para cualquier espacio", badge: "" },
+            { id: 3, name: "Estantería Flotante", category: "MUEBLES", image: "https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?w=400&h=400&fit=crop", desc: "Moderna y funcional para organizar", badge: "" },
+            { id: 4, name: "Sofá Modular", category: "MUEBLES", image: "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?w=400&h=400&fit=crop", desc: "Versátil para salas grandes", badge: "" },
+            { id: 5, name: "Cama Tapizada Premium", category: "MUEBLES", image: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400&h=400&fit=crop", desc: "Comodidad y diseño en tu dormitorio", badge: "" },
+            { id: 6, name: "Cojines de Lino Estampado", category: "TEXTILES", image: "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=400&h=400&fit=crop", desc: "Suaves y duraderos, varios colores", badge: "" },
+            { id: 7, name: "Cortinas Blackout Premium", category: "TEXTILES", image: "https://images.unsplash.com/photo-1578500494198-246f612d03b3?w=400&h=400&fit=crop", desc: "Oscuridad total y elegancia", badge: "" },
+            { id: 8, name: "Alfombra Persa Artesanal", category: "TEXTILES", image: "https://images.unsplash.com/photo-1611008496550-e610e43e0989?w=400&h=400&fit=crop", desc: "Calidad excepcional, colores naturales", badge: "Nuevo" },
+            { id: 9, name: "Mantas de Algodón Orgánico", category: "TEXTILES", image: "https://images.unsplash.com/photo-1584622181563-430f63602d4b?w=400&h=400&fit=crop", desc: "Confort puro para todas las estaciones", badge: "" },
+            { id: 10, name: "Lámpara Colgante de Diseño", category: "ILUMINACION", image: "https://images.unsplash.com/photo-1565636206683-aa13cc989a4e?w=400&h=400&fit=crop", desc: "Crea ambiente con luz cálida", badge: "" },
+            { id: 11, name: "Aplique de Pared Vintage", category: "ILUMINACION", image: "https://images.unsplash.com/photo-1578759688575-493a5feab70e?w=400&h=400&fit=crop", desc: "Toque retro en cualquier espacio", badge: "" },
+            { id: 12, name: "Lámpara de Pie Arc", category: "ILUMINACION", image: "https://images.unsplash.com/photo-1533090161392-a8255ba84a81?w=400&h=400&fit=crop", desc: "Moderna y ajustable", badge: "" },
+            { id: 13, name: "Luces LED Decorativas", category: "ILUMINACION", image: "https://images.unsplash.com/photo-1549887534-f48c0a73ef78?w=400&h=400&fit=crop", desc: "Ambiente mágico y ecológico", badge: "Oferta" },
+            { id: 14, name: "Espejo Decorativo Marco Dorado", category: "ESPEJOS", image: "https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=400&h=400&fit=crop", desc: "Elegancia y luminosidad", badge: "" },
+            { id: 15, name: "Espejo Pared Hexagonal", category: "ESPEJOS", image: "https://images.unsplash.com/photo-1594877369985-87f06f97a68a?w=400&h=400&fit=crop", desc: "Geométrico y moderno", badge: "" },
+            { id: 16, name: "Espejo de Cuerpo Entero", category: "ESPEJOS", image: "https://images.unsplash.com/photo-1612032782955-06c91ca4dc45?w=400&h=400&fit=crop", desc: "Grande y funcional para cualquier habitación", badge: "" },
+            { id: 17, name: "Espejo Circular Vintage", category: "ESPEJOS", image: "https://images.unsplash.com/photo-1540924773854-3774a0feeb96?w=400&h=400&fit=crop", desc: "Clásico con toque contemporáneo", badge: "" },
+            { id: 18, name: "Plantas Decorativas en Maceta", category: "DECO", image: "https://images.unsplash.com/photo-1578500494198-246f612d03b3?w=400&h=400&fit=crop", desc: "Verde vivo que trae vida a cualquier rincón", badge: "Nuevo" },
+            { id: 19, name: "Cuadros Artísticos Set", category: "DECO", image: "https://images.unsplash.com/photo-1579783902614-e3fb5141b0cb?w=400&h=400&fit=crop", desc: "Colecciones para inspirar", badge: "" },
+            { id: 20, name: "Velas Aromáticas Lux", category: "DECO", image: "https://images.unsplash.com/photo-1584622181563-430f63602d4b?w=400&h=400&fit=crop", desc: "Fragancias premium que relajan", badge: "" },
+            { id: 21, name: "Jarrones de Cerámica", category: "DECO", image: "https://images.unsplash.com/photo-1570129477492-45524c556af5?w=400&h=400&fit=crop", desc: "Piezas únicas artesanales", badge: "" },
+            { id: 22, name: "Bandeja Decorativa Madera", category: "DECO", image: "https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?w=400&h=400&fit=crop", desc: "Funcional y hermosa", badge: "" },
+            { id: 23, name: "Silla Exterior Teak", category: "EXTERIOR", image: "https://images.unsplash.com/photo-1590736969955-71cc94901144?w=400&h=400&fit=crop", desc: "Resistente a la intemperie, estilo", badge: "" },
+            { id: 24, name: "Sombrilla de Jardín", category: "EXTERIOR", image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400&h=400&fit=crop", desc: "Protección solar con diseño", badge: "" },
+            { id: 25, name: "Mesa Exterior Aluminio", category: "EXTERIOR", image: "https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?w=400&h=400&fit=crop", desc: "Ligera y duradera", badge: "" },
+            { id: 26, name: "Banco Exterior de Piedra", category: "EXTERIOR", image: "https://images.unsplash.com/photo-1598928506080-411b26c17588?w=400&h=400&fit=crop", desc: "Permanente, rústico", badge: "" }
+        ];
+
+        function renderProducts(filter = 'ALL') {
+            const grid = document.getElementById('productsGrid');
+            grid.textContent = '';
+            const filtered = filter === 'ALL' ? products : products.filter(p => p.category === filter);
+
+            filtered.forEach((product, index) => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.style.animationDelay = (index * 0.05) + 's';
+
+                const imageDiv = document.createElement('div');
+                imageDiv.className = 'product-image';
+                imageDiv.style.background = `url('${product.image}') center/cover`;
+
+                if (product.badge) {
+                    const badge = document.createElement('div');
+                    badge.className = 'product-badge';
+                    badge.textContent = product.badge;
+                    imageDiv.appendChild(badge);
+                }
+
+                const infoDiv = document.createElement('div');
+                infoDiv.className = 'product-info';
+
+                const title = document.createElement('h3');
+                title.textContent = product.name;
+
+                const desc = document.createElement('p');
+                desc.className = 'product-desc';
+                desc.textContent = product.desc;
+
+                const link = document.createElement('a');
+                link.href = `https://wa.me/5491126917777?text=Hola!%20Me%20interesa%20el%20${encodeURIComponent(product.name)}`;
+                link.target = '_blank';
+                link.className = 'btn btn-primary';
+                link.textContent = 'Consultar precio →';
+
+                infoDiv.appendChild(title);
+                infoDiv.appendChild(desc);
+                infoDiv.appendChild(link);
+
+                card.appendChild(imageDiv);
+                card.appendChild(infoDiv);
+                grid.appendChild(card);
+            });
+        }
+
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                document.querySelectorAll('.filter-btn').forEach(b => {
+                    if (b.classList.contains('active')) {
+                        b.style.backgroundColor = 'var(--color-dark)';
+                        b.style.color = 'var(--color-white)';
+                        b.style.borderColor = 'var(--color-dark)';
+                    } else {
+                        b.style.backgroundColor = 'transparent';
+                        b.style.color = 'var(--color-white)';
+                        b.style.borderColor = 'var(--color-gold)';
+                    }
+                });
+                renderProducts(btn.getAttribute('data-filter'));
+            });
+        });
+
+        document.querySelectorAll('.category-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const category = card.getAttribute('data-category');
+                const filterBtn = document.querySelector(`[data-filter="${category}"]`);
+                if (filterBtn) {
+                    filterBtn.click();
+                    document.getElementById('products-section').scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        renderProducts('ALL');
+
         // ========== NAVBAR SCROLL EFFECT ==========
         const navbar = document.getElementById('navbar');
         window.addEventListener('scroll', () => {
