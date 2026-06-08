@@ -1412,12 +1412,8 @@
                 </div>
             </div>
             <div class="hero-right">
-                <div class="hero-image">
-                    <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="50" y="40" width="100" height="120" rx="8" stroke="currentColor" stroke-width="2"/>
-                        <circle cx="100" cy="80" r="15" stroke="currentColor" stroke-width="2" fill="none"/>
-                        <rect x="70" y="100" width="60" height="40" rx="4" stroke="currentColor" stroke-width="2" fill="none"/>
-                    </svg>
+                <div class="hero-image" style="background: url('https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=500&h=500&fit=crop') center/cover no-repeat; position: relative;">
+                    <div style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(201, 168, 124, 0.2) 0%, rgba(160, 114, 74, 0.15) 100%);"></div>
                 </div>
             </div>
         </div>
@@ -1433,7 +1429,14 @@
     <!-- ABOUT SECTION -->
     <section class="about section" id="nosotros">
         <div class="about-content">
-            <div class="about-image"></div>
+            <div class="about-image" style="background: url('https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=500&h=500&fit=crop') center/cover no-repeat; position: relative; background-color: var(--color-gold);">
+                <div style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(201, 168, 124, 0.6) 0%, rgba(160, 114, 74, 0.5) 100%); display: flex; align-items: center; justify-content: center;">
+                    <div style="text-align: center;">
+                        <div style="font-family: var(--font-display); font-size: 2rem; font-style: italic; color: var(--color-white); margin-bottom: 0.5rem;">Flor & Esteban</div>
+                        <div style="font-size: 0.9rem; color: rgba(255, 255, 255, 0.9);">Diseñadores de espacios que enamoran</div>
+                    </div>
+                </div>
+            </div>
             <div class="about-text">
                 <h2>Nuestra historia</h2>
                 <p>Somos Flor y Esteban, dos apasionados por el diseño y la decoración. Hace años decidimos compartir nuestra pasión transformando espacios en hogares acogedores y hermosos. Cada proyecto es único, cada cliente es especial.</p>
@@ -1499,78 +1502,17 @@
             <p class="section-subtitle">Explorá nuestra colección de muebles y decoración</p>
         </div>
         <div class="categories-grid">
-            <div class="category-card">
-                <div class="category-icon">
-                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M30 70L30 30C30 25 35 20 40 20H60C65 20 70 25 70 30V70M25 70H75C76 70 77 71 77 72V80C77 81 76 82 75 82H25C24 82 23 81 23 80V72C23 71 24 70 25 70Z" stroke-width="2" fill="none" stroke-linecap="round"/>
-                        <circle cx="50" cy="45" r="8" stroke-width="2" fill="none"/>
-                    </svg>
-                </div>
-                <h3>Sillones</h3>
-                <p>Confortables y de diseño, perfectos para relajarte</p>
-                <a href="#featured" class="btn btn-outline">Explorar →</a>
-            </div>
+            <div class="category-card" style="background: url('https://images.unsplash.com/photo-1592078615290-033ee584e267?w=400&h=300&fit=crop') center/cover; position: relative;"><div style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(44, 26, 16, 0.7) 0%, rgba(160, 114, 74, 0.6) 100%); display: flex; flex-direction: column; justify-content: center; align-items: center; border-radius: 16px;"><h3 style="color: var(--color-white);">Sillones</h3><p style="color: rgba(255, 255, 255, 0.9); text-align: center;">Confortables y de diseño</p><a href="#featured" class="btn btn-outline" style="border-color: var(--color-white); color: var(--color-white); margin-top: 1rem;">Explorar →</a></div></div>
 
-            <div class="category-card">
-                <div class="category-icon">
-                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="20" y="40" width="60" height="35" rx="3" stroke-width="2" fill="none"/>
-                        <line x1="50" y1="25" x2="50" y2="40" stroke-width="2"/>
-                        <line x1="30" y1="25" x2="70" y2="25" stroke-width="2"/>
-                    </svg>
-                </div>
-                <h3>Mesas & Muebles</h3>
-                <p>Piezas versátiles para cada ambiente</p>
-                <a href="#featured" class="btn btn-outline">Explorar →</a>
-            </div>
+            <div class="category-card" style="background: url('https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&h=300&fit=crop') center/cover; position: relative;"><div style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(44, 26, 16, 0.7) 0%, rgba(160, 114, 74, 0.6) 100%); display: flex; flex-direction: column; justify-content: center; align-items: center; border-radius: 16px;"><h3 style="color: var(--color-white);">Mesas & Muebles</h3><p style="color: rgba(255, 255, 255, 0.9); text-align: center;">Piezas versátiles</p><a href="#featured" class="btn btn-outline" style="border-color: var(--color-white); color: var(--color-white); margin-top: 1rem;">Explorar →</a></div></div>
 
-            <div class="category-card">
-                <div class="category-icon">
-                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="50" cy="40" r="15" stroke-width="2" fill="none"/>
-                        <path d="M35 60C35 50 40 45 50 45C60 45 65 50 65 60L65 75H35Z" stroke-width="2" fill="none" stroke-linecap="round"/>
-                    </svg>
-                </div>
-                <h3>Decoración</h3>
-                <p>Accesorios que dan vida a tus espacios</p>
-                <a href="#featured" class="btn btn-outline">Explorar →</a>
-            </div>
+            <div class="category-card" style="background: url('https://images.unsplash.com/photo-1578500494198-246f612d03b3?w=400&h=300&fit=crop') center/cover; position: relative;"><div style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(44, 26, 16, 0.7) 0%, rgba(160, 114, 74, 0.6) 100%); display: flex; flex-direction: column; justify-content: center; align-items: center; border-radius: 16px;"><h3 style="color: var(--color-white);">Decoración</h3><p style="color: rgba(255, 255, 255, 0.9); text-align: center;">Accesorios únicos</p><a href="#featured" class="btn btn-outline" style="border-color: var(--color-white); color: var(--color-white); margin-top: 1rem;">Explorar →</a></div></div>
 
-            <div class="category-card">
-                <div class="category-icon">
-                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="25" y="30" width="50" height="50" rx="4" stroke-width="2" fill="none"/>
-                        <path d="M35 45L45 55L65 35" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </div>
-                <h3>Textiles & Cojines</h3>
-                <p>Telas y texturas que abrazan tu hogar</p>
-                <a href="#featured" class="btn btn-outline">Explorar →</a>
-            </div>
+            <div class="category-card" style="background: url('https://images.unsplash.com/photo-1584622614875-2f938757a537?w=400&h=300&fit=crop') center/cover; position: relative;"><div style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(44, 26, 16, 0.7) 0%, rgba(160, 114, 74, 0.6) 100%); display: flex; flex-direction: column; justify-content: center; align-items: center; border-radius: 16px;"><h3 style="color: var(--color-white);">Textiles & Cojines</h3><p style="color: rgba(255, 255, 255, 0.9); text-align: center;">Confort suave</p><a href="#featured" class="btn btn-outline" style="border-color: var(--color-white); color: var(--color-white); margin-top: 1rem;">Explorar →</a></div></div>
 
-            <div class="category-card">
-                <div class="category-icon">
-                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="50" cy="35" r="12" stroke-width="2" fill="none"/>
-                        <path d="M50 47V70M35 55L50 70L65 55" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </div>
-                <h3>Iluminación</h3>
-                <p>Luces que crean el ambiente perfecto</p>
-                <a href="#featured" class="btn btn-outline">Explorar →</a>
-            </div>
+            <div class="category-card" style="background: url('https://images.unsplash.com/photo-1565636192335-14c46fa1120d?w=400&h=300&fit=crop') center/cover; position: relative;"><div style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(44, 26, 16, 0.7) 0%, rgba(160, 114, 74, 0.6) 100%); display: flex; flex-direction: column; justify-content: center; align-items: center; border-radius: 16px;"><h3 style="color: var(--color-white);">Iluminación</h3><p style="color: rgba(255, 255, 255, 0.9); text-align: center;">Luces perfectas</p><a href="#featured" class="btn btn-outline" style="border-color: var(--color-white); color: var(--color-white); margin-top: 1rem;">Explorar →</a></div></div>
 
-            <div class="category-card">
-                <div class="category-icon">
-                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="50" cy="30" r="10" stroke-width="2" fill="none"/>
-                        <path d="M30 50C30 45 40 40 50 40C60 40 70 45 70 50L70 75C70 78 68 80 65 80H35C32 80 30 78 30 75Z" stroke-width="2" fill="none" stroke-linecap="round"/>
-                    </svg>
-                </div>
-                <h3>Navidad & Estaciones</h3>
-                <p>Colecciones temáticas y especiales</p>
-                <a href="#featured" class="btn btn-outline">Explorar →</a>
-            </div>
+            <div class="category-card" style="background: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400&h=300&fit=crop') center/cover; position: relative;"><div style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(44, 26, 16, 0.7) 0%, rgba(160, 114, 74, 0.6) 100%); display: flex; flex-direction: column; justify-content: center; align-items: center; border-radius: 16px;"><h3 style="color: var(--color-white);">Navidad & Estaciones</h3><p style="color: rgba(255, 255, 255, 0.9); text-align: center;">Ediciones especiales</p><a href="#featured" class="btn btn-outline" style="border-color: var(--color-white); color: var(--color-white); margin-top: 1rem;">Explorar →</a></div></div>
         </div>
     </section>
 
@@ -1581,12 +1523,8 @@
         <h2>Sillones que invitan a quedarse</h2>
         <div class="featured-grid">
             <div class="product-card">
-                <div class="product-image">
+                <div class="product-image" style="background: url('https://images.unsplash.com/photo-1592078615290-033ee584e267?w=400&h=400&fit=crop') center/cover;">
                     <div class="product-badge">Destacado</div>
-                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M30 70L30 30C30 25 35 20 40 20H60C65 20 70 25 70 30V70M25 70H75C76 70 77 71 77 72V80C77 81 76 82 75 82H25C24 82 23 81 23 80V72C23 71 24 70 25 70Z" stroke-width="2"/>
-                        <circle cx="50" cy="45" r="8" stroke-width="2" fill="none"/>
-                    </svg>
                 </div>
                 <div class="product-info">
                     <h3>Sillón Chester Premium</h3>
@@ -1596,12 +1534,8 @@
             </div>
 
             <div class="product-card">
-                <div class="product-image">
+                <div class="product-image" style="background: url('https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&h=400&fit=crop') center/cover;">
                     <div class="product-badge">Destacado</div>
-                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="25" y="35" width="50" height="45" rx="5" stroke-width="2" fill="none"/>
-                        <circle cx="50" cy="50" r="6" stroke-width="2" fill="none"/>
-                    </svg>
                 </div>
                 <div class="product-info">
                     <h3>Sillón Puff XXL</h3>
@@ -1611,13 +1545,8 @@
             </div>
 
             <div class="product-card">
-                <div class="product-image">
+                <div class="product-image" style="background: url('https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?w=400&h=400&fit=crop') center/cover;">
                     <div class="product-badge">Destacado</div>
-                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M25 70L25 40C25 35 28 30 32 30H68C72 30 75 35 75 40V70M20 70H80C81 70 82 71 82 72V78C82 79 81 80 80 80H20C19 80 18 79 18 78V72C18 71 19 70 20 70Z" stroke-width="2" fill="none"/>
-                        <line x1="40" y1="45" x2="60" y2="45" stroke-width="1.5"/>
-                        <line x1="35" y1="55" x2="65" y2="55" stroke-width="1.5"/>
-                    </svg>
                 </div>
                 <div class="product-info">
                     <h3>Sillón Orejero Vintage</h3>
@@ -1627,13 +1556,8 @@
             </div>
 
             <div class="product-card">
-                <div class="product-image">
+                <div class="product-image" style="background: url('https://images.unsplash.com/photo-1593642632823-8f785ba67e45?w=400&h=400&fit=crop') center/cover;">
                     <div class="product-badge">Destacado</div>
-                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="20" y="25" width="60" height="50" rx="4" stroke-width="2" fill="none"/>
-                        <line x1="35" y1="25" x2="35" y2="75" stroke-width="1.5"/>
-                        <line x1="65" y1="25" x2="65" y2="75" stroke-width="1.5"/>
-                    </svg>
                 </div>
                 <div class="product-info">
                     <h3>Sillón Cama</h3>
