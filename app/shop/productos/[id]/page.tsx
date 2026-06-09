@@ -16,9 +16,10 @@ async function getProducto(id: string) {
 export default async function ProductDetailPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const producto = (await getProducto(params.id)) as Producto | null;
+  const { id } = await params;
+  const producto = (await getProducto(id)) as Producto | null;
 
   if (!producto) {
     return <div className="text-center py-12">Producto no encontrado</div>;
