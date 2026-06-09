@@ -1,0 +1,103 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Tema claro neutro */
+    --background: 40 30% 97%;
+    --foreground: 28 16% 16%;
+    --border: 32 18% 86%;
+    --accent: 28 28% 38%;
+    --accent-foreground: 40 30% 97%;
+    --radius: 0.5rem;
+    --cream: 35 26% 42%;
+    --muted: 28 10% 40%;
+  }
+  .light {
+    --background: 40 20% 98%;
+    --foreground: 24 10% 10%;
+    --border: 28 20% 88%;
+    --accent: 28 45% 35%;
+    --accent-foreground: 40 20% 98%;
+    --cream: 40 20% 30%;
+    --muted: 24 10% 40%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+}
+
+body {
+  font-feature-settings: "rlig" 1, "calt" 1;
+}
+
+/* Ocultar barra de scroll manteniendo scroll funcional */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* ─── Animaciones ─────────────────────────────────────────────────────────── */
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes scrollBounce {
+  0%, 100% { transform: translateX(-50%) translateY(0);  opacity: 0.6; }
+  50%       { transform: translateX(-50%) translateY(7px); opacity: 0.3; }
+}
+
+/* Hero: animaciones de entrada (above-the-fold, delay escalonado) */
+.hero-eyebrow { animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.10s both; }
+.hero-title   { animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.25s both; }
+.hero-body    { animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.42s both; }
+.hero-cta     { animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.58s both; }
+.hero-scroll  { animation: fadeIn 1s ease 1.3s both, scrollBounce 2.2s ease-in-out 2s infinite; }
+
+/* Scroll-driven reveal (Chrome 115+, Safari 18+, Firefox 128+) */
+@supports (animation-timeline: scroll()) {
+  .reveal {
+    opacity: 0;
+    animation: fadeUp 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 38%;
+  }
+  .reveal-fast {
+    opacity: 0;
+    animation: fadeIn 0.55s ease both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 28%;
+  }
+}
+
+/* Grain texture */
+.grain {
+  isolation: isolate;
+}
+.grain::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.04;
+  pointer-events: none;
+  z-index: 1;
+  mix-blend-mode: overlay;
+}
