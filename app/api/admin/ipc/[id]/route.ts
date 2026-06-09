@@ -1,14 +1,15 @@
-import { NextResponse } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
 import { getAdminFirestore } from "@/lib/firebase/admin";
 import { FieldValue } from "firebase-admin/firestore";
 
 export async function DELETE(
-  request: Request,
-  { params }: { params: { id: string } }
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const db = getAdminFirestore();
-    await db.collection("ipc_records").doc(params.id).delete();
+    await db.collection("ipc_records").doc(id).delete();
     return NextResponse.json({ ok: true });
   } catch (e) {
     return NextResponse.json({ error: "Error deleting IPC record" }, { status: 500 });
@@ -16,14 +17,15 @@ export async function DELETE(
 }
 
 export async function PATCH(
-  request: Request,
-  { params }: { params: { id: string } }
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const body = await request.json();
     const db = getAdminFirestore();
 
-    await db.collection("ipc_records").doc(params.id).update({
+    await db.collection("ipc_records").doc(id).update({
       ...body,
       updated_at: FieldValue.serverTimestamp()
     });
