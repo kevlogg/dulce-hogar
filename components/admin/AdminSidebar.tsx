@@ -15,9 +15,9 @@ import { SITE_NAME } from "@/lib/site-config";
 
 const links = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
-  // Agregar secciones del cliente aquí:
-  { href: "/admin/seccion-1", label: "Sección 1", icon: Folder },
-  { href: "/admin/seccion-2", label: "Sección 2", icon: Star },
+  { href: "/admin/productos", label: "Productos", icon: Folder },
+  { href: "/admin/categorias", label: "Categorías", icon: Star },
+  { href: "/admin/ordenes", label: "Órdenes", icon: CreditCard },
   { href: "/admin/plan", label: "Mi Plan", icon: CreditCard },
   { href: "/admin/academia", label: "Academia", icon: BookOpen },
 ];
