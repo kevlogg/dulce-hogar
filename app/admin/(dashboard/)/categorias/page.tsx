@@ -17,7 +17,7 @@ export default function CategoriasAdminPage() {
 
   return (
     <div>
-      <SectionHeader title="Categorías" description="Gestiona categorías de productos" />
+      <SectionHeader title="Categorías" subtitle="Gestiona categorías de productos" />
       <div className="mt-6 space-y-4">
         {categorias.length === 0 ? (
           <p className="text-gray-500">No hay categorías.</p>

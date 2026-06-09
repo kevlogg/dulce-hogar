@@ -17,7 +17,7 @@ export default function OrdenesAdminPage() {
 
   return (
     <div>
-      <SectionHeader title="Órdenes" description="Gestiona órdenes de clientes" />
+      <SectionHeader title="Órdenes" subtitle="Gestiona órdenes de clientes" />
       <div className="mt-6 overflow-x-auto">
         <table className="w-full text-sm">
           <thead className="bg-gray-100">

@@ -17,7 +17,7 @@ export default function ProductosAdminPage() {
 
   return (
     <div>
-      <SectionHeader title="Productos" description="Gestiona tus productos" />
+      <SectionHeader title="Productos" subtitle="Gestiona tus productos" />
       <div className="mt-6 space-y-4">
         {productos.length === 0 ? (
           <p className="text-gray-500">No hay productos. Crea uno para empezar.</p>
