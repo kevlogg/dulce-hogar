@@ -43,7 +43,11 @@ function getAdminApp(): any {
   }
   if (json) {
     try {
-      const credentials = JSON.parse(json) as Record<string, unknown>;
+      let jsonString = json;
+      if (!jsonString.startsWith("{")) {
+        jsonString = Buffer.from(jsonString, "base64").toString("utf-8");
+      }
+      const credentials = JSON.parse(jsonString) as Record<string, unknown>;
       const projectId = credentials.project_id as string | undefined;
       const storageBucket =
         process.env.FIREBASE_STORAGE_BUCKET ||
