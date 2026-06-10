@@ -1,5 +1,4 @@
-import { getFirebaseFirestore } from "@/lib/firebase/client";
-import { collection, addDoc } from "firebase/firestore";
+import { getAdminFirestore } from "@/lib/firebase/admin";
 
 export async function POST(req: Request) {
   try {
@@ -10,8 +9,8 @@ export async function POST(req: Request) {
       return Response.json({ error: "Missing fields" }, { status: 400 });
     }
 
-    const db = getFirebaseFirestore();
-    const docRef = await addDoc(collection(db, "ordenes"), {
+    const db = getAdminFirestore();
+    const docRef = await db.collection("ordenes").add({
       items,
       clienteInfo,
       direccionEnvio,

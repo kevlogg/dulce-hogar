@@ -1,5 +1,4 @@
-import { getFirebaseFirestore } from "@/lib/firebase/client";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { getAdminFirestore } from "@/lib/firebase/admin";
 import { type NextRequest } from "next/server";
 
 export async function GET(
@@ -8,11 +7,10 @@ export async function GET(
 ) {
   try {
     const { id } = await params;
-    const db = getFirebaseFirestore();
-    const docRef = doc(db, "ordenes", id);
-    const docSnap = await getDoc(docRef);
+    const db = getAdminFirestore();
+    const docSnap = await db.collection("ordenes").doc(id).get();
 
-    if (!docSnap.exists()) {
+    if (!docSnap.exists) {
       return Response.json({ error: "Order not found" }, { status: 404 });
     }
 
@@ -29,11 +27,10 @@ export async function PUT(
 ) {
   try {
     const { id } = await params;
-    const db = getFirebaseFirestore();
+    const db = getAdminFirestore();
     const body = await req.json();
-    const docRef = doc(db, "ordenes", id);
 
-    await updateDoc(docRef, {
+    await db.collection("ordenes").doc(id).update({
       ...body,
       updatedAt: new Date(),
     });

@@ -1,18 +1,13 @@
-import { getFirebaseFirestore } from "@/lib/firebase/client";
-import {
-  collection,
-  getDocs,
-  query,
-  orderBy,
-  addDoc,
-} from "firebase/firestore";
+import { getAdminFirestore } from "@/lib/firebase/admin";
 import { Categoria } from "@/lib/types";
 
 export async function GET() {
   try {
-    const db = getFirebaseFirestore();
-    const q = query(collection(db, "categorias"), orderBy("orden", "asc"));
-    const snapshot = await getDocs(q);
+    const db = getAdminFirestore();
+    const snapshot = await db
+      .collection("categorias")
+      .orderBy("orden", "asc")
+      .get();
     const categorias = snapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
@@ -30,7 +25,7 @@ export async function GET() {
 
 export async function POST(req: Request) {
   try {
-    const db = getFirebaseFirestore();
+    const db = getAdminFirestore();
     const body = await req.json();
     const { nombre, descripcion, imagen, orden } = body;
 
@@ -41,7 +36,7 @@ export async function POST(req: Request) {
       );
     }
 
-    const docRef = await addDoc(collection(db, "categorias"), {
+    const docRef = await db.collection("categorias").add({
       nombre,
       descripcion: descripcion || "",
       imagen: imagen || "",

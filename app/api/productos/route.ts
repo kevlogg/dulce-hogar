@@ -1,12 +1,13 @@
-import { getFirebaseFirestore } from "@/lib/firebase/client";
-import { collection, getDocs, query, orderBy, addDoc } from "firebase/firestore";
+import { getAdminFirestore } from "@/lib/firebase/admin";
 import { Producto } from "@/lib/types";
 
 export async function GET() {
   try {
-    const db = getFirebaseFirestore();
-    const q = query(collection(db, "productos"), orderBy("createdAt", "desc"));
-    const snapshot = await getDocs(q);
+    const db = getAdminFirestore();
+    const snapshot = await db
+      .collection("productos")
+      .orderBy("createdAt", "desc")
+      .get();
     const productos = snapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
@@ -24,7 +25,7 @@ export async function GET() {
 
 export async function POST(req: Request) {
   try {
-    const db = getFirebaseFirestore();
+    const db = getAdminFirestore();
     const body = await req.json();
     const {
       nombre,
@@ -44,7 +45,7 @@ export async function POST(req: Request) {
       );
     }
 
-    const docRef = await addDoc(collection(db, "productos"), {
+    const docRef = await db.collection("productos").add({
       nombre,
       descripcion,
       precio,

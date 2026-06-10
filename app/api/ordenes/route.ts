@@ -1,11 +1,12 @@
-import { getFirebaseFirestore } from "@/lib/firebase/client";
-import { collection, getDocs, query, orderBy } from "firebase/firestore";
+import { getAdminFirestore } from "@/lib/firebase/admin";
 
 export async function GET() {
   try {
-    const db = getFirebaseFirestore();
-    const q = query(collection(db, "ordenes"), orderBy("createdAt", "desc"));
-    const snapshot = await getDocs(q);
+    const db = getAdminFirestore();
+    const snapshot = await db
+      .collection("ordenes")
+      .orderBy("createdAt", "desc")
+      .get();
     const ordenes = snapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
