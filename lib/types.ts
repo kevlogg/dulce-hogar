@@ -14,6 +14,7 @@ export interface OpcionItem {
   id: string;
   nombre: string;
   precioAdicional: number;
+  imagenIdx?: number;
 }
 
 export interface OpcionProducto {
@@ -29,7 +30,9 @@ export interface Producto {
   descripcion: string;
   precio: number;
   imagenes: string[];
+  categoria: string;
   categoriaId: string;
+  precioEfectivo?: number;
   stock: number;
   opciones: OpcionProducto[];
   especificaciones: Record<string, string>;

@@ -6,6 +6,7 @@ const CartContext = createContext<{
   items: CartItem[];
   add: (item: CartItem) => void;
   remove: (id: string) => void;
+  updateCantidad: (id: string, cantidad: number) => void;
   clear: () => void;
 }>(null!);
 
@@ -39,6 +40,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
           });
         },
         remove: (id) => setItems((p) => p.filter((x) => x.productoId !== id)),
+        updateCantidad: (id, cantidad) =>
+          setItems((p) =>
+            cantidad <= 0
+              ? p.filter((x) => x.productoId !== id)
+              : p.map((x) => (x.productoId === id ? { ...x, cantidad } : x))
+          ),
         clear: () => setItems([]),
       }}
     >

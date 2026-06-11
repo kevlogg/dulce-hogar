@@ -3,3 +3,5 @@
 node_modules
 .next
 .env.local
+.firebase-service-account.json
+*service-account*.json

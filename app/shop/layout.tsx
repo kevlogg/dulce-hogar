@@ -1,6 +1,8 @@
 import { CartProvider } from "@/components/shop/CartProvider";
 import { PromoBanner } from "@/components/shop/PromoBanner";
+import { CartNavIcon } from "@/components/shop/CartNavIcon";
 import Link from "next/link";
+import Image from "next/image";
 
 export const metadata = {
   title: "Dulce Hogar | Tienda",
@@ -15,24 +17,76 @@ export default function ShopLayout({
   return (
     <CartProvider>
       <div className="min-h-screen bg-[#F7F3EE] flex flex-col">
-        <header className="bg-white border-b">
-          <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-            <Link href="/shop" className="text-2xl font-bold text-[#2C1A10]">
-              Dulce Hogar
+        <header className="bg-white border-b sticky top-0 z-50">
+          <div className="max-w-6xl mx-auto px-4 py-2 flex items-center justify-between gap-6">
+            {/* Logo */}
+            <Link href="/shop" className="flex items-center gap-2 shrink-0">
+              {/* Franja izquierda */}
+              <div className="flex flex-col gap-1.5">
+                <div className="w-8 h-2.5 rounded-sm bg-[#74AADB]" />
+                <div className="w-8 h-2.5 rounded-sm bg-[#74AADB]" />
+              </div>
+
+              {/* Logo + estrellas */}
+              <div className="flex flex-col items-center">
+                <Image
+                  src="/logo.png"
+                  alt="Dulce Hogar"
+                  width={360}
+                  height={128}
+                  className="h-24 w-auto object-contain"
+                  priority
+                />
+                <div className="flex items-start gap-1 mt-0.5">
+                  <span className="text-[#F0C040] text-[10px] leading-none">★</span>
+                  <span className="text-[#F0C040] text-[10px] leading-none translate-y-1">★</span>
+                  <span className="text-[#F0C040] text-[10px] leading-none">★</span>
+                </div>
+              </div>
+
+              {/* Franja derecha */}
+              <div className="flex flex-col gap-1.5">
+                <div className="w-8 h-2.5 rounded-sm bg-[#74AADB]" />
+                <div className="w-8 h-2.5 rounded-sm bg-[#74AADB]" />
+              </div>
             </Link>
-            <Link href="/shop/carrito" className="text-[#C9A87C]">Carrito</Link>
+
+            {/* Nav links */}
+            <nav className="hidden md:flex items-center gap-6">
+              {[
+                { label: "Inicio", href: "/shop#inicio" },
+                { label: "Nosotros", href: "/shop#nosotros" },
+                { label: "Categorías", href: "/shop#categorias" },
+                { label: "Productos", href: "/shop/productos" },
+                { label: "Envíos", href: "/shop#envios" },
+                { label: "Contacto", href: "/shop#contacto" },
+              ].map((item) => (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  className="text-sm font-medium text-[#3D2B1F] hover:text-[#C9A87C] transition-colors"
+                >
+                  {item.label}
+                </a>
+              ))}
+            </nav>
+
+            {/* Carrito */}
+            <CartNavIcon />
           </div>
         </header>
 
-        <PromoBanner />
+        <div className="sticky top-32 z-40">
+          <PromoBanner />
+        </div>
 
-        <main className="flex-1 max-w-6xl mx-auto w-full px-4 py-8">
+        <main className="flex-1 w-full">
           {children}
         </main>
 
         <footer className="bg-[#2C1A10] text-white">
           <div className="max-w-6xl mx-auto px-4 py-12">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
               {/* Contacto */}
               <div>
                 <h3 className="text-[#C9A87C] font-bold mb-4">Contacto</h3>
@@ -67,6 +121,30 @@ export default function ShopLayout({
                 <p className="text-sm text-gray-400">
                   Tienda física abierta en horario de atención
                 </p>
+              </div>
+
+              {/* Mini mapa */}
+              <div>
+                <h3 className="text-[#C9A87C] font-bold mb-4 opacity-0 select-none">-</h3>
+                <a
+                  href="https://www.google.com/maps/place/Dulce+Hogar+Dise%C3%B1o+%26+Estilo/@-34.5816184,-58.7536031,17.25z/data=!4m6!3m5!1s0x43c32d13b1f30a19:0x7f4d669db8bb3a!8m2!3d-34.5815039!4d-58.7528469!16s%2Fg%2F11mcz3wqw2"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block relative rounded-xl overflow-hidden group"
+                  style={{ height: "110px" }}
+                >
+                  <iframe
+                    src="https://maps.google.com/maps?q=-34.5815039,-58.7528469&z=16&output=embed"
+                    className="w-full h-full border-0 pointer-events-none"
+                    loading="lazy"
+                    title="Ubicación Dulce Hogar"
+                  />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all flex items-end justify-center pb-2">
+                    <span className="bg-white text-[#2C1A10] text-xs font-semibold px-3 py-1 rounded-full shadow translate-y-2 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all">
+                      Ver en Google Maps
+                    </span>
+                  </div>
+                </a>
               </div>
             </div>
 

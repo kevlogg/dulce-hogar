@@ -48,6 +48,12 @@ function getAdminApp(): any {
         jsonString = Buffer.from(jsonString, "base64").toString("utf-8");
       }
       const credentials = JSON.parse(jsonString) as Record<string, unknown>;
+
+      // Convert escaped \n in private_key to actual newlines
+      if (typeof credentials.private_key === "string") {
+        credentials.private_key = credentials.private_key.replace(/\\n/g, "\n");
+      }
+
       const projectId = credentials.project_id as string | undefined;
       const storageBucket =
         process.env.FIREBASE_STORAGE_BUCKET ||

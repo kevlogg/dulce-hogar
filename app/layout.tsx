@@ -25,7 +25,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="es" className={`${dmSans.variable} ${libreBaskerville.variable}`}>
+    <html lang="es" className={`${dmSans.variable} ${libreBaskerville.variable} scroll-pt-[200px]`}>
       <body className="min-h-screen flex flex-col font-sans antialiased bg-background text-foreground">
         {children}
       </body>

@@ -1,79 +1,76 @@
-import { Producto } from "@/lib/types";
-import { useCart } from "@/components/shop/CartProvider";
 import Link from "next/link";
+import { notFound } from "next/navigation";
+import { ProductDetailClient } from "@/components/shop/ProductDetailClient";
 
 async function getProducto(id: string) {
   try {
-    const res = await fetch(`http://localhost:3000/api/productos/${id}`, {
-      next: { revalidate: 60 },
-    });
-    return res.ok ? await res.json() : null;
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/productos/${id}`,
+      { next: { revalidate: 60 } }
+    );
+    if (!res.ok) return null;
+    return await res.json();
   } catch {
     return null;
   }
 }
 
-export default async function ProductDetailPage({
+async function getRelacionados(categoria: string, excludeId: string) {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/productos`,
+      { next: { revalidate: 60 } }
+    );
+    if (!res.ok) return [];
+    const todos = await res.json();
+    return todos
+      .filter((p: any) => p.categoria === categoria && p.id !== excludeId)
+      .slice(0, 4);
+  } catch {
+    return [];
+  }
+}
+
+const CATEGORIA_LABELS: Record<string, string> = {
+  MUEBLES: "Muebles",
+  TEXTILES: "Textiles",
+  EXTERIOR: "Exterior",
+  ESPEJOS: "Espejos",
+  DECO: "Decoración",
+  ILUMINACION: "Iluminación",
+};
+
+export default async function ProductoPage({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const producto = (await getProducto(id)) as Producto | null;
+  const producto = await getProducto(id);
+  if (!producto) notFound();
 
-  if (!producto) {
-    return <div className="text-center py-12">Producto no encontrado</div>;
-  }
+  const relacionados = await getRelacionados(producto.categoria, id);
+  const whatsappMsg = encodeURIComponent(
+    `Hola! Me interesa el producto: ${producto.nombre} ($${producto.precio?.toLocaleString()}). ¿Tienen disponibilidad?`
+  );
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-      <div>
-        {producto.imagenes?.[0] && (
-          <img
-            src={producto.imagenes[0]}
-            alt={producto.nombre}
-            className="w-full rounded"
-          />
-        )}
-      </div>
-      <div>
-        <h1 className="text-4xl font-bold text-[#2C1A10] mb-4">
-          {producto.nombre}
-        </h1>
-        <p className="text-gray-600 mb-6">{producto.descripcion}</p>
-        <p className="text-3xl font-bold text-[#C9A87C] mb-6">
-          ${producto.precio.toLocaleString("es-AR")}
-        </p>
-
-        {producto.opciones && producto.opciones.length > 0 && (
-          <div className="mb-6">
-            <h3 className="font-bold mb-2">Opciones:</h3>
-            {producto.opciones.map((opcion) => (
-              <div key={opcion.id} className="mb-4">
-                <p className="text-sm font-semibold">{opcion.nombre}</p>
-                {opcion.items.map((item) => (
-                  <label key={item.id} className="flex items-center gap-2 text-sm">
-                    <input type={opcion.tipo === "checkbox" ? "checkbox" : "radio"} />
-                    {item.nombre}
-                    {item.precioAdicional > 0 && (
-                      <span className="text-gray-500">
-                        +${item.precioAdicional}
-                      </span>
-                    )}
-                  </label>
-                ))}
-              </div>
-            ))}
-          </div>
-        )}
-
-        <Link
-          href="/shop/carrito"
-          className="inline-block bg-[#2C1A10] text-white px-8 py-3 rounded hover:bg-[#A0724A]"
-        >
-          Agregar al carrito
+    <div className="max-w-6xl mx-auto px-4 py-8">
+      <nav className="flex items-center gap-2 text-sm text-[#A0724A] mb-8 flex-wrap">
+        <Link href="/shop" className="hover:text-[#2C1A10] transition-colors">Inicio</Link>
+        <span>/</span>
+        <Link href="/shop/productos" className="hover:text-[#2C1A10] transition-colors">
+          {CATEGORIA_LABELS[producto.categoria] ?? producto.categoria}
         </Link>
-      </div>
+        <span>/</span>
+        <span className="text-[#2C1A10] font-medium truncate max-w-xs">{producto.nombre}</span>
+      </nav>
+
+      <ProductDetailClient
+        producto={producto}
+        relacionados={relacionados}
+        whatsappMsg={whatsappMsg}
+      />
     </div>
   );
 }

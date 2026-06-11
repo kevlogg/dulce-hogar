@@ -1,58 +1,115 @@
+"use client";
+
+const items = [
+  { icon: "🛋️", text: "PROMO MUNDIAL — 10% descuento en sofás y combos mesa + sillas" },
+  { icon: "💳", text: "3 Y 6 CUOTAS FIJAS sin interés" },
+  { icon: "💵", text: "25% DE DESCUENTO pagando en efectivo" },
+  { icon: "🚚", text: "FLETE A DOMICILIO en GBA y CABA" },
+  { icon: "📦", text: "ENVÍOS A TODO EL PAÍS por Vía Cargo y Andreani" },
+];
+
+const ticker = [...items, ...items];
+
+function SolDeMayo() {
+  return (
+    <svg
+      className="mx-6 shrink-0"
+      width="18"
+      height="18"
+      viewBox="0 0 100 100"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      {/* Rayos rectos */}
+      {[0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330].map((deg) => (
+        <line
+          key={deg}
+          x1="50" y1="14"
+          x2="50" y2="6"
+          stroke="#F0C040"
+          strokeWidth="4"
+          strokeLinecap="round"
+          transform={`rotate(${deg} 50 50)`}
+        />
+      ))}
+      {/* Rayos ondulados (entre los rectos) */}
+      {[15, 45, 75, 105, 135, 165, 195, 225, 255, 285, 315, 345].map((deg) => (
+        <line
+          key={deg}
+          x1="50" y1="16"
+          x2="50" y2="9"
+          stroke="#F0C040"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          transform={`rotate(${deg} 50 50)`}
+        />
+      ))}
+      {/* Círculo central */}
+      <circle cx="50" cy="50" r="20" fill="#F0C040" stroke="#D4A820" strokeWidth="1.5" />
+      {/* Cara */}
+      <circle cx="43" cy="46" r="2.5" fill="#8B6914" />
+      <circle cx="57" cy="46" r="2.5" fill="#8B6914" />
+      <path d="M43 56 Q50 62 57 56" stroke="#8B6914" strokeWidth="2" fill="none" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function TickerTrack() {
+  return (
+    <>
+      <div
+        className="flex shrink-0"
+        style={{ animation: "ticker 30s linear infinite", willChange: "transform" }}
+      >
+        {ticker.map((item, i) => (
+          <div key={i} className="flex items-center shrink-0">
+            <span className="text-sm mr-2">{item.icon}</span>
+            <span className="text-[#1a1a1a] text-xs font-bold tracking-wide whitespace-nowrap uppercase">
+              {item.text}
+            </span>
+            <SolDeMayo />
+          </div>
+        ))}
+      </div>
+      <div
+        className="flex shrink-0"
+        style={{ animation: "ticker 30s linear infinite", willChange: "transform" }}
+      >
+        {ticker.map((item, i) => (
+          <div key={i} className="flex items-center shrink-0">
+            <span className="text-sm mr-2">{item.icon}</span>
+            <span className="text-[#1a1a1a] text-xs font-bold tracking-wide whitespace-nowrap uppercase">
+              {item.text}
+            </span>
+            <SolDeMayo />
+          </div>
+        ))}
+      </div>
+    </>
+  );
+}
+
 export function PromoBanner() {
   return (
-    <div className="bg-white border-y border-[#E0D4C4]">
-      <div className="max-w-6xl mx-auto px-4 py-6">
-        {/* Argentina Flag - Three Stripes */}
-        <div className="flex gap-0 mb-6 h-12 rounded overflow-hidden shadow-sm">
-          <div className="flex-1 bg-[#74B9FF]" />
-          <div className="flex-1 bg-white flex items-center justify-center">
-            <span className="text-lg">🇦🇷</span>
-          </div>
-          <div className="flex-1 bg-[#74B9FF]" />
-        </div>
+    <div className="select-none overflow-hidden">
+      {/* Franja superior — celeste */}
+      <div className="h-3 bg-[#74AADB]" />
 
-        {/* Promo Information */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {/* Promo 1 */}
-          <div className="bg-gradient-to-br from-[#F7F3EE] to-[#EFEBE3] p-4 rounded-lg border border-[#C9A87C]">
-            <h3 className="text-[#2C1A10] font-bold text-sm mb-1">
-              PROMO MUNDIAL
-            </h3>
-            <p className="text-xs text-gray-600 mb-2">
-              10% de descuento en sofás y combos mesa + sillas
-            </p>
-            <div className="text-[#C9A87C] font-semibold text-xs">
-              ¡Aprovechá ahora!
-            </div>
-          </div>
-
-          {/* Promo 2 */}
-          <div className="bg-gradient-to-br from-[#F7F3EE] to-[#EFEBE3] p-4 rounded-lg border border-[#C9A87C]">
-            <h3 className="text-[#2C1A10] font-bold text-sm mb-1">
-              CUOTAS FIJAS
-            </h3>
-            <p className="text-xs text-gray-600 mb-2">
-              Financiación en 3 y 6 cuotas sin interés
-            </p>
-            <div className="text-[#C9A87C] font-semibold text-xs">
-              Sin sorpresas
-            </div>
-          </div>
-
-          {/* Promo 3 */}
-          <div className="bg-gradient-to-br from-[#F7F3EE] to-[#EFEBE3] p-4 rounded-lg border border-[#C9A87C]">
-            <h3 className="text-[#2C1A10] font-bold text-sm mb-1">
-              DESCUENTO EN EFECTIVO
-            </h3>
-            <p className="text-xs text-gray-600 mb-2">
-              25% de descuento pagando en efectivo
-            </p>
-            <div className="text-[#C9A87C] font-semibold text-xs">
-              ¡Máximo ahorro!
-            </div>
-          </div>
+      {/* Franja del medio — blanca con ticker */}
+      <div className="bg-white py-2 overflow-hidden">
+        <div className="flex">
+          <TickerTrack />
         </div>
       </div>
+
+      {/* Franja inferior — celeste */}
+      <div className="h-3 bg-[#74AADB]" />
+
+      <style jsx>{`
+        @keyframes ticker {
+          0%   { transform: translateX(0); }
+          100% { transform: translateX(-100%); }
+        }
+      `}</style>
     </div>
   );
 }
