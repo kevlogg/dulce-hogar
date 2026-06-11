@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Producto } from "@/lib/types";
+import { HeroCarousel } from "@/components/shop/HeroCarousel";
 
 async function getProductos(): Promise<Producto[]> {
   try {
@@ -17,56 +18,7 @@ export default async function ShopPage() {
 
   return (
     <div>
-      {/* HERO */}
-      <section className="py-16 px-4 bg-gradient-to-br from-[#F7F3EE] to-[#EFEBE3]" id="inicio">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div>
-            <p className="text-[#C9A87C] text-xs tracking-widest uppercase font-semibold mb-4">✦ Moreno, Buenos Aires</p>
-            <h1 className="text-4xl lg:text-5xl font-bold text-[#2C1A10] leading-tight mb-6" style={{ fontFamily: "'Playfair Display', serif" }}>
-              Transformamos espacios en hogares que enamoran
-            </h1>
-            <p className="text-[#3D2B1F] text-lg leading-relaxed mb-8">
-              Somos Flor y Esteban. Diseñamos ambientes únicos con muebles y deco de calidad, con envíos a todo el país y asesoramiento personalizado.
-            </p>
-            <div className="flex flex-wrap gap-4 mb-10">
-              <a href="#productos" className="bg-[#2C1A10] text-white px-7 py-3 rounded-full font-medium hover:bg-[#A0724A] transition-all">
-                Ver Productos
-              </a>
-              <a
-                href="https://wa.me/5491126917777?text=Hola!%20Me%20gustaría%20hablar%20sobre%20vuestros%20productos"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="border-2 border-[#25D366] text-[#25D366] px-7 py-3 rounded-full font-medium hover:bg-[#25D366] hover:text-white transition-all"
-              >
-                Hablar por WhatsApp
-              </a>
-            </div>
-            <div className="flex flex-wrap gap-8">
-              <div>
-                <div className="text-3xl font-bold text-[#2C1A10]">508</div>
-                <div className="text-sm text-[#A0724A] font-medium">Publicaciones</div>
-              </div>
-              <div>
-                <div className="text-3xl font-bold text-[#2C1A10]">26K</div>
-                <div className="text-sm text-[#A0724A] font-medium">Seguidores</div>
-              </div>
-              <div className="self-center">
-                <div className="text-sm font-semibold text-[#2C1A10]">Envíos a todo el país</div>
-              </div>
-            </div>
-          </div>
-          <div className="relative">
-            <div
-              className="w-full h-96 lg:h-[480px] rounded-2xl shadow-2xl"
-              style={{
-                background: "url('https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&h=600&fit=crop') center/cover no-repeat",
-              }}
-            >
-              <div className="absolute inset-0 rounded-2xl" style={{ background: "linear-gradient(135deg, rgba(201, 168, 124, 0.2) 0%, rgba(160, 114, 74, 0.15) 100%)" }} />
-            </div>
-          </div>
-        </div>
-      </section>
+      <HeroCarousel />
 
       <div className="h-px bg-gradient-to-r from-transparent via-[#C9A87C] to-transparent" />
 
