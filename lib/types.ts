@@ -36,6 +36,10 @@ export interface Producto {
   stock: number;
   opciones: OpcionProducto[];
   especificaciones: Record<string, string>;
+  peso?: number;
+  alto?: number;
+  ancho?: number;
+  largo?: number;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -54,6 +58,10 @@ export interface DireccionEnvio {
   ciudad: string;
   codigoPostal: string;
   provincia: string;
+  tipoEntrega: "domicilio" | "sucursal";
+  sucursalId?: string;
+  sucursalNombre?: string;
+  sucursalDireccion?: string;
 }
 
 export interface ItemOrden {
@@ -77,10 +85,12 @@ export interface Orden {
   montoEnvio: number;
   montoTotal: number;
   estadoPago: "pendiente" | "completado" | "fallido";
-  estadoEnvio: "procesando" | "enviado" | "entregado";
+  estadoEnvio: "procesando" | "enviado" | "entregado" | "sin_envio";
   metodoPago: "mercadopago";
   mercadopagoPreferenceId: string;
   mercadopagoPaymentId?: string;
+  enviopackId?: string;
+  trackingNumber?: string;
   createdAt: Date;
   updatedAt: Date;
 }
