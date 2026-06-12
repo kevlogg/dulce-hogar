@@ -3,7 +3,7 @@ import { getAdminFirestore } from "@/lib/firebase/admin";
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { items, clienteInfo, direccionEnvio, montoTotal } = body;
+    const { items, clienteInfo, direccionEnvio, montoTotal, montoEnvio } = body;
 
     if (!items || !clienteInfo || !direccionEnvio) {
       return Response.json({ error: "Missing fields" }, { status: 400 });
@@ -14,8 +14,8 @@ export async function POST(req: Request) {
       items,
       clienteInfo,
       direccionEnvio,
-      montoSubtotal: montoTotal,
-      montoEnvio: 0,
+      montoSubtotal: montoTotal - (montoEnvio ?? 0),
+      montoEnvio: montoEnvio ?? 0,
       montoTotal,
       estadoPago: "pendiente",
       estadoEnvio: "procesando",
