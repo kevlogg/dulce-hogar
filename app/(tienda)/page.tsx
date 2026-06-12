@@ -1,6 +1,14 @@
 import Link from "next/link";
 import { Producto } from "@/lib/types";
 import { HeroCarousel } from "@/components/shop/HeroCarousel";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Dulce Hogar | Muebles y Decoración en Moreno, Buenos Aires",
+  description:
+    "Tienda de muebles y decoración en Moreno, Buenos Aires. Sofás, sillones, mesas, textiles, espejos e iluminación. Envíos a todo el país.",
+  alternates: { canonical: "https://dulce-hogar-eight.vercel.app/" },
+};
 
 async function getProductos(): Promise<Producto[]> {
   try {
@@ -13,7 +21,7 @@ async function getProductos(): Promise<Producto[]> {
   }
 }
 
-export default async function ShopPage() {
+export default async function HomePage() {
   const productos = await getProductos();
 
   return (
@@ -93,7 +101,7 @@ export default async function ShopPage() {
               { name: "Iluminación", cat: "ILUMINACION", desc: "Luces para cada ambiente", img: "https://images.unsplash.com/photo-1540932239986-30128078f3c5?q=85&w=400&h=300&fit=crop" },
               { name: "Exterior", cat: "EXTERIOR", desc: "Espacios al aire libre", img: "https://images.unsplash.com/photo-1602860739945-9a61573cd62d?q=85&w=400&h=300&fit=crop" },
             ].map((cat) => (
-              <Link key={cat.name} href={`/shop/productos?cat=${cat.cat}`} className="relative block h-64 rounded-2xl overflow-hidden group cursor-pointer">
+              <Link key={cat.name} href={`/productos?cat=${cat.cat}`} className="relative block h-64 rounded-2xl overflow-hidden group cursor-pointer">
                 <div className="absolute inset-0" style={{ background: `url('${cat.img}') center/cover no-repeat` }} />
                 <div className="absolute inset-0 flex flex-col items-center justify-center transition-all" style={{ background: "linear-gradient(135deg, rgba(44, 26, 16, 0.7) 0%, rgba(160, 114, 74, 0.6) 100%)" }}>
                   <h3 className="text-white text-xl font-bold mb-1">{cat.name}</h3>
@@ -123,7 +131,7 @@ export default async function ShopPage() {
             {productos.slice(0, 6).map((p) => {
               const precioEfectivo = p.precioEfectivo ?? Math.round(p.precio * 0.75);
               return (
-                <Link key={p.id} href={`/shop/productos/${p.id}`}>
+                <Link key={p.id} href={`/productos/${p.id}`}>
                   <div className="bg-white rounded-2xl shadow hover:shadow-xl transition-all overflow-hidden group border border-[#E0D4C4]">
                     {p.imagenes?.[0] ? (
                       <div className="h-72 overflow-hidden">
@@ -160,7 +168,7 @@ export default async function ShopPage() {
           </div>
           <div className="text-center">
             <Link
-              href="/shop/productos"
+              href="/productos"
               className="inline-block bg-[#2C1A10] text-white px-10 py-4 rounded-full font-semibold hover:bg-[#A0724A] transition-all text-lg"
             >
               Ver todos los productos →

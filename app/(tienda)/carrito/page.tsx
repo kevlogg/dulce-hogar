@@ -42,7 +42,7 @@ export default function CarritoPage() {
           Tu carrito está vacío
         </h1>
         <p className="text-[#A0724A] mb-8">Explorá nuestros productos y encontrá lo que tu hogar necesita.</p>
-        <Link href="/shop/productos" className="inline-block bg-[#2C1A10] text-white px-8 py-3 rounded-full font-semibold hover:bg-[#A0724A] transition-all">
+        <Link href="/productos" className="inline-block bg-[#2C1A10] text-white px-8 py-3 rounded-full font-semibold hover:bg-[#A0724A] transition-all">
           Ver productos
         </Link>
       </div>
@@ -52,7 +52,7 @@ export default function CarritoPage() {
   return (
     <div className="max-w-5xl mx-auto px-4 py-6 md:py-10">
       <div className="mb-8">
-        <Link href="/shop/productos" className="text-sm text-[#A0724A] hover:text-[#2C1A10] transition-colors">
+        <Link href="/productos" className="text-sm text-[#A0724A] hover:text-[#2C1A10] transition-colors">
           ← Seguir comprando
         </Link>
         <h1 className="text-3xl font-bold text-[#2C1A10] mt-3" style={{ fontFamily: "'Playfair Display', serif" }}>
@@ -140,7 +140,7 @@ export default function CarritoPage() {
               <p className="text-xs text-[#A0724A]">25% de descuento pagando en efectivo / transferencia</p>
             </div>
             <Link
-              href="/shop/checkout"
+              href="/checkout"
               className="block w-full text-center bg-[#2C1A10] text-white py-3.5 rounded-full font-semibold hover:bg-[#A0724A] transition-all mb-3"
             >
               Continuar con la compra →

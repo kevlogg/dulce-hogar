@@ -4,9 +4,9 @@ import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 
 const SLIDES = [
-  { src: "/hero-1.png", alt: "Sofá Chesterfield", href: "/shop/productos/MN4NIEhcb1qJVlOJDrkq" },
-  { src: "/hero-2.png", alt: "Mecedora Viral", href: "/shop/productos/zD0UV9Xa7V5LgpvJgFvd" },
-  { src: "/hero-3.png", alt: "Mesa", href: "/shop/productos" },
+  { src: "/hero-1.png", alt: "Sofá Chesterfield", href: "/productos/MN4NIEhcb1qJVlOJDrkq" },
+  { src: "/hero-2.png", alt: "Mecedora Viral", href: "/productos/zD0UV9Xa7V5LgpvJgFvd" },
+  { src: "/hero-3.png", alt: "Mesa", href: "/productos" },
 ];
 
 export function HeroCarousel() {

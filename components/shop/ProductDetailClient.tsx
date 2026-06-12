@@ -104,7 +104,7 @@ export function ProductDetailClient({ producto, relacionados, whatsappMsg }: Pro
             </a>
 
             <Link
-              href="/shop/productos"
+              href="/productos"
               className="text-center text-sm text-[#A0724A] hover:text-[#2C1A10] transition-colors py-2"
             >
               ← Volver al catálogo
@@ -124,7 +124,7 @@ export function ProductDetailClient({ producto, relacionados, whatsappMsg }: Pro
           </h2>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             {relacionados.map((p: any) => (
-              <Link key={p.id} href={`/shop/productos/${p.id}`}>
+              <Link key={p.id} href={`/productos/${p.id}`}>
                 <div className="bg-white rounded-xl shadow-sm hover:shadow-md transition-all overflow-hidden group border border-[#E0D4C4]">
                   {p.imagenes?.[0] ? (
                     <div className="h-40 overflow-hidden">

@@ -136,7 +136,7 @@ export function CatalogoClient({ productos }: Props) {
     <div className="max-w-6xl mx-auto px-4 py-8">
       {/* Header */}
       <div className="mb-8">
-        <Link href="/shop" className="text-sm text-[#A0724A] hover:text-[#2C1A10] transition-colors">
+        <Link href="/" className="text-sm text-[#A0724A] hover:text-[#2C1A10] transition-colors">
           ← Volver al inicio
         </Link>
         <h1
@@ -216,7 +216,7 @@ export function CatalogoClient({ productos }: Props) {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
           {filtrados.map((p) => (
-            <Link key={p.id} href={`/shop/productos/${p.id}`} className="group">
+            <Link key={p.id} href={`/productos/${p.id}`} className="group">
               <div className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all overflow-hidden border border-[#E0D4C4]">
                 <CardImage imagenes={p.imagenes} nombre={p.nombre} />
                 <div className="p-4">

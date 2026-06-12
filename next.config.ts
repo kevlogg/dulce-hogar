@@ -20,6 +20,16 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      { source: "/shop", destination: "/", permanent: true },
+      { source: "/shop/productos", destination: "/productos", permanent: true },
+      { source: "/shop/productos/:id", destination: "/productos/:id", permanent: true },
+      { source: "/shop/carrito", destination: "/carrito", permanent: true },
+      { source: "/shop/checkout", destination: "/checkout", permanent: true },
+      { source: "/shop/confirmacion", destination: "/confirmacion", permanent: true },
+    ];
+  },
 };
 
 export default nextConfig;

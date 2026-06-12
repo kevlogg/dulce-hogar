@@ -4,12 +4,12 @@ import { useState } from "react";
 import Link from "next/link";
 
 const LINKS = [
-  { label: "Inicio", href: "/shop#inicio" },
-  { label: "Nosotros", href: "/shop#nosotros" },
-  { label: "Categorías", href: "/shop#categorias" },
-  { label: "Productos", href: "/shop/productos" },
-  { label: "Envíos", href: "/shop#envios" },
-  { label: "Contacto", href: "/shop#contacto" },
+  { label: "Inicio", href: "/#inicio" },
+  { label: "Nosotros", href: "/#nosotros" },
+  { label: "Categorías", href: "/#categorias" },
+  { label: "Productos", href: "/productos" },
+  { label: "Envíos", href: "/#envios" },
+  { label: "Contacto", href: "/#contacto" },
 ];
 
 export function MobileNav() {

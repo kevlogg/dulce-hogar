@@ -48,7 +48,7 @@ export function CartNavIcon() {
       onMouseLeave={() => setOpen(false)}
     >
       <Link
-        href="/shop/carrito"
+        href="/carrito"
         className="relative text-[#2C1A10] hover:text-[#C9A87C] transition-colors shrink-0 block p-1"
         aria-label="Carrito"
       >
@@ -107,14 +107,14 @@ export function CartNavIcon() {
                 </div>
                 <div className="flex gap-2">
                   <Link
-                    href="/shop/carrito"
+                    href="/carrito"
                     onClick={() => setOpen(false)}
                     className="flex-1 text-center text-sm border border-[#2C1A10] text-[#2C1A10] py-2 rounded-full hover:bg-[#2C1A10] hover:text-white transition-all"
                   >
                     Ver carrito
                   </Link>
                   <Link
-                    href="/shop/checkout"
+                    href="/checkout"
                     onClick={() => setOpen(false)}
                     className="flex-1 text-center text-sm bg-[#2C1A10] text-white py-2 rounded-full hover:bg-[#A0724A] transition-all"
                   >

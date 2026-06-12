@@ -78,7 +78,7 @@ export default function CheckoutPage() {
       if (res.ok) {
         const { id } = await res.json();
         clear();
-        router.push(`/shop/confirmacion?orden=${id}`);
+        router.push(`/confirmacion?orden=${id}`);
       }
     } catch (err) {
       console.error(err);
@@ -93,7 +93,7 @@ export default function CheckoutPage() {
     return (
       <div className="max-w-xl mx-auto px-4 py-24 text-center">
         <p className="text-[#A0724A] mb-6">No tenés productos en el carrito.</p>
-        <Link href="/shop/productos" className="inline-block bg-[#2C1A10] text-white px-8 py-3 rounded-full font-semibold hover:bg-[#A0724A] transition-all">
+        <Link href="/productos" className="inline-block bg-[#2C1A10] text-white px-8 py-3 rounded-full font-semibold hover:bg-[#A0724A] transition-all">
           Ver productos
         </Link>
       </div>
@@ -106,7 +106,7 @@ export default function CheckoutPage() {
   return (
     <div className="max-w-5xl mx-auto px-4 py-6 md:py-10">
       <div className="mb-8">
-        <Link href="/shop/carrito" className="text-sm text-[#A0724A] hover:text-[#2C1A10] transition-colors">
+        <Link href="/carrito" className="text-sm text-[#A0724A] hover:text-[#2C1A10] transition-colors">
           ← Volver al carrito
         </Link>
         <h1 className="text-3xl font-bold text-[#2C1A10] mt-3" style={{ fontFamily: "'Playfair Display', serif" }}>

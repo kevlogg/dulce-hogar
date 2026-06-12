@@ -4,13 +4,22 @@ import { CartNavIcon } from "@/components/shop/CartNavIcon";
 import { MobileNav } from "@/components/shop/MobileNav";
 import Link from "next/link";
 import Image from "next/image";
+import type { Metadata } from "next";
 
-export const metadata = {
-  title: "Dulce Hogar | Tienda",
-  description: "Muebles y decoración premium",
+export const metadata: Metadata = {
+  title: {
+    template: "%s | Dulce Hogar",
+    default: "Dulce Hogar | Muebles y Decoración en Moreno, Buenos Aires",
+  },
+  description:
+    "Muebles y decoración de diseño en Moreno, Buenos Aires. Sofás, sillones, mesas, textiles y más. Envíos a todo el país con Andreani y Vía Cargo.",
+  openGraph: {
+    locale: "es_AR",
+    siteName: "Dulce Hogar",
+  },
 };
 
-export default function ShopLayout({
+export default function TiendaLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -21,7 +30,7 @@ export default function ShopLayout({
         <header className="bg-white border-b sticky top-0 z-50 relative">
           <div className="max-w-6xl mx-auto px-4 py-2 flex items-center justify-between gap-4">
             {/* Logo */}
-            <Link href="/shop" className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+            <Link href="/" className="flex items-center gap-1.5 sm:gap-2 shrink-0">
               <div className="hidden sm:flex flex-col gap-1.5">
                 <div className="w-6 h-2 sm:w-8 sm:h-2.5 rounded-sm bg-[#74AADB]" />
                 <div className="w-6 h-2 sm:w-8 sm:h-2.5 rounded-sm bg-[#74AADB]" />
@@ -50,12 +59,12 @@ export default function ShopLayout({
             {/* Nav desktop */}
             <nav className="hidden md:flex items-center gap-6 flex-1 justify-center">
               {[
-                { label: "Inicio", href: "/shop#inicio" },
-                { label: "Nosotros", href: "/shop#nosotros" },
-                { label: "Categorías", href: "/shop#categorias" },
-                { label: "Productos", href: "/shop/productos" },
-                { label: "Envíos", href: "/shop#envios" },
-                { label: "Contacto", href: "/shop#contacto" },
+                { label: "Inicio", href: "/#inicio" },
+                { label: "Nosotros", href: "/#nosotros" },
+                { label: "Categorías", href: "/#categorias" },
+                { label: "Productos", href: "/productos" },
+                { label: "Envíos", href: "/#envios" },
+                { label: "Contacto", href: "/#contacto" },
               ].map((item) => (
                 <a
                   key={item.href}

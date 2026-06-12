@@ -26,7 +26,7 @@ export function ConfirmacionContent() {
       </p>
 
       <Link
-        href="/shop"
+        href="/"
         className="inline-block bg-[#2C1A10] text-white px-6 py-3 rounded hover:bg-[#A0724A]"
       >
         Volver a tienda
