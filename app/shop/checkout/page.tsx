@@ -104,7 +104,7 @@ export default function CheckoutPage() {
   const labelClass = "block text-xs font-semibold text-[#A0724A] uppercase tracking-wide mb-1.5";
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-10">
+    <div className="max-w-5xl mx-auto px-4 py-6 md:py-10">
       <div className="mb-8">
         <Link href="/shop/carrito" className="text-sm text-[#A0724A] hover:text-[#2C1A10] transition-colors">
           ← Volver al carrito
@@ -219,7 +219,7 @@ export default function CheckoutPage() {
 
         {/* Resumen */}
         <div className="lg:col-span-1">
-          <div className="bg-white rounded-2xl border border-[#E0D4C4] p-5 sticky top-32">
+          <div className="bg-white rounded-2xl border border-[#E0D4C4] p-5 sticky top-20 md:top-32">
             <h2 className="font-bold text-[#2C1A10] mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>
               Tu pedido
             </h2>

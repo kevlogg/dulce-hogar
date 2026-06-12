@@ -1,6 +1,7 @@
 import { CartProvider } from "@/components/shop/CartProvider";
 import { PromoBanner } from "@/components/shop/PromoBanner";
 import { CartNavIcon } from "@/components/shop/CartNavIcon";
+import { MobileNav } from "@/components/shop/MobileNav";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -17,42 +18,37 @@ export default function ShopLayout({
   return (
     <CartProvider>
       <div className="min-h-screen bg-[#F7F3EE] flex flex-col">
-        <header className="bg-white border-b sticky top-0 z-50">
-          <div className="max-w-6xl mx-auto px-4 py-2 flex items-center justify-between gap-6">
+        <header className="bg-white border-b sticky top-0 z-50 relative">
+          <div className="max-w-6xl mx-auto px-4 py-2 flex items-center justify-between gap-4">
             {/* Logo */}
-            <Link href="/shop" className="flex items-center gap-2 shrink-0">
-              {/* Franja izquierda */}
-              <div className="flex flex-col gap-1.5">
-                <div className="w-8 h-2.5 rounded-sm bg-[#74AADB]" />
-                <div className="w-8 h-2.5 rounded-sm bg-[#74AADB]" />
+            <Link href="/shop" className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+              <div className="hidden sm:flex flex-col gap-1.5">
+                <div className="w-6 h-2 sm:w-8 sm:h-2.5 rounded-sm bg-[#74AADB]" />
+                <div className="w-6 h-2 sm:w-8 sm:h-2.5 rounded-sm bg-[#74AADB]" />
               </div>
-
-              {/* Logo + estrellas */}
               <div className="flex flex-col items-center">
                 <Image
                   src="/logo.png"
                   alt="Dulce Hogar"
                   width={360}
                   height={128}
-                  className="h-24 w-auto object-contain"
+                  className="h-14 sm:h-20 md:h-24 w-auto object-contain"
                   priority
                 />
                 <div className="flex items-start gap-1 mt-0.5">
-                  <span className="text-[#F0C040] text-[10px] leading-none">★</span>
-                  <span className="text-[#F0C040] text-[10px] leading-none translate-y-1">★</span>
-                  <span className="text-[#F0C040] text-[10px] leading-none">★</span>
+                  <span className="text-[#F0C040] text-[8px] sm:text-[10px] leading-none">★</span>
+                  <span className="text-[#F0C040] text-[8px] sm:text-[10px] leading-none translate-y-0.5 sm:translate-y-1">★</span>
+                  <span className="text-[#F0C040] text-[8px] sm:text-[10px] leading-none">★</span>
                 </div>
               </div>
-
-              {/* Franja derecha */}
-              <div className="flex flex-col gap-1.5">
-                <div className="w-8 h-2.5 rounded-sm bg-[#74AADB]" />
-                <div className="w-8 h-2.5 rounded-sm bg-[#74AADB]" />
+              <div className="hidden sm:flex flex-col gap-1.5">
+                <div className="w-6 h-2 sm:w-8 sm:h-2.5 rounded-sm bg-[#74AADB]" />
+                <div className="w-6 h-2 sm:w-8 sm:h-2.5 rounded-sm bg-[#74AADB]" />
               </div>
             </Link>
 
-            {/* Nav links */}
-            <nav className="hidden md:flex items-center gap-6">
+            {/* Nav desktop */}
+            <nav className="hidden md:flex items-center gap-6 flex-1 justify-center">
               {[
                 { label: "Inicio", href: "/shop#inicio" },
                 { label: "Nosotros", href: "/shop#nosotros" },
@@ -71,12 +67,14 @@ export default function ShopLayout({
               ))}
             </nav>
 
-            {/* Carrito */}
-            <CartNavIcon />
+            <div className="flex items-center gap-2">
+              <CartNavIcon />
+              <MobileNav />
+            </div>
           </div>
         </header>
 
-        <div className="sticky top-32 z-40">
+        <div className="sticky top-[60px] sm:top-[88px] md:top-[112px] z-40">
           <PromoBanner />
         </div>
 
@@ -86,7 +84,7 @@ export default function ShopLayout({
 
         <footer className="bg-[#2C1A10] text-white">
           <div className="max-w-6xl mx-auto px-4 py-12">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 mb-8">
               {/* Contacto */}
               <div>
                 <h3 className="text-[#C9A87C] font-bold mb-4">Contacto</h3>

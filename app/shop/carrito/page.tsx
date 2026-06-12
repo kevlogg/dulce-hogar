@@ -50,7 +50,7 @@ export default function CarritoPage() {
   }
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-10">
+    <div className="max-w-5xl mx-auto px-4 py-6 md:py-10">
       <div className="mb-8">
         <Link href="/shop/productos" className="text-sm text-[#A0724A] hover:text-[#2C1A10] transition-colors">
           ← Seguir comprando
@@ -67,11 +67,11 @@ export default function CarritoPage() {
             const p = productos[item.productoId];
             const precioEfectivo = p ? (p.precioEfectivo ?? Math.round(p.precio * 0.75)) : 0;
             return (
-              <div key={item.productoId} className="bg-white rounded-2xl border border-[#E0D4C4] p-4 flex gap-4 items-center">
+              <div key={item.productoId} className="bg-white rounded-2xl border border-[#E0D4C4] p-3 sm:p-4 flex gap-3 sm:gap-4 items-center">
                 {p?.imagenes?.[0] ? (
-                  <img src={p.imagenes[0]} alt={p.nombre} className="w-24 h-24 object-cover rounded-xl shrink-0" />
+                  <img src={p.imagenes[0]} alt={p.nombre} className="w-20 h-20 sm:w-24 sm:h-24 object-cover rounded-xl shrink-0" />
                 ) : (
-                  <div className="w-24 h-24 bg-[#EFEBE3] rounded-xl shrink-0" />
+                  <div className="w-20 h-20 sm:w-24 sm:h-24 bg-[#EFEBE3] rounded-xl shrink-0" />
                 )}
                 <div className="flex-1 min-w-0">
                   <p className="text-xs text-[#C9A87C] font-semibold uppercase tracking-wide mb-1">{p?.categoria ?? ""}</p>
@@ -114,7 +114,7 @@ export default function CarritoPage() {
 
         {/* Summary */}
         <div className="lg:col-span-1">
-          <div className="bg-white rounded-2xl border border-[#E0D4C4] p-6 sticky top-32">
+          <div className="bg-white rounded-2xl border border-[#E0D4C4] p-6 sticky top-20 md:top-32">
             <h2 className="font-bold text-[#2C1A10] text-lg mb-5" style={{ fontFamily: "'Playfair Display', serif" }}>
               Resumen del pedido
             </h2>

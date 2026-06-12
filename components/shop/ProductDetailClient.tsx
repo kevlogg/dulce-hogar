@@ -29,7 +29,7 @@ export function ProductDetailClient({ producto, relacionados, whatsappMsg }: Pro
   return (
     <>
       {/* Two-column main section */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 mb-10 md:mb-16">
         {/* Left: gallery */}
         <ProductoGallery
           imagenes={producto.imagenes ?? []}
@@ -44,7 +44,7 @@ export function ProductDetailClient({ producto, relacionados, whatsappMsg }: Pro
           </span>
 
           <h1
-            className="text-3xl font-bold text-[#2C1A10] mb-4 leading-tight"
+            className="text-2xl md:text-3xl font-bold text-[#2C1A10] mb-4 leading-tight"
             style={{ fontFamily: "'Playfair Display', serif" }}
           >
             {producto.nombre}
@@ -52,13 +52,13 @@ export function ProductDetailClient({ producto, relacionados, whatsappMsg }: Pro
 
           <div className="flex items-baseline gap-4 mb-6">
             <div>
-              <p className="text-4xl font-bold text-[#2C1A10]">
+              <p className="text-3xl md:text-4xl font-bold text-[#2C1A10]">
                 ${producto.precio?.toLocaleString("es-AR")}
               </p>
               <p className="text-xs text-[#A0724A] mt-0.5">precio cuotas</p>
             </div>
             <div>
-              <p className="text-2xl font-bold text-green-700">
+              <p className="text-xl md:text-2xl font-bold text-green-700">
                 ${precioEfectivo.toLocaleString("es-AR")}
               </p>
               <p className="text-xs text-green-600 mt-0.5">precio efectivo</p>

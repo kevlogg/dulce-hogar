@@ -23,8 +23,8 @@ export default async function ShopPage() {
       <div className="h-px bg-gradient-to-r from-transparent via-[#C9A87C] to-transparent" />
 
       {/* NUESTRA HISTORIA */}
-      <section className="py-20 px-4 bg-[#F7F3EE]" id="nosotros">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      <section className="py-12 px-4 md:py-20 bg-[#F7F3EE]" id="nosotros">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 items-center">
           <div
             className="relative h-80 lg:h-[480px] rounded-2xl overflow-hidden"
             style={{ background: "url('https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=500&h=500&fit=crop') center/cover no-repeat" }}
@@ -38,7 +38,7 @@ export default async function ShopPage() {
           </div>
           <div>
             <p className="text-[#C9A87C] text-xs tracking-widest uppercase font-semibold mb-3">Nuestra historia</p>
-            <h2 className="text-3xl lg:text-4xl font-bold text-[#2C1A10] mb-6" style={{ fontFamily: "'Playfair Display', serif" }}>
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#2C1A10] mb-6" style={{ fontFamily: "'Playfair Display', serif" }}>
               Pasión por el diseño, amor por el hogar
             </h2>
             <p className="text-[#3D2B1F] leading-relaxed mb-4">
@@ -75,11 +75,11 @@ export default async function ShopPage() {
       <div className="h-px bg-gradient-to-r from-transparent via-[#C9A87C] to-transparent" />
 
       {/* CATEGORÍAS */}
-      <section className="py-20 px-4 bg-[#EFEBE3]" id="categorias">
+      <section className="py-12 px-4 md:py-20 bg-[#EFEBE3]" id="categorias">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
+          <div className="text-center mb-8 md:mb-12">
             <p className="text-[#C9A87C] text-xs tracking-widest uppercase font-semibold mb-3">Categorías</p>
-            <h2 className="text-3xl lg:text-4xl font-bold text-[#2C1A10] mb-3" style={{ fontFamily: "'Playfair Display', serif" }}>
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#2C1A10] mb-3" style={{ fontFamily: "'Playfair Display', serif" }}>
               Encontrá lo que tu hogar necesita
             </h2>
             <p className="text-[#A0724A]">Explorá nuestra colección de muebles y decoración</p>
@@ -111,11 +111,11 @@ export default async function ShopPage() {
       <div className="h-px bg-gradient-to-r from-transparent via-[#C9A87C] to-transparent" />
 
       {/* PRODUCTOS */}
-      <section className="py-20 px-4 bg-[#F7F3EE]" id="productos">
+      <section className="py-12 px-4 md:py-20 bg-[#F7F3EE]" id="productos">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
+          <div className="text-center mb-8 md:mb-12">
             <p className="text-[#C9A87C] text-xs tracking-widest uppercase font-semibold mb-3">Catálogo</p>
-            <h2 className="text-3xl lg:text-4xl font-bold text-[#2C1A10]" style={{ fontFamily: "'Playfair Display', serif" }}>
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#2C1A10]" style={{ fontFamily: "'Playfair Display', serif" }}>
               Nuestros productos
             </h2>
           </div>
@@ -147,7 +147,10 @@ export default async function ShopPage() {
                             <p className="text-xs text-green-600 font-medium">efectivo</p>
                           </div>
                         </div>
-                        <span className="bg-green-100 text-green-700 text-xs font-bold px-2 py-1 rounded-full shrink-0">25% OFF</span>
+                        <div className="flex flex-col gap-1 items-end shrink-0">
+                          <span className="bg-green-100 text-green-700 text-xs font-bold px-2 py-1 rounded-full">25% OFF</span>
+                          <span className="bg-[#FFF3E0] text-[#E65100] text-[10px] font-bold px-1.5 py-0.5 rounded-full">6 cuotas sin interés</span>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -169,11 +172,11 @@ export default async function ShopPage() {
       <div className="h-px bg-gradient-to-r from-transparent via-[#C9A87C] to-transparent" />
 
       {/* ENVÍOS */}
-      <section className="py-20 px-4 bg-[#EFEBE3]" id="envios">
+      <section className="py-12 px-4 md:py-20 bg-[#EFEBE3]" id="envios">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
+          <div className="text-center mb-8 md:mb-12">
             <p className="text-[#C9A87C] text-xs tracking-widest uppercase font-semibold mb-3">Envíos</p>
-            <h2 className="text-3xl font-bold text-[#2C1A10]" style={{ fontFamily: "'Playfair Display', serif" }}>
+            <h2 className="text-2xl md:text-3xl font-bold text-[#2C1A10]" style={{ fontFamily: "'Playfair Display', serif" }}>
               Llegamos a donde estés
             </h2>
           </div>
@@ -183,7 +186,7 @@ export default async function ShopPage() {
               { title: "Vía Cargo & Andreani", desc: "Enviamos a todo el país con los mejores transportistas", icon: "📦" },
               { title: "Seguimiento", desc: "Conocé el estado de tu pedido en todo momento", icon: "📍" },
             ].map((item) => (
-              <div key={item.title} className="bg-white p-8 rounded-2xl shadow-sm text-center border border-[#E0D4C4]">
+              <div key={item.title} className="bg-white p-5 md:p-8 rounded-2xl shadow-sm text-center border border-[#E0D4C4]">
                 <div className="text-4xl mb-4">{item.icon}</div>
                 <h3 className="font-bold text-[#2C1A10] text-lg mb-2">{item.title}</h3>
                 <p className="text-[#3D2B1F] text-sm leading-relaxed">{item.desc}</p>
@@ -202,15 +205,15 @@ export default async function ShopPage() {
       <div className="h-px bg-gradient-to-r from-transparent via-[#C9A87C] to-transparent" />
 
       {/* TESTIMONIOS */}
-      <section className="py-20 px-4 bg-[#F7F3EE]">
+      <section className="py-12 px-4 md:py-20 bg-[#F7F3EE]">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-[#2C1A10] mb-2" style={{ fontFamily: "'Playfair Display', serif" }}>
+          <div className="text-center mb-8 md:mb-12">
+            <h2 className="text-2xl md:text-3xl font-bold text-[#2C1A10] mb-2" style={{ fontFamily: "'Playfair Display', serif" }}>
               Lo que dicen nuestros clientes ❤
             </h2>
             <p className="text-[#A0724A] font-medium">Más de 500 familias ya transformaron su hogar con nosotros</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 md:gap-6">
             {[
               { name: "Julia Sagardoy", badge: "Local Guide", text: "Excelente atención, muy buen asesoramiento. Calidad, seriedad, puntualidad a la hora de entregar." },
               { name: "Maiten Ursi", badge: null, text: "Amooo todo, son unos genios. Excelente atención y tienen los mejores precios 💗" },
@@ -264,13 +267,13 @@ export default async function ShopPage() {
       <div className="h-px bg-gradient-to-r from-transparent via-[#C9A87C] to-transparent" />
 
       {/* CTA */}
-      <section className="py-20 px-4 bg-gradient-to-br from-[#2C1A10] to-[#1A0E07] text-center relative overflow-hidden" id="contacto">
+      <section className="py-12 px-4 md:py-20 bg-gradient-to-br from-[#2C1A10] to-[#1A0E07] text-center relative overflow-hidden" id="contacto">
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#C9A87C] to-transparent" />
         <div className="max-w-2xl mx-auto relative z-10">
-          <h2 className="text-3xl font-bold text-white mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>
+          <h2 className="text-2xl md:text-3xl font-bold text-white mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>
             ¿No sabés qué elegir para tu hogar?
           </h2>
-          <p className="text-white/80 text-lg mb-8">
+          <p className="text-white/80 text-base md:text-lg mb-8">
             Contanos tus gustos y presupuesto, y te asesoramos para crear el espacio que soñás.
           </p>
           <a
