@@ -257,7 +257,10 @@ export function CatalogoClient({ productos }: Props) {
                         <span className="text-[10px] text-green-600">efectivo</span>
                       </div>
                     </div>
-                    <span className="bg-green-100 text-green-700 text-[10px] font-bold px-1.5 py-0.5 rounded-full shrink-0">25% OFF</span>
+                    <div className="flex flex-col gap-1 items-end shrink-0">
+                      <span className="bg-green-100 text-green-700 text-[10px] font-bold px-1.5 py-0.5 rounded-full">25% OFF</span>
+                      <span className="bg-[#FFF3E0] text-[#E65100] text-[10px] font-bold px-1.5 py-0.5 rounded-full">6 cuotas sin interés</span>
+                    </div>
                   </div>
                 </div>
               </div>

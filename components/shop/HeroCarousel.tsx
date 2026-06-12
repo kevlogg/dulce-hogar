@@ -26,7 +26,7 @@ export function HeroCarousel() {
     <section
       id="inicio"
       className="relative w-full overflow-hidden"
-      style={{ height: "calc(100vh - 8rem)" }}
+      style={{ height: "clamp(240px, 60vw, calc(100vh - 8rem))" }}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
