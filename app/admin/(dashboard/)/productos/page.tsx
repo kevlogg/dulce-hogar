@@ -21,6 +21,10 @@ type Producto = {
   imagenes?: string[];
   opciones?: any[];
   especificaciones?: Record<string, string>;
+  peso?: number;
+  alto?: number;
+  ancho?: number;
+  largo?: number;
 };
 
 const EMPTY: any = {
@@ -32,6 +36,10 @@ const EMPTY: any = {
   stock: "0",
   imagenes: "",
   opciones: "[]",
+  peso: "",
+  alto: "",
+  ancho: "",
+  largo: "",
 };
 
 const inputCls =
@@ -83,6 +91,10 @@ export default function ProductosAdminPage() {
       stock: String(p.stock ?? 0),
       imagenes: (p.imagenes || []).join("\n"),
       opciones: JSON.stringify(p.opciones || [], null, 2),
+      peso: String(p.peso ?? ""),
+      alto: String(p.alto ?? ""),
+      ancho: String(p.ancho ?? ""),
+      largo: String(p.largo ?? ""),
     });
     setError("");
     setModal(true);
@@ -110,6 +122,10 @@ export default function ProductosAdminPage() {
       imagenes,
       opciones,
       especificaciones: {},
+      ...(form.peso ? { peso: Number(form.peso) } : {}),
+      ...(form.alto ? { alto: Number(form.alto) } : {}),
+      ...(form.ancho ? { ancho: Number(form.ancho) } : {}),
+      ...(form.largo ? { largo: Number(form.largo) } : {}),
     };
     const url = editing ? `/api/productos/${editing.id}` : "/api/productos";
     const method = editing ? "PUT" : "POST";
@@ -191,6 +207,11 @@ export default function ProductosAdminPage() {
                       <p className="font-semibold text-[#2C1A10] leading-snug">{p.nombre}</p>
                       {p.imagenes && p.imagenes.length > 1 && (
                         <p className="text-xs text-gray-400 mt-0.5">{p.imagenes.length} imágenes</p>
+                      )}
+                      {(!p.peso || !p.alto || !p.ancho || !p.largo) && (
+                        <span className="inline-block mt-1 text-xs bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-full font-medium">
+                          Faltan datos de envío
+                        </span>
                       )}
                     </td>
                     <td className="px-4 py-3">
@@ -281,6 +302,27 @@ export default function ProductosAdminPage() {
                 <div className="sm:col-span-2">
                   <label className={labelCls}>Opciones / variantes <span className="normal-case text-gray-400 font-normal">(JSON)</span></label>
                   <textarea value={form.opciones} onChange={(e) => set("opciones", e.target.value)} className={inputCls + " resize-none font-mono text-xs"} rows={5} placeholder='[{"id":"color","nombre":"Color","tipo":"radio","items":[{"id":"negro","nombre":"Negro","precioAdicional":0}]}]' />
+                </div>
+                <div className="sm:col-span-2">
+                  <p className={labelCls + " mb-3"}>Datos de envío (requeridos por Envíopack)</p>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    <div>
+                      <label className={labelCls}>Peso (kg)</label>
+                      <input type="number" min="0" step="0.1" value={form.peso} onChange={(e) => set("peso", e.target.value)} className={inputCls} placeholder="5.5" />
+                    </div>
+                    <div>
+                      <label className={labelCls}>Alto (cm)</label>
+                      <input type="number" min="0" value={form.alto} onChange={(e) => set("alto", e.target.value)} className={inputCls} placeholder="80" />
+                    </div>
+                    <div>
+                      <label className={labelCls}>Ancho (cm)</label>
+                      <input type="number" min="0" value={form.ancho} onChange={(e) => set("ancho", e.target.value)} className={inputCls} placeholder="90" />
+                    </div>
+                    <div>
+                      <label className={labelCls}>Largo (cm)</label>
+                      <input type="number" min="0" value={form.largo} onChange={(e) => set("largo", e.target.value)} className={inputCls} placeholder="100" />
+                    </div>
+                  </div>
                 </div>
               </div>
 

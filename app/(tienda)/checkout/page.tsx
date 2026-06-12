@@ -12,6 +12,13 @@ const PROVINCIAS = [
   "Tierra del Fuego", "Tucumán",
 ];
 
+interface Sucursal {
+  id: string;
+  nombre: string;
+  direccion: string;
+  localidad: string;
+}
+
 export default function CheckoutPage() {
   const { items, clear } = useCart();
   const router = useRouter();
@@ -23,6 +30,14 @@ export default function CheckoutPage() {
     nombre: "", apellido: "", email: "", telefono: "",
     calle: "", numero: "", depto: "", ciudad: "", codigoPostal: "", provincia: "",
   });
+
+  // Shipping state
+  const [tipoEntrega, setTipoEntrega] = useState<"domicilio" | "sucursal">("domicilio");
+  const [sucursales, setSucursales] = useState<Sucursal[]>([]);
+  const [sucursalSeleccionada, setSucursalSeleccionada] = useState<Sucursal | null>(null);
+  const [costoEnvio, setCostoEnvio] = useState<number | null>(null);
+  const [cotizando, setCotizando] = useState(false);
+  const [cargandoSucursales, setCargandoSucursales] = useState(false);
 
   useEffect(() => setMounted(true), []);
 
@@ -39,6 +54,57 @@ export default function CheckoutPage() {
     );
   }, [mounted, items]);
 
+  // Fetch Vía Cargo branches when CP changes in sucursal mode
+  useEffect(() => {
+    const cp = formData.codigoPostal;
+    if (tipoEntrega !== "sucursal" || cp.length < 4) {
+      setSucursales([]);
+      setSucursalSeleccionada(null);
+      return;
+    }
+    setCargandoSucursales(true);
+    fetch(`/api/envios/sucursales?cp=${cp}`)
+      .then((r) => r.json())
+      .then((data) => setSucursales(data.sucursales ?? []))
+      .catch(() => setSucursales([]))
+      .finally(() => setCargandoSucursales(false));
+  }, [formData.codigoPostal, tipoEntrega]);
+
+  // Calculate shipping cost with debounce
+  useEffect(() => {
+    const cp = formData.codigoPostal;
+    if (cp.length < 4 || items.length === 0) {
+      setCostoEnvio(null);
+      return;
+    }
+    if (tipoEntrega === "sucursal" && !sucursalSeleccionada) return;
+
+    const timer = setTimeout(async () => {
+      setCotizando(true);
+      try {
+        const res = await fetch("/api/envios/cotizar", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            codigoPostal: cp,
+            tipoEntrega,
+            sucursalId: sucursalSeleccionada?.id,
+            items: items.map((i) => ({ productoId: i.productoId, cantidad: i.cantidad })),
+          }),
+        });
+        const data = await res.json();
+        if (res.ok) setCostoEnvio(data.costo);
+        else setCostoEnvio(null);
+      } catch {
+        setCostoEnvio(null);
+      } finally {
+        setCotizando(false);
+      }
+    }, 600);
+
+    return () => clearTimeout(timer);
+  }, [formData.codigoPostal, tipoEntrega, sucursalSeleccionada, items]);
+
   const totalEfectivo = items.reduce((s, i) => {
     const p = productos[i.productoId];
     return s + (p ? (p.precioEfectivo ?? Math.round(p.precio * 0.75)) * i.cantidad : 0);
@@ -47,7 +113,8 @@ export default function CheckoutPage() {
     const p = productos[i.productoId];
     return s + (p ? p.precio * i.cantidad : 0);
   }, 0);
-  const total = metodoPago === "efectivo" ? totalEfectivo : totalCuotas;
+  const subtotal = metodoPago === "efectivo" ? totalEfectivo : totalCuotas;
+  const totalFinal = subtotal + (costoEnvio ?? 0);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -69,9 +136,26 @@ export default function CheckoutPage() {
               : (productos[i.productoId]?.precio ?? 0),
             opcionesSeleccionadas: i.opcionesSeleccionadas,
           })),
-          clienteInfo: { nombre: formData.nombre, apellido: formData.apellido, email: formData.email, telefono: formData.telefono },
-          direccionEnvio: { calle: formData.calle, numero: formData.numero, depto: formData.depto, ciudad: formData.ciudad, codigoPostal: formData.codigoPostal, provincia: formData.provincia },
-          montoTotal: total,
+          clienteInfo: {
+            nombre: formData.nombre,
+            apellido: formData.apellido,
+            email: formData.email,
+            telefono: formData.telefono,
+          },
+          direccionEnvio: {
+            calle: tipoEntrega === "domicilio" ? formData.calle : "",
+            numero: tipoEntrega === "domicilio" ? formData.numero : "",
+            depto: formData.depto,
+            ciudad: tipoEntrega === "domicilio" ? formData.ciudad : (sucursalSeleccionada?.localidad ?? ""),
+            codigoPostal: formData.codigoPostal,
+            provincia: tipoEntrega === "domicilio" ? formData.provincia : "",
+            tipoEntrega,
+            sucursalId: sucursalSeleccionada?.id,
+            sucursalNombre: sucursalSeleccionada?.nombre,
+            sucursalDireccion: sucursalSeleccionada?.direccion,
+          },
+          montoEnvio: costoEnvio ?? 0,
+          montoTotal: totalFinal,
           metodoPago,
         }),
       });
@@ -143,41 +227,122 @@ export default function CheckoutPage() {
             </div>
           </div>
 
-          {/* Dirección */}
+          {/* Envío */}
           <div className="bg-white rounded-2xl border border-[#E0D4C4] p-6">
             <h2 className="font-bold text-[#2C1A10] text-base mb-5 flex items-center gap-2">
               <span className="w-6 h-6 bg-[#2C1A10] text-white rounded-full flex items-center justify-center text-xs">2</span>
-              Dirección de envío
+              Envío
             </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="sm:col-span-2">
-                <label className={labelClass}>Calle</label>
-                <input type="text" name="calle" required placeholder="Av. Corrientes" value={formData.calle} onChange={handleChange} className={inputClass} />
-              </div>
-              <div>
-                <label className={labelClass}>Número</label>
-                <input type="text" name="numero" required placeholder="1234" value={formData.numero} onChange={handleChange} className={inputClass} />
-              </div>
-              <div>
-                <label className={labelClass}>Depto / Piso (opcional)</label>
-                <input type="text" name="depto" placeholder="3B" value={formData.depto} onChange={handleChange} className={inputClass} />
-              </div>
-              <div>
-                <label className={labelClass}>Ciudad</label>
-                <input type="text" name="ciudad" required placeholder="Buenos Aires" value={formData.ciudad} onChange={handleChange} className={inputClass} />
-              </div>
-              <div>
-                <label className={labelClass}>Código Postal</label>
-                <input type="text" name="codigoPostal" required placeholder="Ej: 1744" value={formData.codigoPostal} onChange={handleChange} className={inputClass} />
-              </div>
-              <div className="sm:col-span-2">
-                <label className={labelClass}>Provincia</label>
-                <select name="provincia" required value={formData.provincia} onChange={handleChange} className={inputClass}>
-                  <option value="">Seleccioná una provincia</option>
-                  {PROVINCIAS.map((p) => <option key={p} value={p}>{p}</option>)}
-                </select>
+
+            {/* Tipo de entrega */}
+            <div className="mb-5">
+              <label className={labelClass}>Tipo de entrega</label>
+              <div className="flex gap-3 mt-1.5">
+                <button
+                  type="button"
+                  onClick={() => { setTipoEntrega("domicilio"); setSucursalSeleccionada(null); }}
+                  className={`flex-1 py-3 px-4 rounded-xl border text-sm font-medium transition-colors ${
+                    tipoEntrega === "domicilio"
+                      ? "border-[#2C1A10] bg-[#2C1A10] text-white"
+                      : "border-[#E0D4C4] text-[#2C1A10] hover:border-[#C9A87C]"
+                  }`}
+                >
+                  Envío a domicilio
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setTipoEntrega("sucursal")}
+                  className={`flex-1 py-3 px-4 rounded-xl border text-sm font-medium transition-colors ${
+                    tipoEntrega === "sucursal"
+                      ? "border-[#2C1A10] bg-[#2C1A10] text-white"
+                      : "border-[#E0D4C4] text-[#2C1A10] hover:border-[#C9A87C]"
+                  }`}
+                >
+                  Retiro en sucursal Vía Cargo
+                </button>
               </div>
             </div>
+
+            {/* Domicilio */}
+            {tipoEntrega === "domicilio" && (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="sm:col-span-2">
+                  <label className={labelClass}>Calle</label>
+                  <input type="text" name="calle" required placeholder="Av. Corrientes" value={formData.calle} onChange={handleChange} className={inputClass} />
+                </div>
+                <div>
+                  <label className={labelClass}>Número</label>
+                  <input type="text" name="numero" required placeholder="1234" value={formData.numero} onChange={handleChange} className={inputClass} />
+                </div>
+                <div>
+                  <label className={labelClass}>Depto / Piso (opcional)</label>
+                  <input type="text" name="depto" placeholder="3B" value={formData.depto} onChange={handleChange} className={inputClass} />
+                </div>
+                <div>
+                  <label className={labelClass}>Ciudad</label>
+                  <input type="text" name="ciudad" required placeholder="Buenos Aires" value={formData.ciudad} onChange={handleChange} className={inputClass} />
+                </div>
+                <div>
+                  <label className={labelClass}>Código Postal</label>
+                  <input type="text" name="codigoPostal" required placeholder="Ej: 1744" value={formData.codigoPostal} onChange={handleChange} className={inputClass} />
+                </div>
+                <div className="sm:col-span-2">
+                  <label className={labelClass}>Provincia</label>
+                  <select name="provincia" required value={formData.provincia} onChange={handleChange} className={inputClass}>
+                    <option value="">Seleccioná una provincia</option>
+                    {PROVINCIAS.map((p) => <option key={p} value={p}>{p}</option>)}
+                  </select>
+                </div>
+              </div>
+            )}
+
+            {/* Sucursal */}
+            {tipoEntrega === "sucursal" && (
+              <div className="space-y-4">
+                <div>
+                  <label className={labelClass}>Código postal</label>
+                  <input
+                    type="text"
+                    name="codigoPostal"
+                    maxLength={5}
+                    required
+                    placeholder="1425"
+                    value={formData.codigoPostal}
+                    onChange={handleChange}
+                    className={inputClass}
+                  />
+                </div>
+                {cargandoSucursales && (
+                  <p className="text-sm text-[#A0724A]">Buscando sucursales...</p>
+                )}
+                {!cargandoSucursales && sucursales.length > 0 && (
+                  <div>
+                    <label className={labelClass}>Sucursal Vía Cargo</label>
+                    <select
+                      required
+                      value={sucursalSeleccionada?.id ?? ""}
+                      onChange={(e) => {
+                        const s = sucursales.find((x) => x.id === e.target.value) ?? null;
+                        setSucursalSeleccionada(s);
+                      }}
+                      className={inputClass}
+                    >
+                      <option value="">Seleccioná una sucursal</option>
+                      {sucursales.map((s) => (
+                        <option key={s.id} value={s.id}>
+                          {s.nombre} — {s.direccion}, {s.localidad}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
+                {!cargandoSucursales && formData.codigoPostal.length >= 4 && sucursales.length === 0 && (
+                  <p className="text-sm text-red-500">
+                    No hay sucursales de Vía Cargo disponibles para ese código postal.
+                  </p>
+                )}
+              </div>
+            )}
           </div>
 
           {/* Método de pago */}
@@ -210,10 +375,14 @@ export default function CheckoutPage() {
 
           <button
             type="submit"
-            disabled={loading}
+            disabled={loading || costoEnvio === null}
             className="w-full bg-[#2C1A10] text-white py-4 rounded-full font-bold text-base hover:bg-[#A0724A] transition-all disabled:opacity-50"
           >
-            {loading ? "Procesando..." : `Confirmar pedido — $${total.toLocaleString("es-AR")}`}
+            {loading
+              ? "Procesando..."
+              : costoEnvio === null
+              ? "Completá los datos de envío para continuar"
+              : `Confirmar pedido — $${totalFinal.toLocaleString("es-AR")}`}
           </button>
         </form>
 
@@ -248,15 +417,23 @@ export default function CheckoutPage() {
             <div className="border-t border-[#E0D4C4] pt-4 space-y-2">
               <div className="flex justify-between text-sm">
                 <span className="text-[#A0724A]">Subtotal</span>
-                <span className="font-semibold text-[#2C1A10]">${total.toLocaleString("es-AR")}</span>
+                <span className="font-semibold text-[#2C1A10]">${subtotal.toLocaleString("es-AR")}</span>
               </div>
               <div className="flex justify-between text-sm">
                 <span className="text-[#A0724A]">Envío</span>
-                <span className="text-[#2C1A10]">A calcular</span>
+                <span className="text-[#2C1A10]">
+                  {cotizando
+                    ? "Calculando..."
+                    : costoEnvio !== null
+                    ? `$${costoEnvio.toLocaleString("es-AR")}`
+                    : "A calcular"}
+                </span>
               </div>
               <div className="flex justify-between font-bold text-[#2C1A10] pt-1 border-t border-[#E0D4C4]">
                 <span>Total</span>
-                <span className={metodoPago === "efectivo" ? "text-green-700" : ""}>${total.toLocaleString("es-AR")}</span>
+                <span className={metodoPago === "efectivo" ? "text-green-700" : ""}>
+                  ${totalFinal.toLocaleString("es-AR")}
+                </span>
               </div>
             </div>
           </div>
