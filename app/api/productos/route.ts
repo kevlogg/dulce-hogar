@@ -31,14 +31,16 @@ export async function POST(req: Request) {
       nombre,
       descripcion,
       precio,
+      precioEfectivo,
       imagenes,
+      categoria,
       categoriaId,
       stock,
       opciones,
       especificaciones,
     } = body;
 
-    if (!nombre || !precio || !categoriaId) {
+    if (!nombre || !precio) {
       return Response.json(
         { error: "Missing required fields" },
         { status: 400 }
@@ -47,10 +49,12 @@ export async function POST(req: Request) {
 
     const docRef = await db.collection("productos").add({
       nombre,
-      descripcion,
-      precio,
+      descripcion: descripcion || "",
+      precio: Number(precio),
+      precioEfectivo: precioEfectivo ? Number(precioEfectivo) : Math.round(Number(precio) * 0.75),
       imagenes: imagenes || [],
-      categoriaId,
+      categoria: categoria || categoriaId || "",
+      categoriaId: categoriaId || categoria || "",
       stock: stock || 0,
       opciones: opciones || [],
       especificaciones: especificaciones || {},
