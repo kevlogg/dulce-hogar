@@ -28,9 +28,10 @@ export async function POST(req: Request) {
   }
 
   // 1. Verify payment with Mercado Pago
-  let paymentStatus: { status: string };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let paymentStatus: { status: string } = null as any;
   try {
-    paymentStatus = await confirmarPagoMercadoPago(paymentId);
+    paymentStatus = (await confirmarPagoMercadoPago(paymentId)) as unknown as { status: string };
   } catch (err) {
     console.error("MP verification error:", err);
     return Response.json({ error: "Error verificando pago" }, { status: 502 });
