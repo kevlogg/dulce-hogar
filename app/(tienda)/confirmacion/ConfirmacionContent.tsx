@@ -8,15 +8,26 @@ import type { Orden } from "@/lib/types";
 export function ConfirmacionContent() {
   const searchParams = useSearchParams();
   const ordenId = searchParams.get("orden");
+  const paymentId = searchParams.get("payment_id") ?? searchParams.get("collection_id");
   const [orden, setOrden] = useState<Orden | null>(null);
 
   useEffect(() => {
     if (!ordenId) return;
+
+    // Confirmar pago con MP si hay payment_id en la URL
+    if (paymentId) {
+      fetch("/api/pagos/confirmar", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ paymentId, ordenId }),
+      }).catch(() => null);
+    }
+
     fetch(`/api/ordenes/${ordenId}`)
       .then((r) => (r.ok ? r.json() : null))
       .then((data) => setOrden(data))
       .catch(() => null);
-  }, [ordenId]);
+  }, [ordenId, paymentId]);
 
   return (
     <div className="max-w-md mx-auto text-center py-12 px-4">

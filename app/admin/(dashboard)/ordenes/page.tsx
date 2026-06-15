@@ -40,6 +40,7 @@ export default function OrdenesAdminPage() {
   const [expanded, setExpanded] = useState<string | null>(null);
   const [updating, setUpdating] = useState<string | null>(null);
   const [busqueda, setBusqueda] = useState("");
+  const [filtroPago, setFiltroPago] = useState<string>("todos");
 
   const load = () => {
     setLoading(true);
@@ -63,10 +64,12 @@ export default function OrdenesAdminPage() {
   }
 
   const filtradas = ordenes.filter((o) => {
+    if (filtroPago !== "todos" && o.estadoPago !== filtroPago) return false;
     const q = busqueda.toLowerCase();
     if (!q) return true;
     const nombre = `${o.clienteInfo?.nombre ?? ""} ${o.clienteInfo?.apellido ?? ""}`.toLowerCase();
-    return nombre.includes(q) || o.clienteInfo?.email?.toLowerCase().includes(q) || o.id.includes(q);
+    const shortId = o.id.slice(-6).toUpperCase();
+    return nombre.includes(q) || o.clienteInfo?.email?.toLowerCase().includes(q) || o.id.includes(q) || shortId.toLowerCase().includes(q);
   });
 
   const total = ordenes.length;
@@ -101,14 +104,29 @@ export default function OrdenesAdminPage() {
         <p className="text-2xl font-bold">${totalVentas.toLocaleString("es-AR")}</p>
       </div>
 
-      <div className="mb-4">
+      <div className="mb-4 flex flex-col sm:flex-row gap-3">
         <input
           type="text"
-          placeholder="Buscar por cliente, email o ID..."
+          placeholder="Buscar por cliente, email o N° de orden..."
           value={busqueda}
           onChange={(e) => setBusqueda(e.target.value)}
-          className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#C9A87C] bg-white"
+          className="flex-1 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#C9A87C] bg-white"
         />
+        <div className="flex gap-2">
+          {[["todos", "Todos"], ["pendiente", "Pendiente"], ["completado", "Completado"], ["fallido", "Fallido"]].map(([val, label]) => (
+            <button
+              key={val}
+              onClick={() => setFiltroPago(val)}
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-colors ${
+                filtroPago === val
+                  ? "bg-[#2C1A10] text-white border-[#2C1A10]"
+                  : "bg-white text-gray-600 border-gray-200 hover:border-[#C9A87C]"
+              }`}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
       </div>
 
       <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
