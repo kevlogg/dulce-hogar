@@ -16,16 +16,12 @@
 
 // ========== ESTRUCTURA LISTA ==========
 
-export async function crearPreferenciaMercadoPago(ordenId: string, montoTotal: number) {
-  // IMPLEMENTAR cuando tengas credenciales
-  // Usar: mercadopago SDK
-  // Retornar: preference_id y checkout_url
-  throw new Error("Mercado Pago no configurado. Agrega credenciales a .env.local");
-}
-
 export async function confirmarPagoMercadoPago(paymentId: string) {
-  // IMPLEMENTAR cuando tengas credenciales
-  // Usar: mercadopago SDK para consultar estado del pago
-  // Retornar: { status: "approved" | "rejected" | "pending" }
-  throw new Error("Mercado Pago no configurado");
+  const { MercadoPagoConfig, Payment } = await import("mercadopago");
+  const client = new MercadoPagoConfig({
+    accessToken: process.env.MERCADOPAGO_ACCESS_TOKEN!,
+  });
+  const payment = new Payment(client);
+  const result = await payment.get({ id: paymentId });
+  return { status: result.status };
 }
