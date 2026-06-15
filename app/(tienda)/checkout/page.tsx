@@ -23,6 +23,7 @@ export default function CheckoutPage() {
   const { items, clear } = useCart();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [mounted, setMounted] = useState(false);
   const [productos, setProductos] = useState<Record<string, any>>({});
   const [metodoPago, setMetodoPago] = useState<"efectivo" | "cuotas">("efectivo");
@@ -131,6 +132,7 @@ export default function CheckoutPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    setSubmitError(null);
     try {
       const res = await fetch("/api/checkout", {
         method: "POST",
@@ -172,9 +174,13 @@ export default function CheckoutPage() {
         const { init_point } = await res.json();
         clear();
         window.location.href = init_point;
+      } else {
+        const data = await res.json().catch(() => ({}));
+        setSubmitError(data.error ?? "No se pudo procesar el pedido. Intentá de nuevo.");
       }
     } catch (err) {
       console.error(err);
+      setSubmitError("Error de conexión. Verificá tu internet e intentá de nuevo.");
     } finally {
       setLoading(false);
     }
@@ -435,6 +441,12 @@ export default function CheckoutPage() {
               ? "Completá los datos de envío para continuar"
               : `Confirmar pedido — $${totalFinal.toLocaleString("es-AR")}`}
           </button>
+          {submitError && (
+            <div className="mt-3 bg-red-50 border border-red-200 rounded-xl px-4 py-3 text-sm text-red-700 flex items-start gap-2">
+              <span className="shrink-0 mt-0.5">⚠️</span>
+              <span>{submitError}</span>
+            </div>
+          )}
         </form>
 
         {/* Resumen */}
