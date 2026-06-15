@@ -115,6 +115,10 @@ interface Props {
 
 const VALID_CATS = new Set(["MUEBLES", "TEXTILES", "EXTERIOR", "ESPEJOS", "DECO", "ILUMINACION"]);
 
+const PROMO_MUNDIAL = ["mesa + 4 sillas tulum", "mesa comedor", "mecedora viral", "hamaca jamaica"];
+const isMundial = (nombre: string) =>
+  PROMO_MUNDIAL.some((n) => nombre.toLowerCase().includes(n.toLowerCase()));
+
 export function CatalogoClient({ productos }: Props) {
   const searchParams = useSearchParams();
   const [categoria, setCategoria] = useState(() => {
@@ -125,10 +129,15 @@ export function CatalogoClient({ productos }: Props) {
 
   const filtrados = useMemo(() => {
     const q = sinTildes(busqueda);
-    return productos.filter((p) => {
+    const lista = productos.filter((p) => {
       const matchCat = categoria === "TODOS" || p.categoria === categoria;
       const matchBusq = q === "" || sinTildes(p.nombre).includes(q);
       return matchCat && matchBusq;
+    });
+    return lista.sort((a, b) => {
+      const aM = isMundial(a.nombre) ? 0 : 1;
+      const bM = isMundial(b.nombre) ? 0 : 1;
+      return aM - bM;
     });
   }, [productos, categoria, busqueda]);
 
@@ -215,57 +224,82 @@ export function CatalogoClient({ productos }: Props) {
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-          {filtrados.map((p) => (
-            <Link key={p.id} href={`/productos/${p.id}`} className="group">
-              <div className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all overflow-hidden border border-[#E0D4C4]">
-                <CardImage imagenes={p.imagenes} nombre={p.nombre} />
-                <div className="p-4">
-                  <span className="text-[10px] font-bold tracking-widest uppercase text-[#C9A87C]">
-                    {CATEGORIAS.find((c) => c.key === p.categoria)?.label ?? p.categoria}
-                  </span>
-                  <h3 className="font-bold text-[#2C1A10] text-sm mt-1 mb-2 line-clamp-2">{p.nombre}</h3>
-                  {(() => {
-                    const colorOpcion = p.opciones?.find((o) => o.id === "color");
-                    const colores = colorOpcion?.items
-                      .map((item) => ({ nombre: item.nombre, hex: getColorHex(item.nombre) }))
-                      .filter((c) => c.hex !== null) ?? [];
-                    if (!colores.length) return null;
-                    return (
-                      <div className="flex gap-1 mb-2 flex-wrap">
-                        {colores.slice(0, 6).map((c) => (
-                          <span
-                            key={c.nombre}
-                            title={c.nombre}
-                            className="w-4 h-4 rounded-full border border-[#D0C4B4] shrink-0"
-                            style={{ backgroundColor: c.hex! }}
-                          />
-                        ))}
-                        {colores.length > 6 && (
-                          <span className="text-[10px] text-[#A0724A] leading-4">+{colores.length - 6}</span>
-                        )}
-                      </div>
-                    );
-                  })()}
-                  <div className="flex items-end justify-between gap-1">
+          {filtrados.map((p) => {
+            const mundial = isMundial(p.nombre);
+            return (
+              <Link key={p.id} href={`/productos/${p.id}`} className="group">
+                <div className={`bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all overflow-hidden ${mundial ? "border-2 border-[#74AADB]" : "border border-[#E0D4C4]"}`}>
+                  {/* Franja Argentina al tope de la card */}
+                  {mundial && (
+                    <div className="flex h-1.5">
+                      <div className="flex-1 bg-[#74AADB]" />
+                      <div className="flex-1 bg-white border-y border-[#74AADB]" />
+                      <div className="flex-1 bg-[#74AADB]" />
+                    </div>
+                  )}
+                  <div className="relative">
+                    <CardImage imagenes={p.imagenes} nombre={p.nombre} />
+                    {mundial ? (
+                      <span className="absolute top-2 left-2 z-10 bg-[#74AADB] text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm flex items-center gap-1">
+                        🇦🇷 PROMO MUNDIAL
+                      </span>
+                    ) : (
+                      <span className="absolute top-2 left-2 z-10 bg-[#E65100] text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm">
+                        6 cuotas sin interés
+                      </span>
+                    )}
+                  </div>
+                  <div className="p-4">
+                    <span className="text-[10px] font-bold tracking-widest uppercase text-[#C9A87C]">
+                      {CATEGORIAS.find((c) => c.key === p.categoria)?.label ?? p.categoria}
+                    </span>
+                    <h3 className="font-bold text-[#2C1A10] text-sm mt-1 mb-2 line-clamp-2">{p.nombre}</h3>
+                    {(() => {
+                      const colorOpcion = p.opciones?.find((o) => o.id === "color");
+                      const colores = colorOpcion?.items
+                        .map((item) => ({ nombre: item.nombre, hex: getColorHex(item.nombre) }))
+                        .filter((c) => c.hex !== null) ?? [];
+                      if (!colores.length) return null;
+                      return (
+                        <div className="flex gap-1 mb-2 flex-wrap">
+                          {colores.slice(0, 6).map((c) => (
+                            <span
+                              key={c.nombre}
+                              title={c.nombre}
+                              className="w-4 h-4 rounded-full border border-[#D0C4B4] shrink-0"
+                              style={{ backgroundColor: c.hex! }}
+                            />
+                          ))}
+                          {colores.length > 6 && (
+                            <span className="text-[10px] text-[#A0724A] leading-4">+{colores.length - 6}</span>
+                          )}
+                        </div>
+                      );
+                    })()}
                     <div className="space-y-0.5">
                       <div className="flex items-baseline gap-1">
                         <span className="text-[#2C1A10] font-bold text-base">${p.precio.toLocaleString("es-AR")}</span>
                         <span className="text-[10px] text-[#A0724A]">cuotas</span>
                       </div>
-                      <div className="flex items-baseline gap-1">
-                        <span className="text-green-700 font-bold text-base">${(p.precioEfectivo ?? Math.round(p.precio * 0.75)).toLocaleString("es-AR")}</span>
-                        <span className="text-[10px] text-green-600">efectivo</span>
+                      <div className="flex items-center gap-1.5 flex-wrap">
+                        <span className={mundial ? "text-[#003DA5] font-bold text-base" : "text-green-700 font-bold text-base"}>
+                          ${(p.precioEfectivo ?? Math.round(p.precio * 0.75)).toLocaleString("es-AR")}
+                        </span>
+                        <span className={mundial ? "text-[10px] text-[#74AADB]" : "text-[10px] text-green-600"}>
+                          efectivo / transferencia
+                        </span>
+                        {mundial ? (
+                          <span className="bg-[#74AADB] text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">30% OFF</span>
+                        ) : (
+                          <span className="bg-green-100 text-green-700 text-[10px] font-bold px-1.5 py-0.5 rounded-full">25% OFF</span>
+                        )}
                       </div>
-                    </div>
-                    <div className="flex flex-col gap-1 items-end shrink-0">
-                      <span className="bg-green-100 text-green-700 text-[10px] font-bold px-1.5 py-0.5 rounded-full">25% OFF</span>
-                      <span className="bg-[#FFF3E0] text-[#E65100] text-[10px] font-bold px-1.5 py-0.5 rounded-full">6 cuotas sin interés</span>
                     </div>
                   </div>
                 </div>
-              </div>
-            </Link>
-          ))}
+              </Link>
+            );
+          })}
         </div>
       )}
     </div>

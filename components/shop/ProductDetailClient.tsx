@@ -25,11 +25,13 @@ export function ProductDetailClient({ producto, relacionados, whatsappMsg }: Pro
   const [activeImageIdx, setActiveImageIdx] = useState<number | undefined>(undefined);
 
   const precioEfectivo = producto.precioEfectivo ?? Math.round(producto.precio * 0.75);
+  const PROMO_MUNDIAL = ["mesa + 4 sillas tulum", "mesa comedor", "mecedora viral", "hamaca jamaica"];
+  const mundial = PROMO_MUNDIAL.some((n) => producto.nombre.toLowerCase().includes(n.toLowerCase()));
 
   return (
     <>
       {/* Two-column main section */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 mb-10 md:mb-16">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 mb-8 md:mb-12">
         {/* Left: gallery */}
         <ProductoGallery
           imagenes={producto.imagenes ?? []}
@@ -44,13 +46,24 @@ export function ProductDetailClient({ producto, relacionados, whatsappMsg }: Pro
           </span>
 
           <h1
-            className="text-2xl md:text-3xl font-bold text-[#2C1A10] mb-4 leading-tight"
+            className="text-xl md:text-2xl font-bold text-[#2C1A10] mb-3 leading-tight"
             style={{ fontFamily: "'Playfair Display', serif" }}
           >
             {producto.nombre}
           </h1>
 
-          <div className="flex items-baseline gap-4 mb-6">
+          {mundial && (
+            <div className="flex items-center gap-2 mb-3">
+              <div className="flex h-2 rounded-full overflow-hidden w-24">
+                <div className="flex-1 bg-[#74AADB]" />
+                <div className="flex-1 bg-white border-y border-[#74AADB]" />
+                <div className="flex-1 bg-[#74AADB]" />
+              </div>
+              <span className="text-xs font-bold text-[#74AADB] tracking-wide uppercase">🇦🇷 Promo Mundial</span>
+            </div>
+          )}
+
+          <div className="flex items-baseline gap-4 mb-4">
             <div>
               <p className="text-3xl md:text-4xl font-bold text-[#2C1A10]">
                 ${producto.precio?.toLocaleString("es-AR")}
@@ -58,18 +71,24 @@ export function ProductDetailClient({ producto, relacionados, whatsappMsg }: Pro
               <p className="text-xs text-[#A0724A] mt-0.5">precio cuotas</p>
             </div>
             <div>
-              <p className="text-xl md:text-2xl font-bold text-green-700">
-                ${precioEfectivo.toLocaleString("es-AR")}
-              </p>
-              <p className="text-xs text-green-600 mt-0.5">precio efectivo</p>
+              <div className="flex items-center gap-2">
+                <p className={`text-xl md:text-2xl font-bold ${mundial ? "text-[#003DA5]" : "text-green-700"}`}>
+                  ${precioEfectivo.toLocaleString("es-AR")}
+                </p>
+                {mundial ? (
+                  <span className="bg-[#74AADB] text-white font-bold px-2 py-0.5 rounded text-xs">30% OFF</span>
+                ) : (
+                  <span className="bg-green-100 text-green-700 font-bold px-2 py-0.5 rounded text-xs">25% OFF</span>
+                )}
+              </div>
+              <p className={`text-xs mt-0.5 ${mundial ? "text-[#74AADB]" : "text-green-600"}`}>efectivo / transferencia</p>
             </div>
           </div>
 
           {/* Promos */}
-          <div className="bg-[#F7F3EE] rounded-xl p-4 mb-6 space-y-2.5 border border-[#E0D4C4]">
+          <div className="bg-[#F7F3EE] rounded-xl p-3 mb-4 space-y-1.5 border border-[#E0D4C4]">
             <div className="flex items-center gap-2 text-sm">
-              <span className="bg-green-100 text-green-700 font-bold px-2 py-0.5 rounded text-xs">25% OFF</span>
-              <span className="text-[#3D2B1F]">pagando en efectivo / transferencia</span>
+              <span className="text-[#3D2B1F]">💸 25% de descuento pagando en efectivo / transferencia</span>
             </div>
             <div className="flex items-center gap-2 text-sm text-[#3D2B1F]">
               <span>💳</span>
@@ -79,10 +98,26 @@ export function ProductDetailClient({ producto, relacionados, whatsappMsg }: Pro
               <span>🚚</span>
               <span>Flete GBA/CABA · Vía Cargo y Andreani a todo el país</span>
             </div>
+            <div className="flex items-center gap-2 text-sm font-semibold text-green-700 border-t border-[#E0D4C4] pt-1.5">
+              <span>✅</span>
+              <span>Envío gratis en compras superiores a $299.000</span>
+            </div>
           </div>
 
           {producto.descripcion && (
-            <p className="text-[#3D2B1F] leading-relaxed mb-6 text-sm">{producto.descripcion}</p>
+            <p className="text-[#3D2B1F] leading-relaxed mb-4 text-sm line-clamp-3">{producto.descripcion}</p>
+          )}
+
+          {producto.stock === 0 && (
+            <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 mb-4 text-sm text-amber-800">
+              Este producto tiene un tiempo de preparación estimado de 7 a 14 días hábiles. Siempre intentamos hacerlo en el menor tiempo posible para que lo recibas cuanto antes.
+            </div>
+          )}
+
+          {producto.id === "zD0UV9Xa7V5LgpvJgFvd" && (
+            <div className="bg-[#EEF6FF] border border-[#74AADB] rounded-xl px-4 py-3 mb-4 text-sm text-[#003DA5] font-semibold flex items-center gap-2">
+              🇦🇷 Envío gratis — Promo Mundial hasta el 20 de junio
+            </div>
           )}
 
           <div className="flex flex-col gap-3 mt-auto">

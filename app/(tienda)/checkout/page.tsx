@@ -32,12 +32,18 @@ export default function CheckoutPage() {
   });
 
   // Shipping state
+  const [zona, setZona] = useState<"caba_amba" | "resto_pais" | null>(null);
   const [tipoEntrega, setTipoEntrega] = useState<"domicilio" | "sucursal">("domicilio");
   const [sucursales, setSucursales] = useState<Sucursal[]>([]);
   const [sucursalSeleccionada, setSucursalSeleccionada] = useState<Sucursal | null>(null);
   const [costoEnvio, setCostoEnvio] = useState<number | null>(null);
   const [cotizando, setCotizando] = useState(false);
   const [cargandoSucursales, setCargandoSucursales] = useState(false);
+
+  const MECEDORA_ID = "zD0UV9Xa7V5LgpvJgFvd";
+  const PROMO_ENDS = new Date("2026-06-21T02:59:00Z");
+  const mecedoraGratis = items.some((i) => i.productoId === MECEDORA_ID) && Date.now() < PROMO_ENDS.getTime();
+  const UMBRAL_ENVIO_GRATIS = 299000;
 
   useEffect(() => setMounted(true), []);
 
@@ -105,6 +111,9 @@ export default function CheckoutPage() {
     return () => clearTimeout(timer);
   }, [formData.codigoPostal, tipoEntrega, sucursalSeleccionada, items]);
 
+  const envioGratisUmbral = totalEfectivo >= UMBRAL_ENVIO_GRATIS;
+  const costoEnvioFinal = mecedoraGratis || zona === "caba_amba" || envioGratisUmbral ? 0 : costoEnvio;
+
   const totalEfectivo = items.reduce((s, i) => {
     const p = productos[i.productoId];
     return s + (p ? (p.precioEfectivo ?? Math.round(p.precio * 0.75)) * i.cantidad : 0);
@@ -114,7 +123,7 @@ export default function CheckoutPage() {
     return s + (p ? p.precio * i.cantidad : 0);
   }, 0);
   const subtotal = metodoPago === "efectivo" ? totalEfectivo : totalCuotas;
-  const totalFinal = subtotal + (costoEnvio ?? 0);
+  const totalFinal = subtotal + (costoEnvioFinal ?? 0);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -154,15 +163,15 @@ export default function CheckoutPage() {
             sucursalNombre: sucursalSeleccionada?.nombre,
             sucursalDireccion: sucursalSeleccionada?.direccion,
           },
-          montoEnvio: costoEnvio ?? 0,
+          montoEnvio: costoEnvioFinal ?? 0,
           montoTotal: totalFinal,
           metodoPago,
         }),
       });
       if (res.ok) {
-        const { id } = await res.json();
+        const { init_point } = await res.json();
         clear();
-        router.push(`/confirmacion?orden=${id}`);
+        window.location.href = init_point;
       }
     } catch (err) {
       console.error(err);
@@ -234,114 +243,154 @@ export default function CheckoutPage() {
               Envío
             </h2>
 
-            {/* Tipo de entrega */}
+            {/* Paso 1: Zona */}
             <div className="mb-5">
-              <label className={labelClass}>Tipo de entrega</label>
+              <label className={labelClass}>¿Dónde recibís el pedido?</label>
               <div className="flex gap-3 mt-1.5">
                 <button
                   type="button"
-                  onClick={() => { setTipoEntrega("domicilio"); setSucursalSeleccionada(null); }}
+                  onClick={() => { setZona("caba_amba"); setTipoEntrega("domicilio"); setSucursalSeleccionada(null); setCostoEnvio(null); }}
                   className={`flex-1 py-3 px-4 rounded-xl border text-sm font-medium transition-colors ${
-                    tipoEntrega === "domicilio"
+                    zona === "caba_amba"
                       ? "border-[#2C1A10] bg-[#2C1A10] text-white"
                       : "border-[#E0D4C4] text-[#2C1A10] hover:border-[#C9A87C]"
                   }`}
                 >
-                  Envío a domicilio
+                  🏙️ CABA / GBA
                 </button>
                 <button
                   type="button"
-                  onClick={() => setTipoEntrega("sucursal")}
+                  onClick={() => { setZona("resto_pais"); setSucursalSeleccionada(null); setCostoEnvio(null); }}
                   className={`flex-1 py-3 px-4 rounded-xl border text-sm font-medium transition-colors ${
-                    tipoEntrega === "sucursal"
+                    zona === "resto_pais"
                       ? "border-[#2C1A10] bg-[#2C1A10] text-white"
                       : "border-[#E0D4C4] text-[#2C1A10] hover:border-[#C9A87C]"
                   }`}
                 >
-                  Retiro en sucursal Vía Cargo
+                  📦 Resto del país
                 </button>
               </div>
             </div>
 
-            {/* Domicilio */}
-            {tipoEntrega === "domicilio" && (
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="sm:col-span-2">
-                  <label className={labelClass}>Calle</label>
-                  <input type="text" name="calle" required placeholder="Av. Corrientes" value={formData.calle} onChange={handleChange} className={inputClass} />
+            {/* CABA / GBA: solo domicilio */}
+            {zona === "caba_amba" && (
+              <>
+                <div className="bg-[#F7F3EE] rounded-xl px-4 py-2.5 mb-4 text-xs text-[#A0724A]">
+                  🚚 Hacemos flete a domicilio en CABA y GBA. Te coordinamos la entrega por WhatsApp.
                 </div>
-                <div>
-                  <label className={labelClass}>Número</label>
-                  <input type="text" name="numero" required placeholder="1234" value={formData.numero} onChange={handleChange} className={inputClass} />
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="sm:col-span-2">
+                    <label className={labelClass}>Calle</label>
+                    <input type="text" name="calle" required placeholder="Av. Corrientes" value={formData.calle} onChange={handleChange} className={inputClass} />
+                  </div>
+                  <div>
+                    <label className={labelClass}>Número</label>
+                    <input type="text" name="numero" required placeholder="1234" value={formData.numero} onChange={handleChange} className={inputClass} />
+                  </div>
+                  <div>
+                    <label className={labelClass}>Depto / Piso (opcional)</label>
+                    <input type="text" name="depto" placeholder="3B" value={formData.depto} onChange={handleChange} className={inputClass} />
+                  </div>
+                  <div>
+                    <label className={labelClass}>Ciudad / Localidad</label>
+                    <input type="text" name="ciudad" required placeholder="Moreno" value={formData.ciudad} onChange={handleChange} className={inputClass} />
+                  </div>
+                  <div>
+                    <label className={labelClass}>Código Postal</label>
+                    <input type="text" name="codigoPostal" required placeholder="Ej: 1744" value={formData.codigoPostal} onChange={handleChange} className={inputClass} />
+                  </div>
                 </div>
-                <div>
-                  <label className={labelClass}>Depto / Piso (opcional)</label>
-                  <input type="text" name="depto" placeholder="3B" value={formData.depto} onChange={handleChange} className={inputClass} />
-                </div>
-                <div>
-                  <label className={labelClass}>Ciudad</label>
-                  <input type="text" name="ciudad" required placeholder="Buenos Aires" value={formData.ciudad} onChange={handleChange} className={inputClass} />
-                </div>
-                <div>
-                  <label className={labelClass}>Código Postal</label>
-                  <input type="text" name="codigoPostal" required placeholder="Ej: 1744" value={formData.codigoPostal} onChange={handleChange} className={inputClass} />
-                </div>
-                <div className="sm:col-span-2">
-                  <label className={labelClass}>Provincia</label>
-                  <select name="provincia" required value={formData.provincia} onChange={handleChange} className={inputClass}>
-                    <option value="">Seleccioná una provincia</option>
-                    {PROVINCIAS.map((p) => <option key={p} value={p}>{p}</option>)}
-                  </select>
-                </div>
-              </div>
+              </>
             )}
 
-            {/* Sucursal */}
-            {tipoEntrega === "sucursal" && (
-              <div className="space-y-4">
-                <div>
-                  <label className={labelClass}>Código postal</label>
-                  <input
-                    type="text"
-                    name="codigoPostal"
-                    maxLength={5}
-                    required
-                    placeholder="1425"
-                    value={formData.codigoPostal}
-                    onChange={handleChange}
-                    className={inputClass}
-                  />
-                </div>
-                {cargandoSucursales && (
-                  <p className="text-sm text-[#A0724A]">Buscando sucursales...</p>
-                )}
-                {!cargandoSucursales && sucursales.length > 0 && (
-                  <div>
-                    <label className={labelClass}>Sucursal Vía Cargo</label>
-                    <select
-                      required
-                      value={sucursalSeleccionada?.id ?? ""}
-                      onChange={(e) => {
-                        const s = sucursales.find((x) => x.id === e.target.value) ?? null;
-                        setSucursalSeleccionada(s);
-                      }}
-                      className={inputClass}
+            {/* Resto del país */}
+            {zona === "resto_pais" && (
+              <>
+                {/* Tipo de entrega */}
+                <div className="mb-5">
+                  <label className={labelClass}>Tipo de entrega</label>
+                  <div className="flex gap-3 mt-1.5">
+                    <button
+                      type="button"
+                      onClick={() => { setTipoEntrega("domicilio"); setSucursalSeleccionada(null); }}
+                      className={`flex-1 py-3 px-4 rounded-xl border text-sm font-medium transition-colors ${
+                        tipoEntrega === "domicilio"
+                          ? "border-[#2C1A10] bg-[#2C1A10] text-white"
+                          : "border-[#E0D4C4] text-[#2C1A10] hover:border-[#C9A87C]"
+                      }`}
                     >
-                      <option value="">Seleccioná una sucursal</option>
-                      {sucursales.map((s) => (
-                        <option key={s.id} value={s.id}>
-                          {s.nombre} — {s.direccion}, {s.localidad}
-                        </option>
-                      ))}
-                    </select>
+                      Envío a domicilio
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setTipoEntrega("sucursal")}
+                      className={`flex-1 py-3 px-4 rounded-xl border text-sm font-medium transition-colors ${
+                        tipoEntrega === "sucursal"
+                          ? "border-[#2C1A10] bg-[#2C1A10] text-white"
+                          : "border-[#E0D4C4] text-[#2C1A10] hover:border-[#C9A87C]"
+                      }`}
+                    >
+                      Retiro en sucursal Vía Cargo
+                    </button>
+                  </div>
+                </div>
+
+                {tipoEntrega === "domicilio" && (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="sm:col-span-2">
+                      <label className={labelClass}>Calle</label>
+                      <input type="text" name="calle" required placeholder="Av. Corrientes" value={formData.calle} onChange={handleChange} className={inputClass} />
+                    </div>
+                    <div>
+                      <label className={labelClass}>Número</label>
+                      <input type="text" name="numero" required placeholder="1234" value={formData.numero} onChange={handleChange} className={inputClass} />
+                    </div>
+                    <div>
+                      <label className={labelClass}>Depto / Piso (opcional)</label>
+                      <input type="text" name="depto" placeholder="3B" value={formData.depto} onChange={handleChange} className={inputClass} />
+                    </div>
+                    <div>
+                      <label className={labelClass}>Ciudad</label>
+                      <input type="text" name="ciudad" required placeholder="Buenos Aires" value={formData.ciudad} onChange={handleChange} className={inputClass} />
+                    </div>
+                    <div>
+                      <label className={labelClass}>Código Postal</label>
+                      <input type="text" name="codigoPostal" required placeholder="Ej: 1744" value={formData.codigoPostal} onChange={handleChange} className={inputClass} />
+                    </div>
+                    <div className="sm:col-span-2">
+                      <label className={labelClass}>Provincia</label>
+                      <select name="provincia" required value={formData.provincia} onChange={handleChange} className={inputClass}>
+                        <option value="">Seleccioná una provincia</option>
+                        {PROVINCIAS.map((p) => <option key={p} value={p}>{p}</option>)}
+                      </select>
+                    </div>
                   </div>
                 )}
-                {!cargandoSucursales && formData.codigoPostal.length >= 4 && sucursales.length === 0 && (
-                  <p className="text-sm text-red-500">
-                    No hay sucursales de Vía Cargo disponibles para ese código postal.
-                  </p>
+
+                {tipoEntrega === "sucursal" && (
+                  <div className="space-y-4">
+                    <div>
+                      <label className={labelClass}>Código postal</label>
+                      <input type="text" name="codigoPostal" maxLength={5} required placeholder="1425" value={formData.codigoPostal} onChange={handleChange} className={inputClass} />
+                    </div>
+                    {cargandoSucursales && <p className="text-sm text-[#A0724A]">Buscando sucursales...</p>}
+                    {!cargandoSucursales && sucursales.length > 0 && (
+                      <div>
+                        <label className={labelClass}>Sucursal Vía Cargo</label>
+                        <select required value={sucursalSeleccionada?.id ?? ""} onChange={(e) => { const s = sucursales.find((x) => x.id === e.target.value) ?? null; setSucursalSeleccionada(s); }} className={inputClass}>
+                          <option value="">Seleccioná una sucursal</option>
+                          {sucursales.map((s) => (
+                            <option key={s.id} value={s.id}>{s.nombre} — {s.direccion}, {s.localidad}</option>
+                          ))}
+                        </select>
+                      </div>
+                    )}
+                    {!cargandoSucursales && formData.codigoPostal.length >= 4 && sucursales.length === 0 && (
+                      <p className="text-sm text-red-500">No hay sucursales de Vía Cargo disponibles para ese código postal.</p>
+                    )}
+                  </div>
                 )}
-              </div>
+              </>
             )}
           </div>
 
@@ -375,12 +424,14 @@ export default function CheckoutPage() {
 
           <button
             type="submit"
-            disabled={loading || costoEnvio === null}
+            disabled={loading || !zona || (zona === "resto_pais" && costoEnvioFinal === null)}
             className="w-full bg-[#2C1A10] text-white py-4 rounded-full font-bold text-base hover:bg-[#A0724A] transition-all disabled:opacity-50"
           >
             {loading
               ? "Procesando..."
-              : costoEnvio === null
+              : !zona
+              ? "Seleccioná tu zona de envío para continuar"
+              : zona === "resto_pais" && costoEnvioFinal === null
               ? "Completá los datos de envío para continuar"
               : `Confirmar pedido — $${totalFinal.toLocaleString("es-AR")}`}
           </button>
@@ -421,14 +472,19 @@ export default function CheckoutPage() {
               </div>
               <div className="flex justify-between text-sm">
                 <span className="text-[#A0724A]">Envío</span>
-                <span className="text-[#2C1A10]">
-                  {cotizando
+                <span className={mecedoraGratis || zona === "caba_amba" || envioGratisUmbral ? "text-green-700 font-semibold" : "text-[#2C1A10]"}>
+                  {mecedoraGratis || zona === "caba_amba" || envioGratisUmbral
+                    ? "Gratis ✓"
+                    : cotizando
                     ? "Calculando..."
-                    : costoEnvio !== null
-                    ? `$${costoEnvio.toLocaleString("es-AR")}`
+                    : costoEnvioFinal !== null
+                    ? `$${costoEnvioFinal.toLocaleString("es-AR")}`
                     : "A calcular"}
                 </span>
               </div>
+              {envioGratisUmbral && (
+                <p className="text-xs text-green-600">Tu compra supera $299.000 — envío sin cargo.</p>
+              )}
               <div className="flex justify-between font-bold text-[#2C1A10] pt-1 border-t border-[#E0D4C4]">
                 <span>Total</span>
                 <span className={metodoPago === "efectivo" ? "text-green-700" : ""}>

@@ -28,7 +28,7 @@ export function ProductoGallery({ imagenes, nombre, activeIndex }: Props) {
 
   return (
     <div className="flex flex-col gap-3">
-      <div className="relative w-full aspect-square bg-[#EFEBE3] rounded-2xl overflow-hidden">
+      <div className="relative w-full aspect-[4/3] max-h-[480px] bg-[#EFEBE3] rounded-2xl overflow-hidden">
         <img
           src={imagenes[selected]}
           alt={nombre}

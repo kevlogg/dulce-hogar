@@ -37,6 +37,7 @@ export async function POST(req: Request) {
       categoriaId,
       stock,
       opciones,
+      accesorios,
       especificaciones,
     } = body;
 
@@ -57,6 +58,7 @@ export async function POST(req: Request) {
       categoriaId: categoriaId || categoria || "",
       stock: stock || 0,
       opciones: opciones || [],
+      accesorios: accesorios || [],
       especificaciones: especificaciones || {},
       createdAt: new Date(),
       updatedAt: new Date(),

@@ -69,7 +69,6 @@ export default function OrdenesAdminPage() {
     return nombre.includes(q) || o.clienteInfo?.email?.toLowerCase().includes(q) || o.id.includes(q);
   });
 
-  // Stats
   const total = ordenes.length;
   const pendientes = ordenes.filter((o) => o.estadoPago === "pendiente").length;
   const enviados = ordenes.filter((o) => o.estadoEnvio === "enviado").length;
@@ -83,7 +82,6 @@ export default function OrdenesAdminPage() {
         <p className="text-sm text-gray-500">Registro de pedidos y clientes</p>
       </div>
 
-      {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         {[
           { label: "Total órdenes", value: total, color: "text-[#2C1A10]" },
@@ -98,13 +96,11 @@ export default function OrdenesAdminPage() {
         ))}
       </div>
 
-      {/* Ventas totales */}
       <div className="bg-[#2C1A10] text-white rounded-xl p-4 mb-6 flex items-center justify-between">
         <p className="text-sm opacity-80">Ventas totales (monto acumulado)</p>
         <p className="text-2xl font-bold">${totalVentas.toLocaleString("es-AR")}</p>
       </div>
 
-      {/* Search */}
       <div className="mb-4">
         <input
           type="text"
@@ -115,7 +111,6 @@ export default function OrdenesAdminPage() {
         />
       </div>
 
-      {/* Table */}
       <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
         {loading ? (
           <div className="p-10 text-center text-gray-400 text-sm">Cargando órdenes...</div>
@@ -127,18 +122,15 @@ export default function OrdenesAdminPage() {
           <div className="divide-y divide-gray-100">
             {filtradas.map((o) => (
               <div key={o.id}>
-                {/* Row */}
                 <div
                   className="flex flex-wrap items-center gap-3 px-4 py-3 hover:bg-gray-50 cursor-pointer transition-colors"
                   onClick={() => setExpanded(expanded === o.id ? null : o.id)}
                 >
-                  {/* ID + fecha */}
                   <div className="min-w-[120px]">
                     <p className="font-mono text-xs text-gray-400">{o.id.slice(0, 10)}...</p>
                     <p className="text-xs text-gray-500 mt-0.5">{parseDate(o.createdAt)}</p>
                   </div>
 
-                  {/* Cliente */}
                   <div className="flex-1 min-w-[140px]">
                     <p className="font-semibold text-sm text-[#2C1A10]">
                       {o.clienteInfo?.nombre} {o.clienteInfo?.apellido}
@@ -149,7 +141,6 @@ export default function OrdenesAdminPage() {
                     )}
                   </div>
 
-                  {/* Items count + total */}
                   <div className="text-right min-w-[100px]">
                     <p className="font-bold text-sm text-[#2C1A10]">${(o.montoTotal ?? 0).toLocaleString("es-AR")}</p>
                     <p className="text-xs text-gray-500">{o.items?.length ?? 0} {o.items?.length === 1 ? "ítem" : "ítems"}</p>
@@ -158,7 +149,6 @@ export default function OrdenesAdminPage() {
                     )}
                   </div>
 
-                  {/* Estado pago */}
                   <div onClick={(e) => e.stopPropagation()}>
                     <p className="text-[10px] text-gray-400 mb-1 font-semibold uppercase tracking-wide">Pago</p>
                     <select
@@ -171,7 +161,6 @@ export default function OrdenesAdminPage() {
                     </select>
                   </div>
 
-                  {/* Estado envío */}
                   <div onClick={(e) => e.stopPropagation()}>
                     <p className="text-[10px] text-gray-400 mb-1 font-semibold uppercase tracking-wide">Envío</p>
                     <select
@@ -187,10 +176,8 @@ export default function OrdenesAdminPage() {
                   <div className="text-gray-400 text-sm">{expanded === o.id ? "▲" : "▼"}</div>
                 </div>
 
-                {/* Expanded detail */}
                 {expanded === o.id && (
                   <div className="bg-gray-50 border-t border-gray-100 px-6 py-4 grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {/* Dirección */}
                     <div>
                       <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Dirección de envío</p>
                       {o.direccionEnvio ? (
@@ -203,7 +190,6 @@ export default function OrdenesAdminPage() {
                       )}
                     </div>
 
-                    {/* Items */}
                     <div>
                       <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Productos del pedido</p>
                       <div className="space-y-1.5">

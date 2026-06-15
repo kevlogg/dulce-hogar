@@ -7,7 +7,7 @@ async function getProducto(id: string) {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/productos/${id}`,
-      { next: { revalidate: 60 } }
+      { cache: "no-store" }
     );
     if (!res.ok) return null;
     return await res.json();
@@ -20,7 +20,7 @@ async function getRelacionados(categoria: string, excludeId: string) {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/productos`,
-      { next: { revalidate: 60 } }
+      { cache: "no-store" }
     );
     if (!res.ok) return [];
     const todos = await res.json();

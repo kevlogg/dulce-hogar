@@ -43,11 +43,11 @@ interface IPCEstimate {
 
 const DEFAULT_CONFIG: BillingConfig = {
   plan_type: "monthly",
-  monthly_amount: 25000,
+  monthly_amount: 33000,
   monthly_annual_increase_pct: 25,
   monthly_next_date: "",
-  one_time_amount: 190000,
-  maintenance_amount: 35000,
+  one_time_amount: 250000,
+  maintenance_amount: 45000,
   variable_increase_min: 15,
   variable_increase_max: 40,
   cbu: "",
@@ -210,10 +210,6 @@ export default function AdminPlanPage() {
                 <p className="text-xs text-wood-500 uppercase tracking-wide">Monto actual</p>
                 <p className="font-medium text-wood-900">{formatARS(config.monthly_amount)}/mes</p>
               </div>
-              <div>
-                <p className="text-xs text-wood-500 uppercase tracking-wide">Aumento anual</p>
-                <p className="font-medium text-wood-900">{config.monthly_annual_increase_pct}%</p>
-              </div>
             </>
           ) : (
             <>
@@ -222,12 +218,8 @@ export default function AdminPlanPage() {
                 <p className="font-medium text-wood-900">{formatARS(config.one_time_amount)}</p>
               </div>
               <div>
-                <p className="text-xs text-wood-500 uppercase tracking-wide">Mantenimiento anual</p>
+                <p className="text-xs text-wood-500 uppercase tracking-wide">Renovacion anual</p>
                 <p className="font-medium text-wood-900">{formatARS(config.maintenance_amount)}</p>
-              </div>
-              <div>
-                <p className="text-xs text-wood-500 uppercase tracking-wide">Aumento variable</p>
-                <p className="font-medium text-wood-900">{config.variable_increase_min}–{config.variable_increase_max}%</p>
               </div>
             </>
           )}
@@ -360,7 +352,7 @@ export default function AdminPlanPage() {
           <div>
             <p className="font-medium text-wood-900 mb-1">Plan mensual</p>
             <ul className="space-y-1 list-disc list-inside text-wood-600">
-              <li>Pago mensual fijo de {formatARS(25000)}.</li>
+              <li>Pago mensual fijo de {formatARS(33000)}.</li>
               <li>El precio se ajusta cada 6 meses por la variacion del componente Servicios del IPC publicado por INDEC en los 6 meses anteriores a la fecha de ajuste. El aumento se calcula multiplicando los factores mensuales (no sumando).</li>
               <li>El servicio incluye hosting, actualizaciones de seguridad y soporte tecnico ante errores o caidas.</li>
               <li>Cualquier modificacion, nueva seccion o desarrollo adicional se presupuesta por separado, ya que implica tiempo de desarrollo.</li>
@@ -369,9 +361,9 @@ export default function AdminPlanPage() {
           <div className="border-t border-wood-100 pt-4">
             <p className="font-medium text-wood-900 mb-1">Plan pago unico</p>
             <ul className="space-y-1 list-disc list-inside text-wood-600">
-              <li>Pago unico de {formatARS(190000)} que cubre el desarrollo completo.</li>
+              <li>Pago unico de {formatARS(250000)} que cubre el desarrollo completo.</li>
               <li>El precio se ajusta cada 6 meses por la variacion del componente Servicios del IPC publicado por INDEC en los 6 meses anteriores a la fecha de ajuste. El aumento se calcula multiplicando los factores mensuales (no sumando).</li>
-              <li>Incluye un mantenimiento cada 6 meses de {formatARS(35000)}, tambien sujeto a ajuste por IPC cada 6 meses.</li>
+              <li>Incluye renovacion anual de {formatARS(45000)}, tambien sujeto a ajuste por IPC cada 6 meses.</li>
               <li>El mantenimiento cubre actualizaciones de seguridad y correccion de errores del sistema existente.</li>
               <li>Cualquier modificacion, nueva seccion o desarrollo adicional se presupuesta por separado, ya que implica tiempo de desarrollo.</li>
             </ul>

@@ -33,10 +33,10 @@ export async function PUT(
     const db = getAdminFirestore();
     const body = await req.json();
 
-    await db.collection("productos").doc(id).update({
-      ...body,
-      updatedAt: new Date(),
-    });
+    const updateData: Record<string, any> = { ...body, updatedAt: new Date() };
+    // Ensure accesorios is always written (even as empty array)
+    if (!("accesorios" in updateData)) updateData.accesorios = [];
+    await db.collection("productos").doc(id).update(updateData);
 
     return Response.json({ id });
   } catch (error) {

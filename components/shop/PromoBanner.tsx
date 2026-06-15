@@ -1,7 +1,8 @@
 "use client";
 
 const items = [
-  { icon: "🛋️", text: "PROMO MUNDIAL — 10% descuento en sofás y combos mesa + sillas" },
+  { icon: "🛋️", text: "PROMO MUNDIAL — descuento en sofás y combos mesa + sillas" },
+  { icon: "🚚", text: "ENVÍO GRATIS en compras superiores a $299.000" },
   { icon: "💳", text: "3 Y 6 CUOTAS FIJAS sin interés" },
   { icon: "💵", text: "25% DE DESCUENTO pagando en efectivo" },
   { icon: "🚚", text: "FLETE A DOMICILIO en GBA y CABA" },

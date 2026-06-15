@@ -24,6 +24,13 @@ export interface OpcionProducto {
   items: OpcionItem[];
 }
 
+export interface Accesorio {
+  id: string;
+  nombre: string;
+  precio: number;
+  precioEfectivo?: number;
+}
+
 export interface Producto {
   id: string;
   nombre: string;
@@ -35,6 +42,7 @@ export interface Producto {
   precioEfectivo?: number;
   stock: number;
   opciones: OpcionProducto[];
+  accesorios?: Accesorio[];
   especificaciones: Record<string, string>;
   peso?: number;
   alto?: number;
@@ -103,4 +111,5 @@ export interface CartItem {
     itemSeleccionadoId: string;
     precioAdicional: number;
   }[];
+  accesoriosSeleccionados?: string[];
 }

@@ -1,9 +1,11 @@
 import { Resend } from "resend";
 import type { Orden } from "./types";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-// Must match a domain verified in the Resend dashboard
 const FROM = "Dulce Hogar <noreply@dulcehogar.com.ar>";
+
+function getResend() {
+  return new Resend(process.env.RESEND_API_KEY);
+}
 
 export async function sendTrackingEmail(orden: Orden): Promise<void> {
   const itemsList = orden.items
@@ -15,7 +17,7 @@ export async function sendTrackingEmail(orden: Orden): Promise<void> {
       ? `Retiro en sucursal: ${orden.direccionEnvio.sucursalNombre ?? ""} — ${orden.direccionEnvio.sucursalDireccion ?? ""}`
       : `Envío a: ${orden.direccionEnvio.calle} ${orden.direccionEnvio.numero}, ${orden.direccionEnvio.ciudad}`;
 
-  await resend.emails.send({
+  await getResend().emails.send({
     from: FROM,
     to: orden.clienteInfo.email,
     subject: `Tu pedido está en camino — #${orden.id.slice(-6).toUpperCase()}`,
@@ -41,7 +43,7 @@ export async function sendTrackingEmail(orden: Orden): Promise<void> {
 }
 
 export async function sendTrackingPendingEmail(orden: Orden): Promise<void> {
-  await resend.emails.send({
+  await getResend().emails.send({
     from: FROM,
     to: orden.clienteInfo.email,
     subject: `Tu pedido fue confirmado — #${orden.id.slice(-6).toUpperCase()}`,
@@ -68,7 +70,7 @@ export async function sendShipmentFailedAlert(
     .filter(Boolean);
   if (adminEmails.length === 0) return;
 
-  await resend.emails.send({
+  await getResend().emails.send({
     from: FROM,
     to: adminEmails,
     subject: `[ACCIÓN REQUERIDA] Envío pendiente — Orden #${orden.id.slice(-6).toUpperCase()}`,

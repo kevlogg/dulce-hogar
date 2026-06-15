@@ -1,5 +1,6 @@
 import { CartProvider } from "@/components/shop/CartProvider";
 import { PromoBanner } from "@/components/shop/PromoBanner";
+import { CountdownBanner } from "@/components/shop/CountdownBanner";
 import { CartNavIcon } from "@/components/shop/CartNavIcon";
 import { MobileNav } from "@/components/shop/MobileNav";
 import Link from "next/link";
@@ -27,7 +28,9 @@ export default function TiendaLayout({
   return (
     <CartProvider>
       <div className="min-h-screen bg-[#F7F3EE] flex flex-col">
-        <header className="bg-white border-b sticky top-0 z-50 relative">
+        <CountdownBanner />
+        <header className="sticky top-0 z-50">
+          <div className="bg-white border-b">
           <div className="max-w-6xl mx-auto px-4 py-2 flex items-center justify-between gap-4">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-1.5 sm:gap-2 shrink-0">
@@ -60,9 +63,10 @@ export default function TiendaLayout({
             <nav className="hidden md:flex items-center gap-6 flex-1 justify-center">
               {[
                 { label: "Inicio", href: "/#inicio" },
-                { label: "Nosotros", href: "/#nosotros" },
+                { label: "Nosotros", href: "/nosotros" },
                 { label: "Categorías", href: "/#categorias" },
                 { label: "Productos", href: "/productos" },
+                { label: "Ventas x Mayor", href: "/mayoristas" },
                 { label: "Envíos", href: "/#envios" },
                 { label: "Contacto", href: "/#contacto" },
               ].map((item) => (
@@ -81,11 +85,9 @@ export default function TiendaLayout({
               <MobileNav />
             </div>
           </div>
-        </header>
-
-        <div className="sticky top-[60px] sm:top-[88px] md:top-[112px] z-40">
+          </div>
           <PromoBanner />
-        </div>
+        </header>
 
         <main className="flex-1 w-full">
           {children}

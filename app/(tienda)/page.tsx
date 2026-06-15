@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Producto } from "@/lib/types";
 import { HeroCarousel } from "@/components/shop/HeroCarousel";
+import { ConfettiCannon } from "@/components/shop/ConfettiCannon";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -26,6 +27,7 @@ export default async function HomePage() {
 
   return (
     <div>
+      <ConfettiCannon />
       <HeroCarousel />
 
       <div className="h-px bg-gradient-to-r from-transparent via-[#C9A87C] to-transparent" />
