@@ -51,7 +51,7 @@ export async function POST(request: Request) {
       email,
       paymentMethodId: payment_method_id ?? brand,
       installments: Number(installments) || 1,
-      description: 'Plan mensual - Tienda de Astillas',
+      description: 'Plan mensual - Dulce Hogar',
     })
 
     const confirmed = status === 'approved'

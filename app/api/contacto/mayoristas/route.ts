@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
     await resend.emails.send({
       from: FROM,
       to: DEST,
-      replyTo: email,
+      reply_to: email,
       subject: `Nueva solicitud mayorista — ${nombre}`,
       text: [
         "Nueva solicitud de compra mayorista:",

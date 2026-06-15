@@ -111,9 +111,6 @@ export default function CheckoutPage() {
     return () => clearTimeout(timer);
   }, [formData.codigoPostal, tipoEntrega, sucursalSeleccionada, items]);
 
-  const envioGratisUmbral = totalEfectivo >= UMBRAL_ENVIO_GRATIS;
-  const costoEnvioFinal = mecedoraGratis || zona === "caba_amba" || envioGratisUmbral ? 0 : costoEnvio;
-
   const totalEfectivo = items.reduce((s, i) => {
     const p = productos[i.productoId];
     return s + (p ? (p.precioEfectivo ?? Math.round(p.precio * 0.75)) * i.cantidad : 0);
@@ -122,6 +119,9 @@ export default function CheckoutPage() {
     const p = productos[i.productoId];
     return s + (p ? p.precio * i.cantidad : 0);
   }, 0);
+
+  const envioGratisUmbral = totalEfectivo >= UMBRAL_ENVIO_GRATIS;
+  const costoEnvioFinal = mecedoraGratis || zona === "caba_amba" || envioGratisUmbral ? 0 : costoEnvio;
   const subtotal = metodoPago === "efectivo" ? totalEfectivo : totalCuotas;
   const totalFinal = subtotal + (costoEnvioFinal ?? 0);
 
