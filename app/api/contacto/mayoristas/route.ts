@@ -1,7 +1,7 @@
 import { type NextRequest } from "next/server";
 import { Resend } from "resend";
 
-const FROM = "Dulce Hogar <noreply@dulcehogar.com.ar>";
+const FROM = "Dulce Hogar <onboarding@resend.dev>";
 const DEST = "Dulcehogar.dye@gmail.com";
 
 export async function POST(req: NextRequest) {
