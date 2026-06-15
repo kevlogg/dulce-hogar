@@ -90,7 +90,8 @@ export async function POST(req: Request) {
     }, { status: 201 });
 
   } catch (error) {
-    console.error("Checkout error:", error);
-    return Response.json({ error: "Checkout failed" }, { status: 500 });
+    const msg = error instanceof Error ? error.message : String(error);
+    console.error("Checkout error:", msg);
+    return Response.json({ error: msg }, { status: 500 });
   }
 }
