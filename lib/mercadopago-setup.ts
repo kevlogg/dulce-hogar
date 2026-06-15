@@ -16,6 +16,10 @@
 
 // ========== ESTRUCTURA LISTA ==========
 
+export async function crearPreferenciaMercadoPago(_ordenId: string, _montoTotal: number) {
+  throw new Error("Usar /api/checkout en su lugar");
+}
+
 export async function confirmarPagoMercadoPago(paymentId: string) {
   const { MercadoPagoConfig, Payment } = await import("mercadopago");
   const client = new MercadoPagoConfig({
