@@ -37,12 +37,17 @@ export async function POST(req: Request) {
     return Response.json({ error: "Error verificando pago" }, { status: 502 });
   }
 
-  if (paymentStatus.status !== "approved") {
-    return Response.json({ approved: false, status: paymentStatus.status });
-  }
-
   const db = getAdminFirestore();
   const ordenRef = db.collection("ordenes").doc(ordenId);
+
+  if (paymentStatus.status !== "approved") {
+    await ordenRef.update({
+      estadoPago: "fallido",
+      mercadopagoPaymentId: paymentId,
+      updatedAt: new Date(),
+    });
+    return Response.json({ approved: false, status: paymentStatus.status });
+  }
 
   // 2. Fetch full order
   const ordenSnap = await ordenRef.get();
