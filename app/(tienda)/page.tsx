@@ -227,7 +227,6 @@ export default async function HomePage() {
             {[
               { name: "Julia Sagardoy", badge: "Local Guide", text: "Excelente atención, muy buen asesoramiento. Calidad, seriedad, puntualidad a la hora de entregar." },
               { name: "Maiten Ursi", badge: null, text: "Amooo todo, son unos genios. Excelente atención y tienen los mejores precios 💗" },
-              { name: "Esteban Tablonski", badge: null, text: "Excelente atención y hermosos productos! Son unos genios!! Recomiendo 100% a Dulce Hogar Diseño y Estilo!!" },
               { name: "Ariel", badge: null, text: "Muy buenos productos, muy buena atención pero por sobretodo excelentes personas! 🤩" },
               { name: "Karina Baez", badge: null, text: "Además del diseño, excelente calidad y la atención espectacular." },
               { name: "Monica Barchuk", badge: null, text: "Hermosos objetos de decoración o para renovar la casa; además de excelente atención y amabilidad." },
