@@ -38,7 +38,7 @@ export async function POST(request: Request) {
     const billingDoc = await billingRef.get()
     const billing = billingDoc.exists ? billingDoc.data()! : {}
 
-    const amount: number = billing.monthly_amount ?? 25000
+    const amount: number = billing.monthly_amount ?? 33000
 
     const customerId = (billing.mp_customer_id as string | undefined) ?? await obtenerOCrearCustomer(email)
 
