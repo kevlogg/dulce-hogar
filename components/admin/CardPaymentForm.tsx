@@ -25,21 +25,25 @@ export default function CardPaymentForm({ amount, onSuccess, onError, onCancel }
   useEffect(() => { onErrorRef.current = onError }, [onError])
 
   useEffect(() => {
-    const existing = document.querySelector('script[src="https://sdk.mercadopago.com/js/v2"]')
-    if (existing) {
-      if (window.MercadoPago) {
-        mpRef.current = new window.MercadoPago(process.env.NEXT_PUBLIC_MP_PUBLIC_KEY!)
-        setSdkListo(true)
-      }
-      return
-    }
-    const script = document.createElement('script')
-    script.src = 'https://sdk.mercadopago.com/js/v2'
-    script.async = true
-    script.onload = () => {
+    const init = () => {
       mpRef.current = new window.MercadoPago(process.env.NEXT_PUBLIC_MP_PUBLIC_KEY!)
       setSdkListo(true)
     }
+
+    const existing = document.querySelector('script[src="https://sdk.mercadopago.com/js/v2"]')
+    if (existing) {
+      if (window.MercadoPago) {
+        init()
+      } else {
+        existing.addEventListener('load', init)
+      }
+      return
+    }
+
+    const script = document.createElement('script')
+    script.src = 'https://sdk.mercadopago.com/js/v2'
+    script.async = true
+    script.onload = init
     document.body.appendChild(script)
   }, [])
 
