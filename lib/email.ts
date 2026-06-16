@@ -60,6 +60,38 @@ export async function sendTrackingPendingEmail(orden: Orden): Promise<void> {
   });
 }
 
+export async function sendNewOrderAlert(orden: Orden): Promise<void> {
+  const adminEmails = (process.env.ADMIN_EMAILS ?? "")
+    .split(",")
+    .map((e) => e.trim())
+    .filter(Boolean);
+  if (adminEmails.length === 0) return;
+
+  const itemsList = orden.items
+    .map((i) => `- ${i.nombre} x${i.cantidad} — $${(i.precioUnitario * i.cantidad).toLocaleString("es-AR")}`)
+    .join("\n");
+
+  await getResend().emails.send({
+    from: FROM,
+    to: adminEmails,
+    subject: `Nueva compra — #${orden.id.slice(-6).toUpperCase()} — $${orden.montoTotal.toLocaleString("es-AR")}`,
+    text: [
+      `Nueva orden recibida: #${orden.id.slice(-6).toUpperCase()}`,
+      "",
+      `Cliente: ${orden.clienteInfo.nombre} ${orden.clienteInfo.apellido}`,
+      `Email: ${orden.clienteInfo.email}`,
+      `Teléfono: ${orden.clienteInfo.telefono}`,
+      "",
+      "Productos:",
+      itemsList,
+      "",
+      `Total: $${orden.montoTotal.toLocaleString("es-AR")}`,
+      "",
+      `Dirección: ${orden.direccionEnvio.calle} ${orden.direccionEnvio.numero}, ${orden.direccionEnvio.ciudad}, ${orden.direccionEnvio.provincia}`,
+    ].join("\n"),
+  });
+}
+
 export async function sendShipmentFailedAlert(
   orden: Orden,
   errorMsg: string

@@ -103,7 +103,7 @@ export default function TiendaLayout({
                   <strong>Teléfono:</strong> +54 9 11 2691-7777
                 </p>
                 <p className="text-sm mb-2">
-                  <strong>Email:</strong> Dulcehogar.dye@gmail.com
+                  <strong>Email:</strong> dulcehogar.dye@gmail.com
                 </p>
                 <p className="text-sm">
                   <strong>Horario:</strong> 9:00 - 13:00 | 17:15 - 20:15 hs

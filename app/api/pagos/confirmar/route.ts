@@ -2,6 +2,7 @@ import { confirmarPagoMercadoPago } from "@/lib/mercadopago-setup";
 import { getAdminFirestore } from "@/lib/firebase/admin";
 import { crearEnvio, EnviopackError } from "@/lib/enviopack";
 import {
+  sendNewOrderAlert,
   sendTrackingEmail,
   sendTrackingPendingEmail,
   sendShipmentFailedAlert,
@@ -62,6 +63,13 @@ export async function POST(req: Request) {
     mercadopagoPaymentId: paymentId,
     updatedAt: new Date(),
   });
+
+  // Notificar al admin
+  try {
+    await sendNewOrderAlert(orden);
+  } catch (e) {
+    console.error("Admin order alert failed:", e);
+  }
 
   // 4. Fetch product dimensions
   const productosSnaps = await Promise.all(
