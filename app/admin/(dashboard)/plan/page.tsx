@@ -198,7 +198,7 @@ export default function AdminPlanPage() {
         <div className="flex flex-wrap gap-6">
           <div>
             <p className="text-xs text-wood-500 uppercase tracking-wide">Inicio del proyecto</p>
-            <p className="font-medium text-wood-900">11/05/2026</p>
+            <p className="font-medium text-wood-900">16/06/2026</p>
           </div>
           <div>
             <p className="text-xs text-wood-500 uppercase tracking-wide">Tipo</p>
