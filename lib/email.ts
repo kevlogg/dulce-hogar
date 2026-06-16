@@ -1,7 +1,7 @@
 import { Resend } from "resend";
 import type { Orden } from "./types";
 
-const FROM = "Dulce Hogar <onboarding@resend.dev>";
+const FROM = "Dulce Hogar <noreply@dulcehogardye.com.ar>";
 
 function getResend() {
   return new Resend(process.env.RESEND_API_KEY);
