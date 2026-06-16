@@ -18,7 +18,7 @@ export function CardPaymentModal({ open, amount, onClose, onSuccess }: CardPayme
     <Dialog.Root open={open} onOpenChange={(v) => { if (!v) onClose() }}>
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 z-40 bg-black/40" />
-        <Dialog.Content className="fixed left-1/2 top-1/2 z-50 w-full max-w-md -translate-x-1/2 -translate-y-1/2 rounded-xl bg-white p-6 shadow-xl focus:outline-none">
+        <Dialog.Content className="fixed left-1/2 top-1/2 z-50 w-full max-w-md -translate-x-1/2 -translate-y-1/2 rounded-xl bg-white p-6 shadow-xl focus:outline-none overflow-visible">
           <div className="flex items-center justify-between mb-5">
             <Dialog.Title className="font-serif text-lg font-medium text-wood-900">
               Pagar con tarjeta

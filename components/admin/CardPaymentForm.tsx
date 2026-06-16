@@ -153,10 +153,6 @@ export default function CardPaymentForm({ amount, onSuccess, onError, onCancel }
             <label className="block text-xs text-stone-500 mb-1">Titular de la tarjeta</label>
             <input type="text" id="mp-cardholderName" placeholder="Como figura en la tarjeta" style={fieldStyle} />
           </div>
-          <div>
-            <label className="block text-xs text-stone-500 mb-1">Email</label>
-            <input type="email" id="mp-cardholderEmail" placeholder="correo@ejemplo.com" style={fieldStyle} />
-          </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '0.75rem' }}>
             <div>
               <label className="block text-xs text-stone-500 mb-1">Tipo doc.</label>
@@ -166,6 +162,10 @@ export default function CardPaymentForm({ amount, onSuccess, onError, onCancel }
               <label className="block text-xs text-stone-500 mb-1">Numero doc.</label>
               <input type="text" id="mp-identificationNumber" placeholder="12345678" style={fieldStyle} />
             </div>
+          </div>
+          <div>
+            <label className="block text-xs text-stone-500 mb-1">Email</label>
+            <input type="email" id="mp-cardholderEmail" placeholder="correo@ejemplo.com" style={fieldStyle} />
           </div>
           <div style={{ display: 'none' }}>
             <select id="mp-issuer" />
