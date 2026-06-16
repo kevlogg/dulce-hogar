@@ -156,7 +156,12 @@ export default function CardPaymentForm({ amount, onSuccess, onError, onCancel }
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '0.75rem' }}>
             <div>
               <label className="block text-xs text-stone-500 mb-1">Tipo doc.</label>
-              <select id="mp-identificationType" style={fieldStyle} />
+              <select id="mp-identificationType" style={fieldStyle}>
+                <option value="DNI">DNI</option>
+                <option value="CUIL">CUIL</option>
+                <option value="CUIT">CUIT</option>
+                <option value="CDI">CDI</option>
+              </select>
             </div>
             <div>
               <label className="block text-xs text-stone-500 mb-1">Numero doc.</label>
