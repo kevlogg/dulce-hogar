@@ -12,7 +12,7 @@ jobs:
       - name: Llamar endpoint de cobro mensual
         run: |
           RESPONSE=$(curl -s -o /tmp/response.json -w "%{http_code}" \
-            -X POST "${{ secrets.APP_URL }}/api/admin/billing/cobrar-mensual" \
+            -X POST "https://dulcehogardye.com.ar/api/admin/billing/cobrar-mensual" \
             -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
             -H "Content-Type: application/json")
           cat /tmp/response.json
