@@ -5,11 +5,11 @@ import { getAdminFirestore } from '@/lib/firebase/admin'
 import { FieldValue } from 'firebase-admin/firestore'
 import { cobrarTarjeta } from '@/lib/mercadopago'
 
-function nextMonth11(dateStr: string): string {
+function nextMonth16(dateStr: string): string {
   const [year, month] = dateStr.split('-').map(Number)
   const nextMonth = month + 1
-  if (nextMonth > 12) return `${year + 1}-01-11`
-  return `${year}-${String(nextMonth).padStart(2, '0')}-11`
+  if (nextMonth > 12) return `${year + 1}-01-16`
+  return `${year}-${String(nextMonth).padStart(2, '0')}-16`
 }
 
 export async function POST(request: Request) {
@@ -68,7 +68,7 @@ export async function POST(request: Request) {
 
     if (confirmed && monthly_next_date) {
       await billingRef.update({
-        monthly_next_date: nextMonth11(monthly_next_date),
+        monthly_next_date: nextMonth16(monthly_next_date),
         updated_at: FieldValue.serverTimestamp(),
       })
     }

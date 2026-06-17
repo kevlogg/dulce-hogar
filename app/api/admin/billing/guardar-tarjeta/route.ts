@@ -5,15 +5,15 @@ import { getAdminFirestore } from '@/lib/firebase/admin'
 import { FieldValue } from 'firebase-admin/firestore'
 import { obtenerOCrearCustomer, asociarTarjeta, cobrarTarjeta } from '@/lib/mercadopago'
 
-function proximoDia11(): string {
+function proximoDia16(): string {
   const now = new Date()
   let year = now.getFullYear()
   let month = now.getMonth() // 0-indexed
-  if (now.getDate() >= 11) {
+  if (now.getDate() >= 16) {
     month += 1
     if (month > 11) { month = 0; year += 1 }
   }
-  return `${year}-${String(month + 1).padStart(2, '0')}-11`
+  return `${year}-${String(month + 1).padStart(2, '0')}-16`
 }
 
 export async function POST(request: Request) {
@@ -55,7 +55,7 @@ export async function POST(request: Request) {
     })
 
     const confirmed = status === 'approved'
-    const nextDate = proximoDia11()
+    const nextDate = proximoDia16()
 
     await billingRef.set(
       {
