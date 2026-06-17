@@ -41,7 +41,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'No hay tarjeta guardada' }, { status: 400 })
     }
 
-    const amount: number = monthly_amount ?? 25000
+    const amount: number = monthly_amount ?? 33000
     const email: string = mp_customer_email ?? ''
 
     const { payment_id, status } = await cobrarTarjeta({
@@ -51,7 +51,7 @@ export async function POST(request: Request) {
       email,
       paymentMethodId: mp_payment_method_id ?? '',
       installments: 1,
-      description: 'Plan mensual - Tienda de Astillas',
+      description: 'Plan mensual - Dulce Hogar',
     })
 
     const confirmed = status === 'approved'

@@ -1,0 +1,22 @@
+name: Cobro mensual plan
+
+on:
+  schedule:
+    - cron: '0 12 16 * *'  # día 16 de cada mes a las 12:00 UTC (09:00 Argentina)
+  workflow_dispatch:        # permite correrlo manualmente desde GitHub si es necesario
+
+jobs:
+  cobrar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Llamar endpoint de cobro mensual
+        run: |
+          RESPONSE=$(curl -s -o /tmp/response.json -w "%{http_code}" \
+            -X POST "${{ secrets.APP_URL }}/api/admin/billing/cobrar-mensual" \
+            -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
+            -H "Content-Type: application/json")
+          cat /tmp/response.json
+          if [ "$RESPONSE" != "200" ]; then
+            echo "Error: HTTP $RESPONSE"
+            exit 1
+          fi
