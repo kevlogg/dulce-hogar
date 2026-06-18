@@ -159,7 +159,7 @@ export default function TiendaLayout({
 
             <div className="border-t border-[#C9A87C] pt-6 text-center">
               <p className="text-sm text-gray-400">
-                © 2025 Dulce Hogar | Diseño & Estilo — Muebles y Decoración Premium
+                <a href="/admin" className="hover:text-white transition-colors">©</a> 2025 Dulce Hogar | Diseño &amp; Estilo — Muebles y Decoración Premium
               </p>
             </div>
           </div>
