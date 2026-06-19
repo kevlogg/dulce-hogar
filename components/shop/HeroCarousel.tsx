@@ -8,6 +8,7 @@ const SLIDES = [
   { src: "/hero-2.png", alt: "Sofá Chesterfield", href: "/productos/MN4NIEhcb1qJVlOJDrkq" },
   { src: "/hero-3.png", alt: "Mecedora Viral", href: "/productos/zD0UV9Xa7V5LgpvJgFvd" },
   { src: "/hero-4.png", alt: "Hamaca Jamaica", href: "/productos/8hJeUae5CazAyrSSFRtz" },
+  { src: "/hero-5.png", alt: "Mecedora Viral", href: "/productos/zD0UV9Xa7V5LgpvJgFvd" },
 ];
 
 export function HeroCarousel() {
