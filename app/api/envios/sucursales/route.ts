@@ -13,10 +13,8 @@ export async function GET(req: Request) {
     return Response.json({ sucursales });
   } catch (err) {
     if (err instanceof EnviopackError) {
-      return Response.json(
-        { error: "No se pudieron obtener las sucursales" },
-        { status: 502 }
-      );
+      console.error("Enviopack sucursales error:", err.status, err.message);
+      return Response.json({ sucursales: [] }, { status: 200 });
     }
     console.error("Error fetching sucursales:", err);
     return Response.json({ error: "Error interno" }, { status: 500 });

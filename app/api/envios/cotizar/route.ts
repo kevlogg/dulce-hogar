@@ -23,39 +23,19 @@ export async function POST(req: Request) {
   }
 
   const db = getAdminFirestore();
-
   const productosDocs = await Promise.all(
-    items.map(({ productoId }) =>
-      db.collection("productos").doc(productoId).get()
-    )
+    items.map(({ productoId }) => db.collection("productos").doc(productoId).get())
   );
 
-  const sinDimensiones: string[] = [];
-  const dimensiones = productosDocs.map((snap, idx) => {
-    const data = snap.data();
-    if (!data?.peso || !data?.alto || !data?.ancho || !data?.largo) {
-      sinDimensiones.push(data?.nombre ?? items[idx].productoId);
-    }
-    return {
-      peso: data?.peso ?? 0,
-      alto: data?.alto ?? 0,
-      ancho: data?.ancho ?? 0,
-      largo: data?.largo ?? 0,
-      cantidad: items[idx].cantidad,
-    };
-  });
+  const dimensiones = productosDocs.map((snap, idx) => ({
+    peso: snap.data()?.peso ?? 5,
+    alto: snap.data()?.alto ?? 50,
+    ancho: snap.data()?.ancho ?? 50,
+    largo: snap.data()?.largo ?? 50,
+    cantidad: items[idx].cantidad,
+  }));
 
-  if (sinDimensiones.length > 0) {
-    return Response.json(
-      { error: "missing_dimensions", productos: sinDimensiones },
-      { status: 422 }
-    );
-  }
-
-  const pesoTotal = dimensiones.reduce(
-    (acc, d) => acc + d.peso * d.cantidad,
-    0
-  );
+  const pesoTotal = dimensiones.reduce((acc, d) => acc + d.peso * d.cantidad, 0);
   const alto = Math.max(...dimensiones.map((d) => d.alto));
   const ancho = Math.max(...dimensiones.map((d) => d.ancho));
   const largo = Math.max(...dimensiones.map((d) => d.largo));
@@ -73,10 +53,8 @@ export async function POST(req: Request) {
     return Response.json({ costo });
   } catch (err) {
     if (err instanceof EnviopackError) {
-      return Response.json(
-        { error: "No disponible para esta zona" },
-        { status: 502 }
-      );
+      console.error("Enviopack cotizar error:", err.status, err.message);
+      return Response.json({ error: "No disponible para esta zona" }, { status: 502 });
     }
     console.error("Error cotizando envío:", err);
     return Response.json({ error: "Error interno" }, { status: 500 });

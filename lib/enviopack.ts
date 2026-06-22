@@ -1,15 +1,7 @@
-// IMPORTANT: Endpoint paths and request/response field names are based on the spec
-// description and standard conventions. Verify every path, query param, and JSON
-// field name against the Envíopack API docs before going live.
-// Docs: Central de ayuda > "Integra tu tienda propia o Software"
-
 const BASE_URL = "https://api.enviopack.com";
 
-function authHeaders() {
-  return {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${process.env.ENVIOPACK_ACCESS_TOKEN}`,
-  };
+function authParams() {
+  return `api_key=${process.env.ENVIOPACK_API_KEY}&secret_key=${process.env.ENVIOPACK_SECRET_KEY}`;
 }
 
 export class EnviopackError extends Error {
@@ -24,9 +16,10 @@ async function request<T>(
   path: string,
   body?: unknown
 ): Promise<T> {
-  const res = await fetch(`${BASE_URL}${path}`, {
+  const separator = path.includes("?") ? "&" : "?";
+  const res = await fetch(`${BASE_URL}${path}${separator}${authParams()}`, {
     method,
-    headers: authHeaders(),
+    headers: { "Content-Type": "application/json" },
     ...(body ? { body: JSON.stringify(body) } : {}),
   });
   if (!res.ok) {
