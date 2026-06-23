@@ -32,6 +32,72 @@ export default async function HomePage() {
 
       <div className="h-px bg-gradient-to-r from-transparent via-[#C9A87C] to-transparent" />
 
+      {/* PRODUCTOS DESTACADOS */}
+      {productos.length > 0 && (
+        <section className="py-12 px-4 md:py-16 bg-[#EFEBE3]">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-8 md:mb-10">
+              <p className="text-[#C9A87C] text-xs tracking-widest uppercase font-semibold mb-2">Lo más buscado</p>
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#2C1A10]" style={{ fontFamily: "'Playfair Display', serif" }}>
+                Productos destacados
+              </h2>
+            </div>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+              {productos.slice(0, 4).map((p) => {
+                const precioEfectivo = p.precioEfectivo ?? Math.round(p.precio * 0.75);
+                return (
+                  <Link key={p.id} href={`/productos/${p.id}`} className="group">
+                    <div className="bg-white rounded-2xl overflow-hidden border border-[#E0D4C4] hover:shadow-lg transition-all duration-300">
+                      <div className="relative h-52 md:h-64 overflow-hidden">
+                        {p.imagenes?.[0] ? (
+                          <img
+                            src={p.imagenes[0]}
+                            alt={p.nombre}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          />
+                        ) : (
+                          <div className="w-full h-full bg-[#F7F3EE] flex items-center justify-center">
+                            <span className="text-[#C9A87C] text-4xl">🛋️</span>
+                          </div>
+                        )}
+                        <div className="absolute top-2 left-2">
+                          <span className="bg-[#2C1A10] text-white text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wide">
+                            Destacado
+                          </span>
+                        </div>
+                      </div>
+                      <div className="p-4">
+                        <h3 className="font-bold text-[#2C1A10] text-sm leading-snug line-clamp-2 mb-3">{p.nombre}</h3>
+                        <div className="flex flex-col gap-0.5">
+                          <div className="flex items-baseline gap-1">
+                            <span className="text-green-700 font-bold text-base">${precioEfectivo.toLocaleString("es-AR")}</span>
+                            <span className="text-[10px] text-green-600 font-semibold">efectivo</span>
+                          </div>
+                          <div className="flex items-baseline gap-1">
+                            <span className="text-[#A0724A] text-xs">${p.precio.toLocaleString("es-AR")}</span>
+                            <span className="text-[10px] text-[#A0724A]">cuotas</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+            <div className="text-center mt-8">
+              <Link
+                href="/productos"
+                className="inline-block border-2 border-[#2C1A10] text-[#2C1A10] px-8 py-3 rounded-full font-semibold hover:bg-[#2C1A10] hover:text-white transition-all"
+              >
+                Ver todos los productos
+              </Link>
+            </div>
+          </div>
+        </section>
+      )}
+
+      <div className="h-px bg-gradient-to-r from-transparent via-[#C9A87C] to-transparent" />
+
       {/* NUESTRA HISTORIA */}
       <section className="py-12 px-4 md:py-20 bg-[#F7F3EE]" id="nosotros">
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 items-center">
