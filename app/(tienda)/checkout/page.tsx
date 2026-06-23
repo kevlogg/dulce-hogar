@@ -17,6 +17,7 @@ interface Sucursal {
   nombre: string;
   direccion: string;
   localidad: string;
+  transportista: string;
 }
 
 export default function CheckoutPage() {
