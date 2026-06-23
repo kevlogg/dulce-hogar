@@ -17,6 +17,7 @@ interface Sucursal {
   nombre: string;
   direccion: string;
   localidad: string;
+  provincia: string;
   transportista: string;
 }
 
@@ -78,14 +79,11 @@ export default function CheckoutPage() {
       .finally(() => setCargandoSucursales(false));
   }, [formData.codigoPostal, tipoEntrega]);
 
-  // Calculate shipping cost with debounce
+  // Calculate shipping cost
   useEffect(() => {
-    const cp = formData.codigoPostal;
-    if (cp.length < 4 || items.length === 0) {
-      setCostoEnvio(null);
-      return;
-    }
-    if (tipoEntrega === "sucursal" && !sucursalSeleccionada) return;
+    if (items.length === 0) { setCostoEnvio(null); return; }
+    const provincia = tipoEntrega === "domicilio" ? formData.provincia : sucursalSeleccionada?.provincia;
+    if (!provincia) { setCostoEnvio(null); return; }
 
     const timer = setTimeout(async () => {
       setCotizando(true);
@@ -94,9 +92,8 @@ export default function CheckoutPage() {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            codigoPostal: cp,
+            provincia,
             tipoEntrega,
-            sucursalId: sucursalSeleccionada?.id,
             items: items.map((i) => ({ productoId: i.productoId, cantidad: i.cantidad })),
           }),
         });
@@ -111,7 +108,7 @@ export default function CheckoutPage() {
     }, 600);
 
     return () => clearTimeout(timer);
-  }, [formData.codigoPostal, tipoEntrega, sucursalSeleccionada, items]);
+  }, [formData.provincia, tipoEntrega, sucursalSeleccionada, items]);
 
   const totalEfectivo = items.reduce((s, i) => {
     const p = productos[i.productoId];

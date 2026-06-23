@@ -2,9 +2,8 @@ import { cotizarEnvio, EnviopackError } from "@/lib/enviopack";
 import { getAdminFirestore } from "@/lib/firebase/admin";
 
 interface CotizarBody {
-  codigoPostal: string;
+  provincia: string;
   tipoEntrega: "domicilio" | "sucursal";
-  sucursalId?: string;
   items: { productoId: string; cantidad: number }[];
 }
 
@@ -16,9 +15,9 @@ export async function POST(req: Request) {
     return Response.json({ error: "Body inválido" }, { status: 400 });
   }
 
-  const { codigoPostal, tipoEntrega, sucursalId, items } = body;
+  const { provincia, tipoEntrega, items } = body;
 
-  if (!codigoPostal || !tipoEntrega || !items?.length) {
+  if (!provincia || !tipoEntrega || !items?.length) {
     return Response.json({ error: "Faltan campos requeridos" }, { status: 400 });
   }
 
@@ -29,26 +28,16 @@ export async function POST(req: Request) {
 
   const dimensiones = productosDocs.map((snap, idx) => ({
     peso: snap.data()?.peso ?? 5,
-    alto: snap.data()?.alto ?? 50,
-    ancho: snap.data()?.ancho ?? 50,
-    largo: snap.data()?.largo ?? 50,
     cantidad: items[idx].cantidad,
   }));
 
   const pesoTotal = dimensiones.reduce((acc, d) => acc + d.peso * d.cantidad, 0);
-  const alto = Math.max(...dimensiones.map((d) => d.alto));
-  const ancho = Math.max(...dimensiones.map((d) => d.ancho));
-  const largo = Math.max(...dimensiones.map((d) => d.largo));
 
   try {
     const costo = await cotizarEnvio({
-      codigoPostal,
+      provincia,
       tipoEntrega,
-      sucursalId,
       peso: pesoTotal,
-      alto,
-      ancho,
-      largo,
     });
     return Response.json({ costo });
   } catch (err) {

@@ -80,6 +80,7 @@ export interface Sucursal {
   nombre: string;
   direccion: string;
   localidad: string;
+  provincia: string;
   transportista: string;
 }
 
@@ -91,7 +92,7 @@ export async function getSucursales(
     nombre: string;
     calle: string;
     numero: string;
-    localidad: { nombre: string };
+    localidad: { nombre: string; provincia?: { nombre: string } };
     correo: { nombre: string };
   }>>("GET", `/sucursales?codigo_postal=${codigoPostal}`);
 
@@ -100,32 +101,77 @@ export async function getSucursales(
     nombre: s.nombre,
     direccion: `${s.calle} ${s.numero}`,
     localidad: s.localidad.nombre,
+    provincia: s.localidad.provincia?.nombre ?? "",
     transportista: s.correo.nombre,
   }));
 }
 
-export interface CotizarParams {
-  codigoPostal: string;
-  tipoEntrega: "domicilio" | "sucursal";
-  sucursalId?: string;
-  peso: number;
-  alto: number;
-  ancho: number;
-  largo: number;
-}
+const PROVINCIA_ZONA: Record<string, string> = {
+  "CABA": "CF",
+  "Buenos Aires": "BA",
+  "Córdoba": "CC",
+  "Santa Fe": "PM",
+  "Mendoza": "MC",
+  "Tucumán": "NO",
+  "Salta": "NO",
+  "Jujuy": "NO",
+  "Catamarca": "NO",
+  "La Rioja": "NO",
+  "Santiago del Estero": "NO",
+  "Chaco": "NE",
+  "Corrientes": "NE",
+  "Formosa": "NE",
+  "Misiones": "NE",
+  "Entre Ríos": "NE",
+  "La Pampa": "PM",
+  "San Luis": "PM",
+  "San Juan": "CY",
+  "Neuquén": "PA",
+  "Río Negro": "PA",
+  "Chubut": "PA",
+  "Santa Cruz": "PA",
+  "Tierra del Fuego": "TF",
+};
 
-export async function cotizarEnvio(params: CotizarParams): Promise<number> {
-  const data = await request<{ precio: number }>("POST", "/cotizaciones", {
-    transportista: "viacargo",
-    codigo_postal_destino: params.codigoPostal,
-    tipo_entrega: params.tipoEntrega,
-    ...(params.sucursalId ? { sucursal_id: params.sucursalId } : {}),
-    peso: params.peso,
-    alto: params.alto,
-    ancho: params.ancho,
-    largo: params.largo,
-  });
-  return data.precio;
+type PrecioRow = {
+  zona: string;
+  modalidad: string;
+  servicio: string;
+  peso_desde: string;
+  peso_hasta: string;
+  valor: number;
+};
+
+export async function cotizarEnvio(params: {
+  provincia: string;
+  tipoEntrega: "domicilio" | "sucursal";
+  peso: number;
+}): Promise<number> {
+  const zona = PROVINCIA_ZONA[params.provincia] ?? "BA";
+  const modalidad = params.tipoEntrega === "domicilio" ? "D" : "S";
+
+  const precios = await request<PrecioRow[]>("GET", "/precios");
+
+  const match = precios.find(
+    (p) =>
+      p.zona === zona &&
+      p.modalidad === modalidad &&
+      p.servicio === "N" &&
+      params.peso >= parseFloat(p.peso_desde) &&
+      params.peso <= parseFloat(p.peso_hasta)
+  ) ?? precios.find(
+    (p) =>
+      p.zona === zona &&
+      p.servicio === "N" &&
+      params.peso >= parseFloat(p.peso_desde) &&
+      params.peso <= parseFloat(p.peso_hasta)
+  );
+
+  if (!match) {
+    throw new EnviopackError(404, `Sin tarifa para zona ${zona}, peso ${params.peso}kg`);
+  }
+
+  return match.valor;
 }
 
 export interface DimensionesItem {
