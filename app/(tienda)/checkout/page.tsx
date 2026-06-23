@@ -247,8 +247,12 @@ export default function CheckoutPage() {
             {/* CABA / GBA: solo domicilio */}
             {zona === "caba_amba" && (
               <>
-                <div className="bg-[#F7F3EE] rounded-xl px-4 py-2.5 mb-4 text-xs text-[#A0724A]">
-                  🚚 Hacemos flete a domicilio en CABA y GBA. Te coordinamos la entrega por WhatsApp.
+                <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 mb-4 flex gap-3 items-start">
+                  <span className="text-amber-500 text-lg shrink-0">📲</span>
+                  <div>
+                    <p className="text-sm font-semibold text-amber-800">El costo de envío se coordina por WhatsApp</p>
+                    <p className="text-xs text-amber-700 mt-0.5">Una vez confirmado el pedido, te contactamos para acordar fecha, horario y costo del flete antes del despacho.</p>
+                  </div>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="sm:col-span-2">
@@ -278,6 +282,13 @@ export default function CheckoutPage() {
             {/* Resto del país */}
             {zona === "resto_pais" && (
               <>
+                <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 mb-5 flex gap-3 items-start">
+                  <span className="text-amber-500 text-lg shrink-0">📲</span>
+                  <div>
+                    <p className="text-sm font-semibold text-amber-800">El costo de envío se coordina por WhatsApp</p>
+                    <p className="text-xs text-amber-700 mt-0.5">Una vez confirmado el pedido, te contactamos para acordar el costo y los tiempos de envío antes del despacho.</p>
+                  </div>
+                </div>
                 {/* Tipo de entrega */}
                 <div className="mb-5">
                   <label className={labelClass}>Tipo de entrega</label>
