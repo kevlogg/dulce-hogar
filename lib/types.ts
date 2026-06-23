@@ -93,7 +93,8 @@ export interface Orden {
   montoEnvio: number;
   montoTotal: number;
   estadoPago: "pendiente" | "completado" | "fallido";
-  estadoEnvio: "procesando" | "enviado" | "entregado" | "sin_envio";
+  estadoEnvio: "procesando" | "enviado" | "entregado" | "sin_envio" | "a_coordinar";
+  envioACoordinar?: boolean;
   metodoPago: "mercadopago";
   mercadopagoPreferenceId: string;
   mercadopagoPaymentId?: string;

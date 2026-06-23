@@ -12,7 +12,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000";
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { items, clienteInfo, direccionEnvio, montoTotal, montoEnvio, metodoPago } = body;
+    const { items, clienteInfo, direccionEnvio, montoTotal, montoEnvio, metodoPago, envioACoordinar } = body;
 
     if (!items || !clienteInfo || !direccionEnvio) {
       return Response.json({ error: "Missing fields" }, { status: 400 });
@@ -29,7 +29,8 @@ export async function POST(req: Request) {
       montoEnvio: montoEnvio ?? 0,
       montoTotal,
       estadoPago: "pendiente",
-      estadoEnvio: "procesando",
+      estadoEnvio: envioACoordinar ? "a_coordinar" : "procesando",
+      envioACoordinar: envioACoordinar ?? false,
       metodoPago: "mercadopago",
       mercadopagoPreferenceId: "",
       createdAt: new Date(),

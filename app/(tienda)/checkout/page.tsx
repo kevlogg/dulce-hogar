@@ -39,8 +39,6 @@ export default function CheckoutPage() {
   const [tipoEntrega, setTipoEntrega] = useState<"domicilio" | "sucursal">("domicilio");
   const [sucursales, setSucursales] = useState<Sucursal[]>([]);
   const [sucursalSeleccionada, setSucursalSeleccionada] = useState<Sucursal | null>(null);
-  const [costoEnvio, setCostoEnvio] = useState<number | null>(null);
-  const [cotizando, setCotizando] = useState(false);
   const [cargandoSucursales, setCargandoSucursales] = useState(false);
 
   const MECEDORA_ID = "zD0UV9Xa7V5LgpvJgFvd";
@@ -79,36 +77,6 @@ export default function CheckoutPage() {
       .finally(() => setCargandoSucursales(false));
   }, [formData.codigoPostal, tipoEntrega]);
 
-  // Calculate shipping cost
-  useEffect(() => {
-    if (items.length === 0) { setCostoEnvio(null); return; }
-    const provincia = tipoEntrega === "domicilio" ? formData.provincia : sucursalSeleccionada?.provincia;
-    if (!provincia) { setCostoEnvio(null); return; }
-
-    const timer = setTimeout(async () => {
-      setCotizando(true);
-      try {
-        const res = await fetch("/api/envios/cotizar", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            provincia,
-            tipoEntrega,
-            items: items.map((i) => ({ productoId: i.productoId, cantidad: i.cantidad })),
-          }),
-        });
-        const data = await res.json();
-        if (res.ok) setCostoEnvio(data.costo);
-        else setCostoEnvio(null);
-      } catch {
-        setCostoEnvio(null);
-      } finally {
-        setCotizando(false);
-      }
-    }, 600);
-
-    return () => clearTimeout(timer);
-  }, [formData.provincia, tipoEntrega, sucursalSeleccionada, items]);
 
   const totalEfectivo = items.reduce((s, i) => {
     const p = productos[i.productoId];
@@ -120,9 +88,8 @@ export default function CheckoutPage() {
   }, 0);
 
   const envioGratisUmbral = totalEfectivo >= UMBRAL_ENVIO_GRATIS;
-  const costoEnvioFinal = mecedoraGratis || zona === "caba_amba" || envioGratisUmbral ? 0 : costoEnvio;
   const subtotal = metodoPago === "efectivo" ? totalEfectivo : totalCuotas;
-  const totalFinal = subtotal + (costoEnvioFinal ?? 0);
+  const totalFinal = subtotal;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -163,9 +130,10 @@ export default function CheckoutPage() {
             sucursalNombre: sucursalSeleccionada?.nombre,
             sucursalDireccion: sucursalSeleccionada?.direccion,
           },
-          montoEnvio: costoEnvioFinal ?? 0,
+          montoEnvio: 0,
           montoTotal: totalFinal,
           metodoPago,
+          envioACoordinar: zona === "resto_pais",
         }),
       });
       if (res.ok) {
@@ -428,15 +396,15 @@ export default function CheckoutPage() {
 
           <button
             type="submit"
-            disabled={loading || !zona || (zona === "resto_pais" && costoEnvioFinal === null)}
+            disabled={loading || !zona || (zona === "resto_pais" && tipoEntrega === "sucursal" && !sucursalSeleccionada)}
             className="w-full bg-[#2C1A10] text-white py-4 rounded-full font-bold text-base hover:bg-[#A0724A] transition-all disabled:opacity-50"
           >
             {loading
               ? "Procesando..."
               : !zona
               ? "Seleccioná tu zona de envío para continuar"
-              : zona === "resto_pais" && costoEnvioFinal === null
-              ? "Completá los datos de envío para continuar"
+              : zona === "resto_pais" && tipoEntrega === "sucursal" && !sucursalSeleccionada
+              ? "Seleccioná una sucursal para continuar"
               : `Confirmar pedido — $${totalFinal.toLocaleString("es-AR")}`}
           </button>
           {submitError && (
@@ -482,18 +450,19 @@ export default function CheckoutPage() {
               </div>
               <div className="flex justify-between text-sm">
                 <span className="text-[#A0724A]">Envío</span>
-                <span className={mecedoraGratis || zona === "caba_amba" || envioGratisUmbral ? "text-green-700 font-semibold" : "text-[#2C1A10]"}>
-                  {mecedoraGratis || zona === "caba_amba" || envioGratisUmbral
-                    ? "Gratis ✓"
-                    : cotizando
-                    ? "Calculando..."
-                    : costoEnvioFinal !== null
-                    ? `$${costoEnvioFinal.toLocaleString("es-AR")}`
-                    : "A calcular"}
+                <span className={zona === "caba_amba" || mecedoraGratis || envioGratisUmbral ? "text-green-700 font-semibold" : "text-[#A0724A] italic"}>
+                  {!zona
+                    ? "A definir"
+                    : zona === "caba_amba" || mecedoraGratis || envioGratisUmbral
+                    ? "Gratis"
+                    : "Se coordina por WhatsApp"}
                 </span>
               </div>
               {envioGratisUmbral && (
                 <p className="text-xs text-green-600">Tu compra supera $299.000 — envío sin cargo.</p>
+              )}
+              {zona === "resto_pais" && !envioGratisUmbral && (
+                <p className="text-xs text-[#A0724A]">Te contactamos por WhatsApp para coordinar el envío antes del despacho.</p>
               )}
               <div className="flex justify-between font-bold text-[#2C1A10] pt-1 border-t border-[#E0D4C4]">
                 <span>Total</span>

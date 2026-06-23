@@ -71,7 +71,12 @@ export async function POST(req: Request) {
     console.error("Admin order alert failed:", e);
   }
 
-  // 4. Fetch product dimensions
+  // 4. Si el envío se coordina por WhatsApp, no crear envío automático
+  if (orden.envioACoordinar) {
+    return Response.json({ success: true, trackingNumber: null });
+  }
+
+  // 5. Fetch product dimensions and create shipment in Envíopack
   const productosSnaps = await Promise.all(
     orden.items.map((item) =>
       db.collection("productos").doc(item.productoId).get()
@@ -85,7 +90,6 @@ export async function POST(req: Request) {
     cantidad: orden.items[idx].cantidad,
   }));
 
-  // 5. Create shipment in Envíopack
   try {
     const { enviopackId, trackingNumber } = await crearEnvio({
       ordenId: orden.id,
@@ -122,7 +126,6 @@ export async function POST(req: Request) {
       console.error("Alert email failed (non-blocking):", emailErr);
     }
 
-    // Payment succeeded — shipment handled manually by admin
     return Response.json({ success: true, trackingNumber: null });
   }
 }
