@@ -33,6 +33,8 @@ export async function POST(req: Request) {
 
   const pesoTotal = dimensiones.reduce((acc, d) => acc + d.peso * d.cantidad, 0);
 
+  console.log("[cotizar] provincia:", provincia, "tipoEntrega:", tipoEntrega, "pesoTotal:", pesoTotal, "dimensiones:", dimensiones);
+
   try {
     const costo = await cotizarEnvio({
       provincia,

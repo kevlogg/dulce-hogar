@@ -167,6 +167,8 @@ export async function cotizarEnvio(params: {
       params.peso <= parseFloat(p.peso_hasta)
   );
 
+  console.log("[cotizarEnvio] zona:", zona, "modalidad:", modalidad, "peso:", params.peso, "match:", match);
+
   if (!match) {
     throw new EnviopackError(404, `Sin tarifa para zona ${zona}, peso ${params.peso}kg`);
   }
