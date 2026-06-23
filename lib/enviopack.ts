@@ -1,9 +1,5 @@
 const BASE_URL = "https://api.enviopack.com";
 
-function authParams() {
-  return `api_key=${process.env.ENVIOPACK_API_KEY}&secret_key=${process.env.ENVIOPACK_SECRET_KEY}`;
-}
-
 export class EnviopackError extends Error {
   constructor(public status: number, message: string) {
     super(message);
@@ -11,13 +7,63 @@ export class EnviopackError extends Error {
   }
 }
 
+// Module-level token cache (survives across requests within the same instance)
+let cachedToken: string | null = null;
+let cachedRefreshToken: string | null = null;
+let tokenExpiresAt: number = 0;
+
+async function login(): Promise<string> {
+  const body = new URLSearchParams({
+    "api-key": process.env.ENVIOPACK_API_KEY!,
+    "secret-key": process.env.ENVIOPACK_SECRET_KEY!,
+  });
+  const res = await fetch(`${BASE_URL}/auth`, {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: body.toString(),
+  });
+  if (!res.ok) {
+    const text = await res.text();
+    throw new EnviopackError(res.status, `Auth failed: ${text}`);
+  }
+  const data = await res.json();
+  cachedToken = data.access_token as string;
+  cachedRefreshToken = data.refresh_token as string;
+  // Token expires in 4hs — refresh 10 min before
+  tokenExpiresAt = Date.now() + (4 * 60 - 10) * 60 * 1000;
+  return cachedToken;
+}
+
+async function refreshToken(): Promise<string> {
+  const res = await fetch(
+    `${BASE_URL}/token/refresh?refresh_token=${cachedRefreshToken}`,
+    { method: "POST" }
+  );
+  if (!res.ok) {
+    // Refresh failed — login from scratch
+    return login();
+  }
+  const data = await res.json();
+  cachedToken = data.access_token as string;
+  cachedRefreshToken = data.refresh_token as string;
+  tokenExpiresAt = Date.now() + (4 * 60 - 10) * 60 * 1000;
+  return cachedToken;
+}
+
+async function getToken(): Promise<string> {
+  if (cachedToken && Date.now() < tokenExpiresAt) return cachedToken;
+  if (cachedRefreshToken) return refreshToken();
+  return login();
+}
+
 async function request<T>(
   method: string,
   path: string,
   body?: unknown
 ): Promise<T> {
+  const token = await getToken();
   const separator = path.includes("?") ? "&" : "?";
-  const res = await fetch(`${BASE_URL}${path}${separator}${authParams()}`, {
+  const res = await fetch(`${BASE_URL}${path}${separator}access_token=${token}`, {
     method,
     headers: { "Content-Type": "application/json" },
     ...(body ? { body: JSON.stringify(body) } : {}),
