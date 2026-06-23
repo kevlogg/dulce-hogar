@@ -146,9 +146,16 @@ export async function cotizarEnvio(params: {
   provincia: string;
   tipoEntrega: "domicilio" | "sucursal";
   peso: number;
+  alto: number;
+  ancho: number;
+  largo: number;
 }): Promise<number> {
   const zona = PROVINCIA_ZONA[params.provincia] ?? "BA";
   const modalidad = params.tipoEntrega === "domicilio" ? "D" : "S";
+
+  // Peso aforado (volumetrico): carriers cobran por el mayor entre real y aforado
+  const pesoAforado = (params.alto * params.ancho * params.largo) / 4000;
+  const pesoCobrado = Math.max(params.peso, pesoAforado);
 
   const precios = await request<PrecioRow[]>("GET", "/precios");
 
@@ -157,20 +164,20 @@ export async function cotizarEnvio(params: {
       p.zona === zona &&
       p.modalidad === modalidad &&
       p.servicio === "N" &&
-      params.peso >= parseFloat(p.peso_desde) &&
-      params.peso <= parseFloat(p.peso_hasta)
+      pesoCobrado >= parseFloat(p.peso_desde) &&
+      pesoCobrado <= parseFloat(p.peso_hasta)
   ) ?? precios.find(
     (p) =>
       p.zona === zona &&
       p.servicio === "N" &&
-      params.peso >= parseFloat(p.peso_desde) &&
-      params.peso <= parseFloat(p.peso_hasta)
+      pesoCobrado >= parseFloat(p.peso_desde) &&
+      pesoCobrado <= parseFloat(p.peso_hasta)
   );
 
-  console.log("[cotizarEnvio] zona:", zona, "modalidad:", modalidad, "peso:", params.peso, "match:", match);
+  console.log("[cotizarEnvio] zona:", zona, "pesoReal:", params.peso, "pesoAforado:", pesoAforado, "pesoCobrado:", pesoCobrado, "match:", match);
 
   if (!match) {
-    throw new EnviopackError(404, `Sin tarifa para zona ${zona}, peso ${params.peso}kg`);
+    throw new EnviopackError(404, `Sin tarifa para zona ${zona}, peso ${pesoCobrado}kg`);
   }
 
   return match.valor;

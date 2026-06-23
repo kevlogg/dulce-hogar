@@ -28,18 +28,26 @@ export async function POST(req: Request) {
 
   const dimensiones = productosDocs.map((snap, idx) => ({
     peso: snap.data()?.peso || 25,
+    alto: snap.data()?.alto || 100,
+    ancho: snap.data()?.ancho || 60,
+    largo: snap.data()?.largo || 120,
     cantidad: items[idx].cantidad,
   }));
 
   const pesoTotal = dimensiones.reduce((acc, d) => acc + d.peso * d.cantidad, 0);
-
-  console.log("[cotizar] provincia:", provincia, "tipoEntrega:", tipoEntrega, "pesoTotal:", pesoTotal, "dimensiones:", dimensiones);
+  // Para volumetrico usamos el item mas grande (no se suman cajas, se toma la mayor)
+  const alto = Math.max(...dimensiones.map((d) => d.alto));
+  const ancho = Math.max(...dimensiones.map((d) => d.ancho));
+  const largo = Math.max(...dimensiones.map((d) => d.largo));
 
   try {
     const costo = await cotizarEnvio({
       provincia,
       tipoEntrega,
       peso: pesoTotal,
+      alto,
+      ancho,
+      largo,
     });
     return Response.json({ costo });
   } catch (err) {
