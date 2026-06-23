@@ -2,11 +2,12 @@ import { getAdminFirestore } from "@/lib/firebase/admin";
 
 export async function GET(
   _req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   try {
     const db = getAdminFirestore();
-    const snap = await db.collection("ordenes").doc(params.id).get();
+    const snap = await db.collection("ordenes").doc(id).get();
     if (!snap.exists) {
       return Response.json({ error: "Not found" }, { status: 404 });
     }
