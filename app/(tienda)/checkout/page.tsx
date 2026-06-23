@@ -383,11 +383,11 @@ export default function CheckoutPage() {
                     {cargandoSucursales && <p className="text-sm text-[#A0724A]">Buscando sucursales...</p>}
                     {!cargandoSucursales && sucursales.length > 0 && (
                       <div>
-                        <label className={labelClass}>Sucursal Vía Cargo</label>
+                        <label className={labelClass}>Sucursal de retiro</label>
                         <select required value={sucursalSeleccionada?.id ?? ""} onChange={(e) => { const s = sucursales.find((x) => x.id === e.target.value) ?? null; setSucursalSeleccionada(s); }} className={inputClass}>
                           <option value="">Seleccioná una sucursal</option>
                           {sucursales.map((s) => (
-                            <option key={s.id} value={s.id}>{s.transportista} — {s.nombre} ({s.localidad})</option>
+                            <option key={s.id} value={s.id}>{s.transportista} — {s.nombre} | {s.direccion}, {s.localidad}</option>
                           ))}
                         </select>
                       </div>
