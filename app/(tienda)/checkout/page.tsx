@@ -133,7 +133,7 @@ export default function CheckoutPage() {
           montoEnvio: 0,
           montoTotal: totalFinal,
           metodoPago,
-          envioACoordinar: zona === "resto_pais",
+          envioACoordinar: true,
         }),
       });
       if (res.ok) {
@@ -450,18 +450,11 @@ export default function CheckoutPage() {
               </div>
               <div className="flex justify-between text-sm">
                 <span className="text-[#A0724A]">Envío</span>
-                <span className={zona === "caba_amba" || mecedoraGratis || envioGratisUmbral ? "text-green-700 font-semibold" : "text-[#A0724A] italic"}>
-                  {!zona
-                    ? "A definir"
-                    : zona === "caba_amba" || mecedoraGratis || envioGratisUmbral
-                    ? "Gratis"
-                    : "Se coordina por WhatsApp"}
+                <span className="text-[#A0724A] italic">
+                  {!zona ? "A definir" : "Se coordina por WhatsApp"}
                 </span>
               </div>
-              {envioGratisUmbral && (
-                <p className="text-xs text-green-600">Tu compra supera $299.000 — envío sin cargo.</p>
-              )}
-              {zona === "resto_pais" && !envioGratisUmbral && (
+              {zona && (
                 <p className="text-xs text-[#A0724A]">Te contactamos por WhatsApp para coordinar el envío antes del despacho.</p>
               )}
               <div className="flex justify-between font-bold text-[#2C1A10] pt-1 border-t border-[#E0D4C4]">
