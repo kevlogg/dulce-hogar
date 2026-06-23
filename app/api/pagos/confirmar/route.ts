@@ -78,10 +78,10 @@ export async function POST(req: Request) {
     )
   );
   const dimensiones = productosSnaps.map((snap, idx) => ({
-    peso: snap.data()?.peso ?? 1,
-    alto: snap.data()?.alto ?? 10,
-    ancho: snap.data()?.ancho ?? 10,
-    largo: snap.data()?.largo ?? 10,
+    peso: snap.data()?.peso || 25,
+    alto: snap.data()?.alto || 80,
+    ancho: snap.data()?.ancho || 60,
+    largo: snap.data()?.largo || 60,
     cantidad: orden.items[idx].cantidad,
   }));
 

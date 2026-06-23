@@ -27,7 +27,7 @@ export async function POST(req: Request) {
   );
 
   const dimensiones = productosDocs.map((snap, idx) => ({
-    peso: snap.data()?.peso ?? 5,
+    peso: snap.data()?.peso || 25,
     cantidad: items[idx].cantidad,
   }));
 
