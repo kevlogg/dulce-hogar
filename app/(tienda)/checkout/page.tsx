@@ -336,7 +336,7 @@ export default function CheckoutPage() {
                           : "border-[#E0D4C4] text-[#2C1A10] hover:border-[#C9A87C]"
                       }`}
                     >
-                      Retiro en sucursal Vía Cargo
+                      Retiro en sucursal
                     </button>
                   </div>
                 </div>
@@ -386,13 +386,13 @@ export default function CheckoutPage() {
                         <select required value={sucursalSeleccionada?.id ?? ""} onChange={(e) => { const s = sucursales.find((x) => x.id === e.target.value) ?? null; setSucursalSeleccionada(s); }} className={inputClass}>
                           <option value="">Seleccioná una sucursal</option>
                           {sucursales.map((s) => (
-                            <option key={s.id} value={s.id}>{s.nombre} — {s.direccion}, {s.localidad}</option>
+                            <option key={s.id} value={s.id}>{s.transportista} — {s.nombre} ({s.localidad})</option>
                           ))}
                         </select>
                       </div>
                     )}
                     {!cargandoSucursales && formData.codigoPostal.length >= 4 && sucursales.length === 0 && (
-                      <p className="text-sm text-red-500">No hay sucursales de Vía Cargo disponibles para ese código postal.</p>
+                      <p className="text-sm text-red-500">No hay sucursales disponibles para ese código postal.</p>
                     )}
                   </div>
                 )}

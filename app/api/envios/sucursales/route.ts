@@ -1,4 +1,4 @@
-import { getSucursalesViaCargo, EnviopackError } from "@/lib/enviopack";
+import { getSucursales, EnviopackError } from "@/lib/enviopack";
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
@@ -9,7 +9,7 @@ export async function GET(req: Request) {
   }
 
   try {
-    const sucursales = await getSucursalesViaCargo(cp);
+    const sucursales = await getSucursales(cp);
     return Response.json({ sucursales });
   } catch (err) {
     if (err instanceof EnviopackError) {

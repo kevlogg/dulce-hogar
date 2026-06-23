@@ -27,7 +27,7 @@ async function login(): Promise<string> {
     throw new EnviopackError(res.status, `Auth failed: ${text}`);
   }
   const data = await res.json();
-  cachedToken = data.access_token as string;
+  cachedToken = data.token as string;
   cachedRefreshToken = data.refresh_token as string;
   // Token expires in 4hs — refresh 10 min before
   tokenExpiresAt = Date.now() + (4 * 60 - 10) * 60 * 1000;
@@ -44,7 +44,7 @@ async function refreshToken(): Promise<string> {
     return login();
   }
   const data = await res.json();
-  cachedToken = data.access_token as string;
+  cachedToken = data.token as string;
   cachedRefreshToken = data.refresh_token as string;
   tokenExpiresAt = Date.now() + (4 * 60 - 10) * 60 * 1000;
   return cachedToken;
@@ -80,16 +80,28 @@ export interface Sucursal {
   nombre: string;
   direccion: string;
   localidad: string;
+  transportista: string;
 }
 
-export async function getSucursalesViaCargo(
+export async function getSucursales(
   codigoPostal: string
 ): Promise<Sucursal[]> {
-  const data = await request<{ sucursales: Sucursal[] }>(
-    "GET",
-    `/sucursales?transportista=viacargo&codigo_postal=${codigoPostal}`
-  );
-  return data.sucursales;
+  const data = await request<Array<{
+    id: number;
+    nombre: string;
+    calle: string;
+    numero: string;
+    localidad: { nombre: string };
+    correo: { nombre: string };
+  }>>("GET", `/sucursales?codigo_postal=${codigoPostal}`);
+
+  return data.map((s) => ({
+    id: String(s.id),
+    nombre: s.nombre,
+    direccion: `${s.calle} ${s.numero}`,
+    localidad: s.localidad.nombre,
+    transportista: s.correo.nombre,
+  }));
 }
 
 export interface CotizarParams {
