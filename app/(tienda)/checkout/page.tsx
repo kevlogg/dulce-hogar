@@ -221,7 +221,7 @@ export default function CheckoutPage() {
               <div className="flex gap-3 mt-1.5">
                 <button
                   type="button"
-                  onClick={() => { setZona("caba_amba"); setTipoEntrega("domicilio"); setSucursalSeleccionada(null); setCostoEnvio(null); }}
+                  onClick={() => { setZona("caba_amba"); setTipoEntrega("domicilio"); setSucursalSeleccionada(null); }}
                   className={`flex-1 py-3 px-4 rounded-xl border text-sm font-medium transition-colors ${
                     zona === "caba_amba"
                       ? "border-[#2C1A10] bg-[#2C1A10] text-white"
@@ -232,7 +232,7 @@ export default function CheckoutPage() {
                 </button>
                 <button
                   type="button"
-                  onClick={() => { setZona("resto_pais"); setSucursalSeleccionada(null); setCostoEnvio(null); }}
+                  onClick={() => { setZona("resto_pais"); setSucursalSeleccionada(null); }}
                   className={`flex-1 py-3 px-4 rounded-xl border text-sm font-medium transition-colors ${
                     zona === "resto_pais"
                       ? "border-[#2C1A10] bg-[#2C1A10] text-white"
