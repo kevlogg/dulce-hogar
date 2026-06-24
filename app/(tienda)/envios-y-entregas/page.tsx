@@ -78,7 +78,7 @@ export default function EnviosYEntregasPage() {
         <div className="bg-[#F7F3EE] border border-[#E0D4C4] rounded-2xl p-6">
           <h2 className="text-lg font-bold text-[#2C1A10] mb-3">Consideraciones generales</h2>
           <ul className="text-sm text-[#3D2B1F] space-y-2">
-            <li>• Los productos a pedido o con medidas especiales pueden requerir mayor tiempo de preparación</li>
+            <li>• El tiempo de preparación estimado es de <strong>7 a 14 días hábiles</strong>. Siempre intentamos hacerlo en el menor tiempo posible</li>
             <li>• En caso de demoras por parte de la transportista, no somos responsables de los tiempos</li>
             <li>• Ante cualquier inconveniente con la entrega, comunicarte con nosotros inmediatamente</li>
           </ul>
