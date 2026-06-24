@@ -110,13 +110,22 @@ export default function TiendaLayout({
                 </p>
               </div>
 
-              {/* Envíos */}
+              {/* Información */}
               <div>
-                <h3 className="text-[#C9A87C] font-bold mb-4">Envíos</h3>
-                <ul className="text-sm space-y-2">
-                  <li>• Flete a domicilio GBA y CABA</li>
-                  <li>• Vía Cargo y Andreani</li>
-                  <li>• Envíos a todo el país</li>
+                <h3 className="text-[#C9A87C] font-bold mb-4">Información</h3>
+                <ul className="text-sm space-y-2.5">
+                  {[
+                    { label: "Envíos y Entregas", href: "/envios-y-entregas" },
+                    { label: "Medios de Pago", href: "/medios-de-pago" },
+                    { label: "Usos y Cuidados", href: "/usos-y-cuidados" },
+                    { label: "Cambios & Devoluciones", href: "/cambios-y-devoluciones" },
+                  ].map((item) => (
+                    <li key={item.href}>
+                      <Link href={item.href} className="text-white/80 hover:text-[#C9A87C] transition-colors">
+                        {item.label}
+                      </Link>
+                    </li>
+                  ))}
                 </ul>
               </div>
 
