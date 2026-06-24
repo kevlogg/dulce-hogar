@@ -33,7 +33,12 @@ export default async function HomePage() {
       <div className="h-px bg-gradient-to-r from-transparent via-[#C9A87C] to-transparent" />
 
       {/* PRODUCTOS DESTACADOS */}
-      {productos.length > 0 && (
+      {(() => {
+        const PROMO_MUNDIAL = ["mesa + 4 sillas tulum", "mesa comedor", "mecedora viral", "hamaca jamaica"];
+        const isMundial = (nombre: string) => PROMO_MUNDIAL.some((n) => nombre.toLowerCase().includes(n.toLowerCase()));
+        const destacados = productos.filter((p) => isMundial(p.nombre));
+        if (destacados.length === 0) return null;
+        return (
         <section className="py-12 px-4 md:py-16 bg-[#EFEBE3]">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-8 md:mb-10">
@@ -41,13 +46,17 @@ export default async function HomePage() {
               <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#2C1A10]" style={{ fontFamily: "'Playfair Display', serif" }}>
                 Productos destacados
               </h2>
+              <div className="inline-flex items-center gap-1.5 mt-3 bg-[#E8F0FB] text-[#003DA5] text-xs font-bold px-3 py-1.5 rounded-full border border-[#74AADB]/40">
+                <span>🇦🇷</span>
+                <span>Promo Mundial este mes</span>
+              </div>
             </div>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-              {productos.slice(0, 4).map((p) => {
+              {destacados.slice(0, 4).map((p) => {
                 const precioEfectivo = p.precioEfectivo ?? Math.round(p.precio * 0.75);
                 return (
                   <Link key={p.id} href={`/productos/${p.id}`} className="group">
-                    <div className="bg-white rounded-2xl overflow-hidden border border-[#E0D4C4] hover:shadow-lg transition-all duration-300">
+                    <div className="bg-white rounded-2xl overflow-hidden border-2 border-[#74AADB] hover:shadow-lg transition-all duration-300">
                       <div className="relative h-52 md:h-64 overflow-hidden">
                         {p.imagenes?.[0] ? (
                           <img
@@ -61,8 +70,8 @@ export default async function HomePage() {
                           </div>
                         )}
                         <div className="absolute top-2 left-2">
-                          <span className="bg-[#2C1A10] text-white text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wide">
-                            Destacado
+                          <span className="bg-[#003DA5] text-white text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wide">
+                            🇦🇷 Promo Mundial
                           </span>
                         </div>
                       </div>
@@ -70,8 +79,8 @@ export default async function HomePage() {
                         <h3 className="font-bold text-[#2C1A10] text-sm leading-snug line-clamp-2 mb-3">{p.nombre}</h3>
                         <div className="flex flex-col gap-0.5">
                           <div className="flex items-baseline gap-1">
-                            <span className="text-green-700 font-bold text-base">${precioEfectivo.toLocaleString("es-AR")}</span>
-                            <span className="text-[10px] text-green-600 font-semibold">efectivo</span>
+                            <span className="text-[#003DA5] font-bold text-base">${precioEfectivo.toLocaleString("es-AR")}</span>
+                            <span className="text-[10px] text-[#74AADB] font-semibold">efectivo</span>
                           </div>
                           <div className="flex items-baseline gap-1">
                             <span className="text-[#A0724A] text-xs">${p.precio.toLocaleString("es-AR")}</span>
@@ -94,7 +103,8 @@ export default async function HomePage() {
             </div>
           </div>
         </section>
-      )}
+        );
+      })()}
 
       <div className="h-px bg-gradient-to-r from-transparent via-[#C9A87C] to-transparent" />
 

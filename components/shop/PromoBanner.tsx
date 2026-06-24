@@ -1,5 +1,7 @@
 "use client";
 
+import { useState } from "react";
+
 const items = [
   { icon: "🛋️", text: "PROMO MUNDIAL — descuento en sofás y combos mesa + sillas" },
   { icon: "🚚", text: "ENVÍO GRATIS en compras superiores a $299.000" },
@@ -54,51 +56,46 @@ function SolDeMayo() {
   );
 }
 
-function TickerTrack() {
-  return (
-    <>
-      <div
-        className="flex shrink-0"
-        style={{ animation: "ticker 30s linear infinite", willChange: "transform" }}
-      >
-        {ticker.map((item, i) => (
-          <div key={i} className="flex items-center shrink-0">
-            <span className="text-sm mr-2">{item.icon}</span>
-            <span className="text-[#1a1a1a] text-xs font-bold tracking-wide whitespace-nowrap uppercase">
-              {item.text}
-            </span>
-            <SolDeMayo />
-          </div>
-        ))}
-      </div>
-      <div
-        className="flex shrink-0"
-        style={{ animation: "ticker 30s linear infinite", willChange: "transform" }}
-      >
-        {ticker.map((item, i) => (
-          <div key={i} className="flex items-center shrink-0">
-            <span className="text-sm mr-2">{item.icon}</span>
-            <span className="text-[#1a1a1a] text-xs font-bold tracking-wide whitespace-nowrap uppercase">
-              {item.text}
-            </span>
-            <SolDeMayo />
-          </div>
-        ))}
-      </div>
-    </>
+function TickerTrack({ paused }: { paused: boolean }) {
+  const style = {
+    animation: "ticker 30s linear infinite",
+    animationPlayState: paused ? "paused" : "running",
+    willChange: "transform",
+  };
+  const track = (
+    <div className="flex shrink-0" style={style}>
+      {ticker.map((item, i) => (
+        <div key={i} className="flex items-center shrink-0">
+          <span className="text-sm mr-2">{item.icon}</span>
+          <span className="text-[#1a1a1a] text-xs font-bold tracking-wide whitespace-nowrap uppercase">
+            {item.text}
+          </span>
+          <SolDeMayo />
+        </div>
+      ))}
+    </div>
   );
+  return <>{track}{track}</>;
 }
 
 export function PromoBanner() {
+  const [paused, setPaused] = useState(false);
+
   return (
     <div className="select-none overflow-hidden">
       {/* Franja superior — celeste */}
       <div className="h-3 bg-[#74AADB]" />
 
       {/* Franja del medio — blanca con ticker */}
-      <div className="bg-white py-2 overflow-hidden">
+      <div
+        className="bg-white py-2 overflow-hidden cursor-pointer"
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
+        onTouchStart={() => setPaused(true)}
+        onTouchEnd={() => setPaused(false)}
+      >
         <div className="flex">
-          <TickerTrack />
+          <TickerTrack paused={paused} />
         </div>
       </div>
 

@@ -9,8 +9,6 @@ const LINKS = [
   { label: "Categorías", href: "/#categorias" },
   { label: "Productos", href: "/productos" },
   { label: "Ventas x Mayor", href: "/mayoristas" },
-  { label: "Envíos", href: "/#envios" },
-  { label: "Contacto", href: "/#contacto" },
 ];
 
 export function MobileNav() {
