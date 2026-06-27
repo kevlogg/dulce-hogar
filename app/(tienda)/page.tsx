@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Producto } from "@/lib/types";
 import { HeroCarousel } from "@/components/shop/HeroCarousel";
 import { ConfettiCannon } from "@/components/shop/ConfettiCannon";
+import { TestimonialsCarousel } from "@/components/shop/TestimonialsCarousel";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -291,45 +292,17 @@ export default async function HomePage() {
       <div className="h-px bg-gradient-to-r from-transparent via-[#C9A87C] to-transparent" />
 
       {/* TESTIMONIOS */}
-      <section className="py-12 px-4 md:py-20 bg-[#F7F3EE]">
-        <div className="max-w-6xl mx-auto">
+      <section className="py-12 md:py-20 bg-[#F7F3EE] overflow-hidden">
+        <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-8 md:mb-12">
             <h2 className="text-2xl md:text-3xl font-bold text-[#2C1A10] mb-2" style={{ fontFamily: "'Playfair Display', serif" }}>
               Lo que dicen nuestros clientes ❤
             </h2>
             <p className="text-[#A0724A] font-medium">Más de 500 familias ya transformaron su hogar con nosotros</p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 md:gap-6">
-            {[
-              { name: "Julia Sagardoy", badge: "Local Guide", text: "Excelente atención, muy buen asesoramiento. Calidad, seriedad, puntualidad a la hora de entregar." },
-              { name: "Maiten Ursi", badge: null, text: "Amooo todo, son unos genios. Excelente atención y tienen los mejores precios 💗" },
-              { name: "Ariel", badge: null, text: "Muy buenos productos, muy buena atención pero por sobretodo excelentes personas! 🤩" },
-              { name: "Karina Baez", badge: null, text: "Además del diseño, excelente calidad y la atención espectacular." },
-              { name: "Monica Barchuk", badge: null, text: "Hermosos objetos de decoración o para renovar la casa; además de excelente atención y amabilidad." },
-            ].map((t) => (
-              <div key={t.name} className="bg-white p-6 rounded-2xl shadow-sm border border-[#E0D4C4] flex flex-col">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-full bg-[#C9A87C]/20 flex items-center justify-center text-[#2C1A10] font-bold text-sm shrink-0">
-                    {t.name.split(" ").map((n: string) => n[0]).join("").slice(0, 2).toUpperCase()}
-                  </div>
-                  <div>
-                    <div className="font-bold text-[#2C1A10] text-sm leading-tight">{t.name}</div>
-                    {t.badge && <div className="text-[10px] text-[#A0724A]">{t.badge}</div>}
-                  </div>
-                  <div className="ml-auto shrink-0">
-                    <svg viewBox="0 0 24 24" className="w-5 h-5" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-                      <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-                      <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
-                      <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-                    </svg>
-                  </div>
-                </div>
-                <div className="text-[#F4B400] text-sm mb-3">★★★★★</div>
-                <p className="text-[#3D2B1F] text-sm leading-relaxed flex-1">{t.text}</p>
-              </div>
-            ))}
-          </div>
+        </div>
+        <TestimonialsCarousel />
+        <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mt-10">
             <a
               href="https://www.google.com/maps/place/Dulce+Hogar+Dise%C3%B1o+%26+Estilo/@-34.5816184,-58.7536031,17.25z/data=!4m6!3m5!1s0x43c32d13b1f30a19:0x7f4d669db8bb3a!8m2!3d-34.5815039!4d-58.7528469!16s%2Fg%2F11mcz3wqw2"
