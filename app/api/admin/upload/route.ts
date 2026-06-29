@@ -34,8 +34,9 @@ export async function POST(req: NextRequest) {
     const encodedPath = encodeURIComponent(filename);
     const publicUrl = `https://firebasestorage.googleapis.com/v0/b/${bucketName}/o/${encodedPath}?alt=media&token=${token}`;
     return Response.json({ url: publicUrl });
-  } catch (error) {
-    console.error("Upload error:", error);
-    return Response.json({ error: "Upload failed" }, { status: 500 });
+  } catch (error: any) {
+    const msg = error?.message ?? String(error);
+    console.error("Upload error:", msg);
+    return Response.json({ error: msg }, { status: 500 });
   }
 }

@@ -165,13 +165,22 @@ export default function ProductosAdminPage() {
 
   async function uploadFiles(files: FileList) {
     setUploading(true);
+    setError("");
     const urls: string[] = [];
     for (const file of Array.from(files)) {
       const fd = new FormData();
       fd.append("file", file);
-      const res = await fetch("/api/admin/upload", { method: "POST", body: fd });
-      const data = await res.json();
-      if (data.url) urls.push(data.url);
+      try {
+        const res = await fetch("/api/admin/upload", { method: "POST", body: fd });
+        const data = await res.json();
+        if (data.url) {
+          urls.push(data.url);
+        } else {
+          setError(`Error al subir "${file.name}": ${data.error ?? "respuesta inesperada del servidor"}`);
+        }
+      } catch (e: any) {
+        setError(`Error de red al subir "${file.name}": ${e?.message ?? "sin conexión"}`);
+      }
     }
     setExistingImages((prev) => [...prev, ...urls]);
     setUploading(false);
