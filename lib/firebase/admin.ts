@@ -57,6 +57,7 @@ function getAdminApp(): any {
       const projectId = credentials.project_id as string | undefined;
       const storageBucket =
         process.env.FIREBASE_STORAGE_BUCKET ||
+        process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET ||
         (projectId ? `${projectId}.firebasestorage.app` : undefined);
       adminApp = initializeApp({
         credential: cert(credentials),
@@ -110,6 +111,9 @@ export async function getSignedImageUrl(storageUrl: string): Promise<string | nu
 export function getStorageBucketName(): string | undefined {
   if (process.env.FIREBASE_STORAGE_BUCKET) {
     return process.env.FIREBASE_STORAGE_BUCKET;
+  }
+  if (process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET) {
+    return process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET;
   }
   let json: string | undefined = process.env.FIREBASE_SERVICE_ACCOUNT_JSON;
   if (!json && process.env.FIREBASE_SERVICE_ACCOUNT_PATH) {
