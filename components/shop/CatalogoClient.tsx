@@ -125,7 +125,7 @@ export function CatalogoClient({ productos }: Props) {
     const cat = searchParams.get("cat")?.toUpperCase() ?? "";
     return VALID_CATS.has(cat) ? cat : "TODOS";
   });
-  const [busqueda, setBusqueda] = useState("");
+  const [busqueda, setBusqueda] = useState(() => searchParams.get("q") ?? "");
 
   const filtrados = useMemo(() => {
     const q = sinTildes(busqueda);

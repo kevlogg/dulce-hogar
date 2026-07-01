@@ -2,6 +2,7 @@ import { CartProvider } from "@/components/shop/CartProvider";
 import { PromoBanner } from "@/components/shop/PromoBanner";
 import { CountdownBanner } from "@/components/shop/CountdownBanner";
 import { CartNavIcon } from "@/components/shop/CartNavIcon";
+import { SearchButton } from "@/components/shop/SearchButton";
 import { MobileNav } from "@/components/shop/MobileNav";
 import Link from "next/link";
 import Image from "next/image";
@@ -78,7 +79,8 @@ export default function TiendaLayout({
               ))}
             </nav>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1">
+              <SearchButton />
               <CartNavIcon />
               <MobileNav />
             </div>

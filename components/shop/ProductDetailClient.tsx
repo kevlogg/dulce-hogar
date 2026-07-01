@@ -105,13 +105,7 @@ export function ProductDetailClient({ producto, relacionados, whatsappMsg }: Pro
           </div>
 
           {producto.descripcion && (
-            <p className="text-[#3D2B1F] leading-relaxed mb-4 text-sm line-clamp-3">{producto.descripcion}</p>
-          )}
-
-          {producto.stock === 0 && (
-            <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 mb-4 text-sm text-amber-800">
-              Este producto tiene un tiempo de preparación estimado de 7 a 14 días hábiles. Siempre intentamos hacerlo en el menor tiempo posible para que lo recibas cuanto antes.
-            </div>
+            <p className="text-[#3D2B1F] leading-relaxed mb-4 text-sm">{producto.descripcion}</p>
           )}
 
           {producto.id === "zD0UV9Xa7V5LgpvJgFvd" && (
@@ -144,6 +138,12 @@ export function ProductDetailClient({ producto, relacionados, whatsappMsg }: Pro
             >
               ← Volver al catálogo
             </Link>
+
+            {producto.stock === 0 && (
+              <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 text-sm text-amber-800">
+                Este producto tiene un tiempo de preparación estimado de 7 a 14 días hábiles. Siempre intentamos hacerlo en el menor tiempo posible para que lo recibas cuanto antes.
+              </div>
+            )}
           </div>
         </div>
       </div>
